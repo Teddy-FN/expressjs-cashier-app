@@ -1,3 +1,7 @@
 exports.home = (req, res, next) => {
-  res.send("home.html");
+  res.render("admin/home.ejs", {
+    pageTitle: "Admin Page",
+    admin: true,
+    url: req.protocol + "://" + req.header.host,
+  });
 };
