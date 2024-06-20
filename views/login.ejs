@@ -1,14 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="./styles/style.css" type="text/css" />
-    <title>Sheare Your Secrect</title>
+<%- include('./includes/head.ejs', {
+  url: url
+}) %>
   </head>
   <body>
-    <body class="flex h-screen bg-indigo-700">
+    <div class="flex h-screen bg-indigo-700">
       <div class="w-full max-w-xs m-auto bg-indigo-100 rounded p-5">
         <header>
           <img
@@ -56,7 +51,8 @@
             >Create Account</a
           >
         </footer>
-      </div>
-    </body>
-  </body>
-</html>
+      </div>  
+    </div>
+<%- include('./includes/end.ejs') %>
+
+

@@ -4,7 +4,10 @@ const router = express.Router();
 
 // Form Login
 router.get("/", (req, res, next) => {
-  res.render("login.ejs");
+  res.render("login.ejs", {
+    pageTitle: "Login",
+    url: req.protocol + "://" + req.header.host,
+  });
 });
 
 // Login Post
@@ -14,7 +17,7 @@ router.post("/login", (req, res, next) => {
   if (body.username === "admin" && body.password === "123") {
     return res.redirect("/admin/list");
   } else {
-    return res.redirect("/user");
+    return res.redirect("/user/list");
   }
 });
 
