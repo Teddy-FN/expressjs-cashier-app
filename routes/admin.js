@@ -4,6 +4,6 @@ const router = express.Router();
 
 const adminController = require("../controller/admin");
 
-router.get("/", adminController.home);
+router.get("/list", adminController.home);
 
 module.exports = router;
