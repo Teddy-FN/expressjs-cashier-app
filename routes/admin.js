@@ -7,4 +7,10 @@ const adminController = require("../controller/admin");
 
 router.get("/list", adminController.home);
 
+// Render Form
+router.get("/add-product", adminController.renderFormAdd);
+
+// Function Post Product
+router.post("/add-product", adminController.postAddProduct);
+
 module.exports = router;
