@@ -5,5 +5,11 @@
       admin: admin
     }) %>
 
-    <h1>Home User</h1>
+    <div class="container my-10 mx-auto grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
+      <% prod.forEach(function(item) {%>
+        <%- include('../includes/cardProduct.ejs', {
+          admin: admin
+        }) %>
+      <% }) %>
+  </div>
 <%- include('../includes/end.ejs') %>
