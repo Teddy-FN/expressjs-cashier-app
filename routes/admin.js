@@ -13,4 +13,7 @@ router.get("/add-product", adminController.renderFormAdd);
 // Function Post Product
 router.post("/add-product", adminController.postAddProduct);
 
+// Function Delete
+router.post("/delete-product", adminController.deleteProduct);
+
 module.exports = router;
