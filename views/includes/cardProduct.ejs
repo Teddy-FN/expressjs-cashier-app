@@ -1,12 +1,12 @@
 <div
-  class="w-fit bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl"
+  class="w-full bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl"
 >
   <img
     src="<%= item.img %>"
     alt="Product"
     class="h-80 w-72 object-cover rounded-t-xl"
   />
-  <div class="px-4 py-3 w-72">
+  <div class="px-4 py-3">
     <span class="text-gray-400 mr-3 uppercase text-xs"
       ><%= item.category %></span
     >
@@ -19,10 +19,20 @@
     <% if(admin){ %>
     <div class="flex items-center justify-between my-4">
       <button
-        class="bg-green-700 text-base font-bold text-white px-4 py-2 rounded-md hover:bg-yellow-300 duration-200"
+        class="bg-green-700 w-full text-base font-bold text-white px-4 py-2 rounded-md hover:bg-yellow-300 duration-200"
       >
         Add Cart
       </button>
+    </div>
+    <div class="flex items-center justify-between my-4">
+      <a href="/admin/edit-product/<%= item.id %>" class="btn">
+        <button
+          class="bg-red-700 w-full text-base font-bold text-white px-4 py-2 rounded-md hover:bg-green-300 duration-200"
+          type="submit"
+        >
+          Edit
+        </button>
+      </a>
       <form action="/admin/delete-product" method="POST">
         <input type="text" hidden value="<%= item.id %>" name="id" />
         <button
