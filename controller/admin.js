@@ -1,4 +1,4 @@
-const product = [
+let product = [
   {
     id: 1,
     img: "https://images.unsplash.com/photo-1646753522408-077ef9839300?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwcm9maWxlLXBhZ2V8NjZ8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60",
@@ -91,7 +91,6 @@ exports.renderFormAdd = (req, res, next) => {
 
 // Function Post Add Form Product
 exports.postAddProduct = (req, res, next) => {
-  console.log("REQ BODY =>", req);
   product.push({
     id: Math.random(),
     img: req.body.image,
@@ -107,5 +106,11 @@ exports.postAddProduct = (req, res, next) => {
 // Function Put Edit Form Product
 
 // Delete
+exports.deleteProduct = (req, res, next) => {
+  const products = product.filter((items) => items.id !== Number(req.body.id));
+  console.log(products);
+  product = products;
+  res.redirect("/admin/list");
+};
 
 // Report Selling

@@ -2,16 +2,20 @@
   class="w-fit bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl"
 >
   <img
-    src="https://images.unsplash.com/photo-1646753522408-077ef9839300?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwcm9maWxlLXBhZ2V8NjZ8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60"
+    src="<%= item.img %>"
     alt="Product"
     class="h-80 w-72 object-cover rounded-t-xl"
   />
   <div class="px-4 py-3 w-72">
-    <span class="text-gray-400 mr-3 uppercase text-xs">Brand</span>
+    <span class="text-gray-400 mr-3 uppercase text-xs"
+      ><%= item.category %></span
+    >
     <p class="text-lg font-bold text-black truncate block capitalize">
-      Product Name
+      <%= item.productName %>
     </p>
-    <p class="text-lg font-semibold text-black cursor-auto">$149</p>
+    <p class="text-lg font-semibold text-black cursor-auto">
+      Rp. <%= item.price %>
+    </p>
     <% if(admin){ %>
     <div class="flex items-center justify-between my-4">
       <button
@@ -19,11 +23,15 @@
       >
         Add Cart
       </button>
-      <button
-        class="bg-red-700 text-base font-bold text-white px-4 py-2 rounded-md hover:bg-green-300 duration-200"
-      >
-        Delete
-      </button>
+      <form action="/admin/delete-product" method="POST">
+        <input type="text" hidden value="<%= item.id %>" name="id" />
+        <button
+          class="bg-red-700 text-base font-bold text-white px-4 py-2 rounded-md hover:bg-green-300 duration-200"
+          type="submit"
+        >
+          Delete
+        </button>
+      </form>
     </div>
     <% } else { %>
     <div class="flex items-center justify-between my-4">
