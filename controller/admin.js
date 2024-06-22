@@ -71,6 +71,20 @@ let product = [
   },
 ];
 
+let myData = [
+  ["Mushrooms", 3],
+  ["Onions", 1],
+  ["Olives", 1],
+  ["Zucchini", 1],
+  ["Pepperoni", 2],
+  ["Pineapple", 12],
+  ["Green Peppers", 22],
+];
+
+let myGraph = {};
+myGraph.name = "First Chart";
+myGraph.myData = myData;
+
 exports.home = (req, res, next) => {
   res.render("admin/home.ejs", {
     pageTitle: "Admin Page",
@@ -156,3 +170,24 @@ exports.deleteProduct = (req, res, next) => {
 };
 
 // Report Selling
+exports.showGraph = (req, res, next) => {
+  res.render("admin/reportSelling.ejs", {
+    pageTitle: "Report Selling",
+    admin: true,
+    graphs: myGraph,
+    labels: [
+      "Januari",
+      "Februari",
+      "Maret",
+      "April",
+      "Mei",
+      "Juni",
+      "Juli",
+      "Agustus",
+      "September",
+      "Oktober",
+      "November",
+      "Desember",
+    ],
+  });
+};
