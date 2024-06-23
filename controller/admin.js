@@ -71,19 +71,14 @@ let product = [
   },
 ];
 
-let myData = [
-  ["Mushrooms", 3],
-  ["Onions", 1],
-  ["Olives", 1],
-  ["Zucchini", 1],
-  ["Pepperoni", 2],
-  ["Pineapple", 12],
-  ["Green Peppers", 22],
-];
-
-let myGraph = {};
-myGraph.name = "First Chart";
-myGraph.myData = myData;
+const dataGraph = {
+  data: {
+    2021: [1, 2, 3, 10, 20],
+    2022: [20, 30, 40, 50, 20, 10],
+    2023: [20, 30, 40, 50, 20, 50, 60, 70, 80],
+    2024: [20, 30, 40, 50, 20, 50, 60, 70, 80, 100, 120, 200],
+  },
+};
 
 exports.home = (req, res, next) => {
   res.render("admin/home.ejs", {
@@ -174,7 +169,6 @@ exports.showGraph = (req, res, next) => {
   res.render("admin/reportSelling.ejs", {
     pageTitle: "Report Selling",
     admin: true,
-    graphs: myGraph,
     labels: [
       "Januari",
       "Februari",
@@ -189,5 +183,29 @@ exports.showGraph = (req, res, next) => {
       "November",
       "Desember",
     ],
+    dataGraph: dataGraph.data[`${new Date().getFullYear()}`],
+  });
+};
+
+exports.filterGraph = (req, res, next) => {
+  const data = dataGraph.data[req.body.year];
+  res.render("admin/reportSelling.ejs", {
+    pageTitle: "Report Selling",
+    admin: true,
+    labels: [
+      "Januari",
+      "Februari",
+      "Maret",
+      "April",
+      "Mei",
+      "Juni",
+      "Juli",
+      "Agustus",
+      "September",
+      "Oktober",
+      "November",
+      "Desember",
+    ],
+    dataGraph: data,
   });
 };
