@@ -26,4 +26,7 @@ router.post("/edit-product/:id", adminController.EditProduct);
 // Function Show Graph
 router.get("/report-selling", adminController.showGraph);
 
+// Function Filter Graph
+router.post("/filter-chart", adminController.filterGraph);
+
 module.exports = router;

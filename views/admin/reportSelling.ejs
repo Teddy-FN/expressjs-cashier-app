@@ -5,15 +5,36 @@
     <%- include('../includes/nav.ejs', {
       admin: admin
     }) %>
-    <h1>Home Admin</h1>
     <div class="container mx-auto my-10 bg-red-400">
+    <form class="flex flex-wrap items-center justify-between" action="/admin/filter-chart" method="post">
+        <div class="flex flex-wrap items-center gap-10">
+          <div class="relative ml-4">
+            <select 
+              class="w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" 
+              id="year"
+              name="year"
+              value="2024"
+            >
+              <option value="2024">2024</option>
+              <option value="2023">2023</option>
+              <option value="2022">2022</option>
+              <option value="2021">2021</option>
+              <option value="2020">2020</option>
+            </select>
+          </div>
+        </div>
+        <div class="flex flex-wrap mb-6 px-2">
+          <button class="bg-green-700 text-base w-full font-bold text-white px-4 py-2 rounded-md hover:bg-yellow-300 duration-200" type="submit">
+            Apply
+          </button>
+        </div>
+    </form>
       <canvas id="myChart"></canvas>
     </div>
     
     <script>
       var label = "<%= labels %>".split(',');
-      console.log(label); 
-
+      var data = "<%= dataGraph %>".split(',').map((items) => Number(items));
       const ctx = document.getElementById('myChart');
       new Chart(ctx, {
         type: 'bar',
@@ -21,7 +42,7 @@
           labels: label,
           datasets: [{
             label: 'Total Penjualan Bulan Ini ',
-            data: [12, 19, 3, 5, 2, 3],
+            data: data,
             borderWidth: 1
           }]
         },
