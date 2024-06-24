@@ -80,12 +80,30 @@ const dataGraph = {
   },
 };
 
+// Helper / Utils
+const helper = require("../utils/index");
+
 exports.home = (req, res, next) => {
   res.render("admin/home.ejs", {
     pageTitle: "Admin Page",
     prod: product,
     admin: true,
     url: req.protocol + "://" + req.header.host,
+    onPage: "list",
+    navigationActive: {
+      list: "list",
+      cart: "cart",
+      addProduct: "add-product",
+      editProduct: "edit-product",
+      reportSelling: "report-selling",
+    },
+    urlNavigation: {
+      list: "/admin/list",
+      cart: "/admin/cart",
+      addProduct: "/admin/add-product",
+      editProduct: "/admin/edit-product",
+      reportSelling: "/admin/report-selling",
+    },
   });
 };
 
@@ -95,6 +113,21 @@ exports.renderFormAdd = (req, res, next) => {
     pageTitle: "Add Product",
     admin: true,
     url: req.protocol + "://" + req.header.host,
+    onPage: "add-product",
+    navigationActive: {
+      list: "list",
+      cart: "cart",
+      addProduct: "add-product",
+      editProduct: "edit-product",
+      reportSelling: "report-selling",
+    },
+    urlNavigation: {
+      list: "/admin/list",
+      cart: "/admin/cart",
+      addProduct: "/admin/add-product",
+      editProduct: "/admin/edit-product",
+      reportSelling: "/admin/report-selling",
+    },
     item: {
       id: null,
       img: null,
@@ -128,6 +161,21 @@ exports.renderFormEdit = (req, res, next) => {
     pageTitle: "Edit Product",
     admin: true,
     url: req.protocol + "://" + req.header.host,
+    onPage: "edit-product",
+    navigationActive: {
+      list: "list",
+      cart: "cart",
+      addProduct: "add-product",
+      editProduct: "edit-product",
+      reportSelling: "report-selling",
+    },
+    urlNavigation: {
+      list: "/admin/list",
+      cart: "/admin/cart",
+      addProduct: "/admin/add-product",
+      editProduct: "/admin/edit-product",
+      reportSelling: "/admin/report-selling",
+    },
     item: {
       id: prouduct.id,
       img: prouduct.img,
@@ -169,6 +217,22 @@ exports.showGraph = (req, res, next) => {
   res.render("admin/reportSelling.ejs", {
     pageTitle: "Report Selling",
     admin: true,
+    url: req.protocol + "://" + req.header.host,
+    onPage: "report-selling",
+    navigationActive: {
+      list: "list",
+      cart: "cart",
+      addProduct: "add-product",
+      editProduct: "edit-product",
+      reportSelling: "report-selling",
+    },
+    urlNavigation: {
+      list: "/admin/list",
+      cart: "/admin/cart",
+      addProduct: "/admin/add-product",
+      editProduct: "/admin/edit-product",
+      reportSelling: "/admin/report-selling",
+    },
     labels: [
       "Januari",
       "Februari",
@@ -187,11 +251,28 @@ exports.showGraph = (req, res, next) => {
   });
 };
 
+// Filter Report Selling By Year
 exports.filterGraph = (req, res, next) => {
   const data = dataGraph.data[req.body.year];
   res.render("admin/reportSelling.ejs", {
     pageTitle: "Report Selling",
     admin: true,
+    url: req.protocol + "://" + req.header.host,
+    onPage: "report-selling",
+    navigationActive: {
+      list: "list",
+      cart: "cart",
+      addProduct: "add-product",
+      editProduct: "edit-product",
+      reportSelling: "report-selling",
+    },
+    urlNavigation: {
+      list: "/admin/list",
+      cart: "/admin/cart",
+      addProduct: "/admin/add-product",
+      editProduct: "/admin/edit-product",
+      reportSelling: "/admin/report-selling",
+    },
     labels: [
       "Januari",
       "Februari",
@@ -207,5 +288,30 @@ exports.filterGraph = (req, res, next) => {
       "Desember",
     ],
     dataGraph: data,
+  });
+};
+
+// Render Cart
+exports.renderCart = (req, res, next) => {
+  res.render("user/cart.ejs", {
+    url: req.protocol + "://" + req.header.host,
+    pageTitle: "Cart Product",
+    onPage: "cart",
+    admin: true,
+    helper: helper,
+    navigationActive: {
+      list: "list",
+      cart: "cart",
+      addProduct: "add-product",
+      editProduct: "edit-product",
+      reportSelling: "report-selling",
+    },
+    urlNavigation: {
+      list: "/admin/list",
+      cart: "/admin/cart",
+      addProduct: "/admin/add-product",
+      editProduct: "/admin/edit-product",
+      reportSelling: "/admin/report-selling",
+    },
   });
 };

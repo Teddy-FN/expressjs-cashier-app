@@ -10,24 +10,24 @@
     <!-- Secondary Navbar items -->
     <div class="hidden md:flex items-center space-x-3">
       <a
-        href=""
-        class="py-4 px-2 text-green-500 border-b-4 border-green-500 font-semibold"
+        href="<%= urlNavigation.list %>"
+        class="py-4 px-2 font-semibold <% if(onPage === navigationActive.list){ %>text-green-500 border-b-4 border-green-500<% } else{ %>text-gray-500 hover:text-green-500 transition duration-300<% } %>"
         >List Product</a
       >
       <a
-        href="#"
-        class="py-4 px-2 text-gray-500 font-semibold hover:text-green-500 transition duration-300"
+        href="<%= urlNavigation.cart %>"
+        class="py-4 px-2 font-semibold <% if(onPage === navigationActive.cart){ %>text-green-500 border-b-4 border-green-500<% } else{ %>text-gray-500 hover:text-green-500 transition duration-300<% } %>"
         >Cart</a
       >
       <% if(admin){ %>
       <a
-        href="/admin/add-product"
-        class="py-4 px-2 text-gray-500 font-semibold hover:text-green-500 transition duration-300"
+        href="<%= urlNavigation.addProduct || urlNavigation.editProduct %>"
+        class="py-4 px-2 font-semibold <% if(onPage === navigationActive.addProduct || onPage === navigationActive.editProduct){ %>text-green-500 border-b-4 border-green-500<% } else{ %>text-gray-500 hover:text-green-500 transition duration-300<% } %>"
         >Add Product</a
       >
       <a
-        href="/admin/report-selling"
-        class="py-4 px-2 text-gray-500 font-semibold hover:text-green-500 transition duration-300"
+        href="<%= urlNavigation.reportSelling %>"
+        class="py-4 px-2 font-semibold <% if(onPage === navigationActive.reportSelling){ %>text-green-500 border-b-4 border-green-500<% } else{ %>text-gray-500 hover:text-green-500 transition duration-300<% } %>"
         >Report Selling</a
       >
       <% } %>
@@ -56,30 +56,30 @@
     <ul class="">
       <li class="active">
         <a
-          href="index.html"
-          class="block text-sm px-2 py-4 text-white bg-green-500 font-semibold"
+          href="<%= urlNavigation.list %>"
+          class="block text-sm py-4 px-2 font-semibold <% if(onPage === navigationActive.list){ %>text-white bg-green-500 font-semibold<% } else{ %>''<% } %>"
           >List Product</a
         >
       </li>
       <li>
         <a
-          href="#services"
-          class="block text-sm px-2 py-4 hover:bg-green-500 transition duration-300"
+        href="<%= urlNavigation.cart %>"
+        class="block text-sm py-4 px-2 font-semibold <% if(onPage === navigationActive.cart){ %>text-white bg-green-500 font-semibold<% } else{ %>''<% } %>"
           >Cart</a
         >
       </li>
       <% if(admin){ %>
       <li>
         <a
-          href="/admin/add-product"
-          class="block text-sm px-2 py-4 hover:bg-green-500 transition duration-300"
+        href="<%= urlNavigation.addProduct || urlNavigation.editProduct %>"
+        class="block text-sm py-4 px-2 font-semibold <% if(onPage === navigationActive.addProduct || onPage === navigationActive.editProduct){ %>text-white bg-green-500 font-semibold<% } else{ %>''<% } %>"
           >Add Product</a
         >
       </li>
       <li>
         <a
-          href="#"
-          class="py-4 px-2 text-gray-500 font-semibold hover:text-green-500 transition duration-300"
+        href="<%= urlNavigation.reportSelling %>"
+        class="block text-sm py-4 px-2 font-semibold <% if(onPage === navigationActive.reportSelling){ %>text-white bg-green-500 font-semibold<% } else{ %>''<% } %>"
           >Report Selling</a
         >
       </li>

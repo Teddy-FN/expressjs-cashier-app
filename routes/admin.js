@@ -29,4 +29,7 @@ router.get("/report-selling", adminController.showGraph);
 // Function Filter Graph
 router.post("/filter-chart", adminController.filterGraph);
 
+// Function Render Cart
+router.get("/cart", adminController.renderCart);
+
 module.exports = router;

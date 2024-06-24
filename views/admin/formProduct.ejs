@@ -4,7 +4,10 @@
   </head>
   <body>
     <%- include('../includes/nav.ejs', {
-      admin: admin
+      admin: admin,
+      onPage: onPage,
+      navigationActive: navigationActive,
+      urlNavigation: urlNavigation,
     }) %>
     <div class="h-screen my-10 flex flex-col items-center gap-4">
       <% if(item.id){ %><h1>Edit Product</h1><% } else{ %><h1>Add Product</h1><% } %>
