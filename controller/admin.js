@@ -1,76 +1,3 @@
-let product = [
-  {
-    id: 1,
-    img: "https://images.unsplash.com/photo-1646753522408-077ef9839300?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwcm9maWxlLXBhZ2V8NjZ8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60",
-    category: "Makanan",
-    productName: "Nasgor",
-    price: "20.000",
-  },
-  {
-    id: 2,
-    img: "https://images.unsplash.com/photo-1646753522408-077ef9839300?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwcm9maWxlLXBhZ2V8NjZ8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60",
-    category: "Makanan",
-    productName: "Bihun",
-    price: "20.000",
-  },
-  {
-    id: 3,
-    img: "https://images.unsplash.com/photo-1646753522408-077ef9839300?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwcm9maWxlLXBhZ2V8NjZ8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60",
-    category: "Makanan",
-    productName: "Capcay",
-    price: "20.000",
-  },
-  {
-    id: 4,
-    img: "https://images.unsplash.com/photo-1646753522408-077ef9839300?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwcm9maWxlLXBhZ2V8NjZ8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60",
-    category: "Makanan",
-    productName: "Soto",
-    price: "20.000",
-  },
-  {
-    id: 5,
-    img: "https://images.unsplash.com/photo-1646753522408-077ef9839300?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwcm9maWxlLXBhZ2V8NjZ8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60",
-    category: "Makanan",
-    productName: "Bakso",
-    price: "20.000",
-  },
-  {
-    id: 6,
-    img: "https://images.unsplash.com/photo-1646753522408-077ef9839300?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwcm9maWxlLXBhZ2V8NjZ8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60",
-    category: "Makanan",
-    productName: "Miso",
-    price: "20.000",
-  },
-  {
-    id: 7,
-    img: "https://images.unsplash.com/photo-1646753522408-077ef9839300?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwcm9maWxlLXBhZ2V8NjZ8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60",
-    category: "Makanan",
-    productName: "Mie Gacoan",
-    price: "20.000",
-  },
-  {
-    id: 8,
-    img: "https://images.unsplash.com/photo-1646753522408-077ef9839300?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwcm9maWxlLXBhZ2V8NjZ8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60",
-    category: "Makanan",
-    productName: "Indomie",
-    price: "20.000",
-  },
-  {
-    id: 9,
-    img: "https://images.unsplash.com/photo-1646753522408-077ef9839300?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwcm9maWxlLXBhZ2V8NjZ8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60",
-    category: "Makanan",
-    productName: "Paklay",
-    price: "20.000",
-  },
-  {
-    id: 10,
-    img: "https://images.unsplash.com/photo-1646753522408-077ef9839300?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwcm9maWxlLXBhZ2V8NjZ8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60",
-    category: "Makanan",
-    productName: "Batagor",
-    price: "20.000",
-  },
-];
-
 const dataGraph = {
   data: {
     2021: [1, 2, 3, 10, 20],
@@ -80,30 +7,33 @@ const dataGraph = {
   },
 };
 
-// Helper / Utils
-const helper = require("../utils/index");
+// Models
+const AdminModels = require("../model/admin");
 
 exports.home = (req, res, next) => {
-  res.render("admin/home.ejs", {
-    pageTitle: "Admin Page",
-    prod: product,
-    admin: true,
-    url: req.protocol + "://" + req.header.host,
-    onPage: "list",
-    navigationActive: {
-      list: "list",
-      cart: "cart",
-      addProduct: "add-product",
-      editProduct: "edit-product",
-      reportSelling: "report-selling",
-    },
-    urlNavigation: {
-      list: "/admin/list",
-      cart: "/admin/cart",
-      addProduct: "/admin/add-product",
-      editProduct: "/admin/edit-product",
-      reportSelling: "/admin/report-selling",
-    },
+  AdminModels.getAllProduct((product) => {
+    console.log("PRoduct", product);
+    res.render("admin/home.ejs", {
+      pageTitle: "Admin Page",
+      prod: product,
+      admin: true,
+      url: req.protocol + "://" + req.header.host,
+      onPage: "list",
+      navigationActive: {
+        list: "list",
+        cart: "cart",
+        addProduct: "add-product",
+        editProduct: "edit-product",
+        reportSelling: "report-selling",
+      },
+      urlNavigation: {
+        list: "/admin/list",
+        cart: "/admin/cart",
+        addProduct: "/admin/add-product",
+        editProduct: "/admin/edit-product",
+        reportSelling: "/admin/report-selling",
+      },
+    });
   });
 };
 
@@ -140,13 +70,14 @@ exports.renderFormAdd = (req, res, next) => {
 
 // Function Post Add Form Product
 exports.postAddProduct = (req, res, next) => {
-  product.push({
-    id: Math.random(),
+  const product = new AdminModels({
+    id: null,
     img: req.body.image,
     category: req.body.category,
     productName: req.body.product,
     price: req.body.price,
   });
+  product.saveProduct();
   res.redirect("/admin/list");
 };
 
@@ -298,7 +229,6 @@ exports.renderCart = (req, res, next) => {
     pageTitle: "Cart Product",
     onPage: "cart",
     admin: true,
-    helper: helper,
     navigationActive: {
       list: "list",
       cart: "cart",
