@@ -77,5 +77,20 @@ exports.user = (req, res, next) => {
     prod: product,
     admin: false,
     url: req.protocol + "://" + req.header.host,
+    onPage: "list",
+    navigationActive: {
+      list: "list",
+      cart: "cart",
+      addProduct: "",
+      editProduct: "",
+      reportSelling: "",
+    },
+    urlNavigation: {
+      list: "/user/list",
+      cart: "/user/cart",
+      addProduct: "",
+      editProduct: "",
+      reportSelling: "",
+    },
   });
 };

@@ -2,7 +2,10 @@
   </head>
   <body>
     <%- include('../includes/nav.ejs', {
-      admin: admin
+      admin: admin,
+      onPage: onPage,
+      navigationActive: navigationActive,
+      urlNavigation: urlNavigation,
     }) %>
     <div class="container my-10 mx-auto grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
       <% prod.forEach(function(item) {%>
@@ -12,5 +15,4 @@
         }) %>
       <% }) %>
     </div>
-    <h1>Home Admin</h1>
 <%- include('../includes/end.ejs') %>

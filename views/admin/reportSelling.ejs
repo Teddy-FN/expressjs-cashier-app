@@ -3,9 +3,12 @@
   </head>
   <body>
     <%- include('../includes/nav.ejs', {
-      admin: admin
+      admin: admin,
+      onPage: onPage,
+      navigationActive: navigationActive,
+      urlNavigation: urlNavigation,
     }) %>
-    <div class="container mx-auto my-10 bg-red-400">
+    <div class="container mx-auto my-10">
     <form class="flex flex-wrap items-center justify-between" action="/admin/filter-chart" method="post">
         <div class="flex flex-wrap items-center gap-10">
           <div class="relative ml-4">
