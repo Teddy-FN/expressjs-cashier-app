@@ -35,9 +35,16 @@
               type="file"
               name="image"
               value="<%= item.image || '' %>"
+              id="uploadImage"
+              onchange="PreviewImage()"
             >
           </div>
         </div>
+        
+        <!-- Show Image -->
+        <img id="uploadPreview" class="border-pink-100 border w-full px-4 mb-6" src="#" />
+        <!-- End Show Image -->
+         
         <div class="flex flex-wrap mb-6">
           <div class="w-full px-3">
             <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="price">
@@ -81,6 +88,24 @@
         </div>
       </form>
     </div>
+
+
+    <script type="text/javascript">
+      function PreviewImage() {
+      var oFReader = new FileReader();
+      oFReader.readAsDataURL(document.getElementById("uploadImage").files[0]);
+
+      oFReader.onload = function (oFREvent) {
+        document.getElementById("uploadPreview").src = oFREvent.target.result;
+      };
+    };
+  </script>
+
+  <style>
+    [src='#'] {
+    display: none;
+    }
+  </style>
 <%- include('../includes/end.ejs') %>
 
 
