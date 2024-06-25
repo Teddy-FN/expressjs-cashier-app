@@ -79,7 +79,6 @@ exports.renderFormAdd = (req, res, next) => {
 
 // Function Post Add Form Product
 exports.postAddProduct = async (req, res, next) => {
-  console.log("REQ =>", req);
   const date = moment().format("YYYY-MM-DD");
   const { category, product, price } = req.body;
   const { path } = req.file;
@@ -93,39 +92,43 @@ exports.postAddProduct = async (req, res, next) => {
 };
 
 // Render Edit Form Product
-exports.renderFormEdit = (req, res, next) => {
-  const getProduct = product.filter(
-    (items) => items.id === Number(req.params.id)
+exports.renderFormEdit = async (req, res, next) => {
+  return await db.pool.query(
+    'SELECT * FROM public."ListProduct" WHERE id = $1',
+    [req.params.id],
+    (err, response) => {
+      const [prouduct] = response.rows;
+      if (res.statusCode === 200) {
+        res.render("admin/formProduct.ejs", {
+          pageTitle: "Edit Product",
+          admin: true,
+          url: req.protocol + "://" + req.header.host,
+          onPage: "edit-product",
+          navigationActive: {
+            list: "list",
+            cart: "cart",
+            addProduct: "add-product",
+            editProduct: "edit-product",
+            reportSelling: "report-selling",
+          },
+          urlNavigation: {
+            list: "/admin/list",
+            cart: "/admin/cart",
+            addProduct: "/admin/add-product",
+            editProduct: "/admin/edit-product",
+            reportSelling: "/admin/report-selling",
+          },
+          item: {
+            id: prouduct.id,
+            img: prouduct.img,
+            category: prouduct.category,
+            product: prouduct.productName,
+            price: prouduct.price,
+          },
+        });
+      }
+    }
   );
-  const [prouduct] = getProduct;
-
-  res.render("admin/formProduct.ejs", {
-    pageTitle: "Edit Product",
-    admin: true,
-    url: req.protocol + "://" + req.header.host,
-    onPage: "edit-product",
-    navigationActive: {
-      list: "list",
-      cart: "cart",
-      addProduct: "add-product",
-      editProduct: "edit-product",
-      reportSelling: "report-selling",
-    },
-    urlNavigation: {
-      list: "/admin/list",
-      cart: "/admin/cart",
-      addProduct: "/admin/add-product",
-      editProduct: "/admin/edit-product",
-      reportSelling: "/admin/report-selling",
-    },
-    item: {
-      id: prouduct.id,
-      img: prouduct.img,
-      category: prouduct.category,
-      product: prouduct.productName,
-      price: prouduct.price,
-    },
-  });
 };
 
 // Function Put Edit Form Product
