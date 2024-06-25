@@ -1,3 +1,7 @@
+// Connect DB
+const db = require("../db");
+const moment = require("moment");
+
 const dataGraph = {
   data: {
     2021: [1, 2, 3, 10, 20],
@@ -10,31 +14,35 @@ const dataGraph = {
 // Models
 const AdminModels = require("../model/admin");
 
-exports.home = (req, res, next) => {
-  AdminModels.getAllProduct((product) => {
-    console.log("PRoduct", product);
-    res.render("admin/home.ejs", {
-      pageTitle: "Admin Page",
-      prod: product,
-      admin: true,
-      url: req.protocol + "://" + req.header.host,
-      onPage: "list",
-      navigationActive: {
-        list: "list",
-        cart: "cart",
-        addProduct: "add-product",
-        editProduct: "edit-product",
-        reportSelling: "report-selling",
-      },
-      urlNavigation: {
-        list: "/admin/list",
-        cart: "/admin/cart",
-        addProduct: "/admin/add-product",
-        editProduct: "/admin/edit-product",
-        reportSelling: "/admin/report-selling",
-      },
-    });
-  });
+exports.home = async (req, res, next) => {
+  return await db.pool.query(
+    'SELECT * FROM public."ListProduct"',
+    (err, response) => {
+      if (res.statusCode === 200) {
+        res.render("admin/home.ejs", {
+          pageTitle: "Admin Page",
+          prod: response.rows,
+          admin: true,
+          url: req.protocol + "://" + req.header.host,
+          onPage: "list",
+          navigationActive: {
+            list: "list",
+            cart: "cart",
+            addProduct: "add-product",
+            editProduct: "edit-product",
+            reportSelling: "report-selling",
+          },
+          urlNavigation: {
+            list: "/admin/list",
+            cart: "/admin/cart",
+            addProduct: "/admin/add-product",
+            editProduct: "/admin/edit-product",
+            reportSelling: "/admin/report-selling",
+          },
+        });
+      }
+    }
+  );
 };
 
 // Render Add Form Product
@@ -69,15 +77,20 @@ exports.renderFormAdd = (req, res, next) => {
 };
 
 // Function Post Add Form Product
-exports.postAddProduct = (req, res, next) => {
-  const product = new AdminModels({
-    id: null,
-    img: req.body.image,
-    category: req.body.category,
-    productName: req.body.product,
-    price: req.body.price,
-  });
-  product.saveProduct();
+exports.postAddProduct = async (req, res, next) => {
+  const date = moment().format("YYYY-MM-DD");
+  const { image, category, product, price } = req.body;
+  const base64 = new Buffer.from(image).toString("base64");
+  console.log(category);
+  console.log(product);
+  console.log(price);
+  console.log(base64);
+  console.log(date);
+  const postData = await db.pool.query(
+    'INSERT INTO public."ListProduct"("productName", category, img, price, "createdDate", "modifiedDate") VALUES ($1, $2, $3, $4, $5, $6)',
+    [product, category, base64, price, date, date]
+  );
+  console.log("postData =>", postData);
   res.redirect("/admin/list");
 };
 

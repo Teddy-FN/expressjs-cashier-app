@@ -94,10 +94,16 @@ module.exports = class Admin {
     if (!this.id) {
       product.push({
         id: Math.random(),
-        ...this,
+        img: this.img,
+        category: this.category,
+        productName: this.productName,
+        price: this.price,
       });
     }
   }
+
+  // Get Product By Id
+  static getProductById(cb) {}
 
   // Get All Product
   static getAllProduct(cb) {
