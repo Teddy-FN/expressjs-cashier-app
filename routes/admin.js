@@ -1,4 +1,24 @@
 const express = require("express");
+const multer = require("multer");
+const fs = require("fs");
+const path = require("path");
+
+const storage = multer.diskStorage({
+  destination: function (req, res, cb) {
+    const dir = "uploads";
+
+    if (!fs.existsSync(dir)) {
+      fs.mkdirSync(dir);
+    }
+
+    cb(null, dir);
+  },
+  filename: function (req, file, cb) {
+    cb(null, new Date() + path.extname(file.originalname));
+  },
+});
+
+const upload = multer({ storage });
 
 const router = express.Router();
 
@@ -12,7 +32,11 @@ router.get("/list", adminController.home);
 router.get("/add-product", adminController.renderFormAdd);
 
 // Function Post Product
-router.post("/add-product", adminController.postAddProduct);
+router.post(
+  "/add-product",
+  upload.single("image"),
+  adminController.postAddProduct
+);
 
 // Function Delete
 router.post("/delete-product", adminController.deleteProduct);
