@@ -2,10 +2,11 @@
   class="w-full bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl"
 >
   <img
-    src="<%= item.img %>"
-    alt="Product"
+    src="<%= item.img.toString() %>"
+    alt="<%= item.productName %>"
     class="h-80 w-72 object-cover rounded-t-xl"
   />
+
   <div class="px-4 py-3">
     <span class="text-gray-400 mr-3 uppercase text-xs"
       ><%= item.category %></span
