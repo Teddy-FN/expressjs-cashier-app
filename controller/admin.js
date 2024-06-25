@@ -18,10 +18,11 @@ exports.home = async (req, res, next) => {
   return await db.pool.query(
     'SELECT * FROM public."ListProduct"',
     (err, response) => {
+      console.log("response =>", response?.rows);
       if (res.statusCode === 200) {
         res.render("admin/home.ejs", {
           pageTitle: "Admin Page",
-          prod: response.rows,
+          prod: response?.rows,
           admin: true,
           url: req.protocol + "://" + req.header.host,
           onPage: "list",
@@ -78,17 +79,14 @@ exports.renderFormAdd = (req, res, next) => {
 
 // Function Post Add Form Product
 exports.postAddProduct = async (req, res, next) => {
+  console.log("REQ =>", req);
   const date = moment().format("YYYY-MM-DD");
-  const { image, category, product, price } = req.body;
-  const base64 = new Buffer.from(image).toString("base64");
-  console.log(category);
-  console.log(product);
-  console.log(price);
-  console.log(base64);
-  console.log(date);
+  const { category, product, price } = req.body;
+  const { path } = req.file;
+
   const postData = await db.pool.query(
     'INSERT INTO public."ListProduct"("productName", category, img, price, "createdDate", "modifiedDate") VALUES ($1, $2, $3, $4, $5, $6)',
-    [product, category, base64, price, date, date]
+    [product, category, path, price, date, date]
   );
   console.log("postData =>", postData);
   res.redirect("/admin/list");

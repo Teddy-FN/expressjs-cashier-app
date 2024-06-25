@@ -11,7 +11,7 @@
     }) %>
     <div class="h-screen my-10 flex flex-col items-center gap-4">
       <% if(item.id){ %><h1>Edit Product</h1><% } else{ %><h1>Add Product</h1><% } %>
-      <form class="max-w-lg px-4 md:px-0" action="<% if(item.id){ %>/admin/edit-product/<%= item.id %><% } else{ %>/admin/add-product<% } %>" method="post">
+      <form class="max-w-lg px-4 md:px-0" action="<% if(item.id){ %>/admin/edit-product/<%= item.id %><% } else{ %>/admin/add-product<% } %>" method="post" enctype="multipart/form-data">
         <div class="flex flex-wrap mb-6">
           <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
             <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="nameproduct">
