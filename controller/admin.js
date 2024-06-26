@@ -1,6 +1,8 @@
 // Connect DB
 const db = require("../db");
 const moment = require("moment");
+const fs = require("fs/promises");
+const date = moment().format("YYYY-MM-DD");
 
 const dataGraph = {
   data: {
@@ -79,7 +81,6 @@ exports.renderFormAdd = (req, res, next) => {
 
 // Function Post Add Form Product
 exports.postAddProduct = async (req, res, next) => {
-  const date = moment().format("YYYY-MM-DD");
   const { category, product, price } = req.body;
   const { path } = req.file;
 
@@ -97,7 +98,8 @@ exports.renderFormEdit = async (req, res, next) => {
     'SELECT * FROM public."ListProduct" WHERE id = $1',
     [req.params.id],
     (err, response) => {
-      const [prouduct] = response.rows;
+      const [product] = response?.rows || {};
+      console.log("renderFormEdit", product);
       if (res.statusCode === 200) {
         res.render("admin/formProduct.ejs", {
           pageTitle: "Edit Product",
@@ -119,11 +121,11 @@ exports.renderFormEdit = async (req, res, next) => {
             reportSelling: "/admin/report-selling",
           },
           item: {
-            id: prouduct.id,
-            img: prouduct.img,
-            category: prouduct.category,
-            product: prouduct.productName,
-            price: prouduct.price,
+            id: product.id,
+            img: product.img,
+            category: product.category,
+            product: product.productName,
+            price: product.price,
           },
         });
       }
@@ -132,21 +134,28 @@ exports.renderFormEdit = async (req, res, next) => {
 };
 
 // Function Put Edit Form Product
-exports.EditProduct = (req, res, next) => {
-  const getIndexProduct = product.findIndex(
-    (items) => items.id === Number(req.params.id)
+exports.EditProduct = async (req, res, next) => {
+  const id = Number(req.params.id);
+  const { product, price, category } = req.body;
+  const { path } = req.file;
+  // Function Get Detail By ID and remove Image From Assets
+  await db.pool.query(
+    'SELECT * FROM public."ListProduct" WHERE id = $1',
+    [id],
+    (err, response) => {
+      const [product] = response?.rows || {};
+      fs.unlink(product.img);
+    }
   );
-  console.log("getIndexProduct =>", getIndexProduct);
 
-  product[getIndexProduct] = {
-    id: req.params.id,
-    img: req.body.image,
-    category: req.body.category,
-    productName: req.body.product,
-    price: req.body.price,
-  };
-
-  res.redirect("/admin/list");
+  // Function Edit Product
+  await db.pool.query(
+    'UPDATE public."ListProduct" SET "productName" = $1, category = $2, img = $3, price = $4, "createdDate" = $5, "modifiedDate" = $6 WHERE id = $7 RETURNING *;',
+    [product, category, path, price, date, date, id],
+    (err, response) => {
+      res.redirect("/admin/list");
+    }
+  );
 };
 
 // Delete

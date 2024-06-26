@@ -34,7 +34,7 @@
               class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" 
               type="file"
               name="image"
-              value="<%= item.image || '' %>"
+              value="<%= item.img || '' %>"
               id="uploadImage"
               onchange="PreviewImage()"
             >
@@ -42,7 +42,7 @@
         </div>
         
         <!-- Show Image -->
-        <img id="uploadPreview" class="border-pink-100 border w-full px-4 mb-6" src="#" />
+        <img id="uploadPreview" class="border-pink-100 border w-full px-4 mb-6" src="<% if(item.id){ %>/<%= item.img || '' %><% } else{ %>#<% } %>" />
         <!-- End Show Image -->
          
         <div class="flex flex-wrap mb-6">

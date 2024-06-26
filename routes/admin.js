@@ -37,7 +37,11 @@ router.post("/delete-product", adminController.deleteProduct);
 router.get("/edit-product/:id", adminController.renderFormEdit);
 
 // Function Post Edit Product
-router.post("/edit-product/:id", adminController.EditProduct);
+router.post(
+  "/edit-product/:id",
+  upload.single("image"),
+  adminController.EditProduct
+);
 
 // Function Show Graph
 router.get("/report-selling", adminController.showGraph);
