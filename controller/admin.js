@@ -159,11 +159,15 @@ exports.EditProduct = async (req, res, next) => {
 };
 
 // Delete
-exports.deleteProduct = (req, res, next) => {
-  const products = product.filter((items) => items.id !== Number(req.body.id));
-  console.log(products);
-  product = products;
-  res.redirect("/admin/list");
+exports.deleteProduct = async (req, res, next) => {
+  const id = req.body.id;
+  await db.pool.query(
+    'DELETE FROM public."ListProduct" WHERE id = $1;',
+    [id],
+    (err, response) => {
+      res.redirect("/admin/list");
+    }
+  );
 };
 
 // Report Selling
