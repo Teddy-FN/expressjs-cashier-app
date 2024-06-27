@@ -1,5 +1,5 @@
 <div
-  class="w-full bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl"
+  class="w-full bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl h-fit"
 >
   <img
     src="/<%= item.img %>"
@@ -20,6 +20,7 @@
     <div class="flex items-center justify-between my-4">
       <button
         class="bg-green-700 w-full text-base font-bold text-white px-4 py-2 rounded-md hover:bg-yellow-300 duration-200"
+        onclick="toggle_visibility('contact-checkout')"
       >
         Add Cart
       </button>
@@ -47,3 +48,42 @@
     <% } %>
   </div>
 </div>
+
+
+<footer class="fixed z-10 overflow-y-auto top-0 w-full left-0 hidden" id="contact-checkout">
+  <div class="flex items-center justify-center min-height-100vh pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+    <div class="fixed inset-0 transition-opacity">
+          <div class="absolute inset-0 bg-gray-900 opacity-75" />
+        </div>
+    <span class="hidden sm:inline-block sm:align-middle sm:h-screen">&#8203;</span>
+    <div class="inline-block align-center bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full" role="dialog" aria-modal="true" aria-labelledby="modal-headline">
+          <form action="admin/add-cart/" method="post">
+            <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+              <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="count">
+                Banyak Jumlah
+              </label>
+              <input 
+                class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" 
+                id="count" 
+                type="number" 
+                name="count"
+              >
+            </div>
+
+            <div class="bg-gray-200 px-4 py-3 text-right">
+              <button type="button" class="py-2 px-4 bg-gray-500 text-white rounded hover:bg-gray-700 mr-2" onclick="toggle_visibility('contact-checkout')"><i class="fas fa-times"></i> Batal</button>
+              <button type="button" class="py-2 px-4 bg-blue-500 text-white rounded font-medium hover:bg-blue-700 mr-2 transition duration-500"><i class="fas fa-plus"></i> Pesan</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </footer>
+
+<script>
+  function toggle_visibility(id) {
+    var e = document.getElementById(id);
+
+    if (e.style.display == "block") e.style.display = "none";
+    else e.style.display = "block";
+  }
+</script>
