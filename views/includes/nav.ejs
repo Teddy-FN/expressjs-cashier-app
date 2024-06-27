@@ -14,11 +14,6 @@
         class="py-4 px-2 font-semibold <% if(onPage === navigationActive.list){ %>text-green-500 border-b-4 border-green-500<% } else{ %>text-gray-500 hover:text-green-500 transition duration-300<% } %>"
         >List Product</a
       >
-      <a
-        href="<%= urlNavigation.cart %>"
-        class="py-4 px-2 font-semibold <% if(onPage === navigationActive.cart){ %>text-green-500 border-b-4 border-green-500<% } else{ %>text-gray-500 hover:text-green-500 transition duration-300<% } %>"
-        >Cart</a
-      >
       <% if(admin){ %>
       <a
         href="<%= urlNavigation.addProduct || urlNavigation.editProduct %>"
@@ -61,25 +56,18 @@
           >List Product</a
         >
       </li>
-      <li>
-        <a
-        href="<%= urlNavigation.cart %>"
-        class="block text-sm py-4 px-2 font-semibold <% if(onPage === navigationActive.cart){ %>text-white bg-green-500 font-semibold<% } else{ %>''<% } %>"
-          >Cart</a
-        >
-      </li>
       <% if(admin){ %>
       <li>
         <a
-        href="<%= urlNavigation.addProduct || urlNavigation.editProduct %>"
-        class="block text-sm py-4 px-2 font-semibold <% if(onPage === navigationActive.addProduct || onPage === navigationActive.editProduct){ %>text-white bg-green-500 font-semibold<% } else{ %>''<% } %>"
+          href="<%= urlNavigation.addProduct || urlNavigation.editProduct %>"
+          class="block text-sm py-4 px-2 font-semibold <% if(onPage === navigationActive.addProduct || onPage === navigationActive.editProduct){ %>text-white bg-green-500 font-semibold<% } else{ %>''<% } %>"
           >Add Product</a
         >
       </li>
       <li>
         <a
-        href="<%= urlNavigation.reportSelling %>"
-        class="block text-sm py-4 px-2 font-semibold <% if(onPage === navigationActive.reportSelling){ %>text-white bg-green-500 font-semibold<% } else{ %>''<% } %>"
+          href="<%= urlNavigation.reportSelling %>"
+          class="block text-sm py-4 px-2 font-semibold <% if(onPage === navigationActive.reportSelling){ %>text-white bg-green-500 font-semibold<% } else{ %>''<% } %>"
           >Report Selling</a
         >
       </li>

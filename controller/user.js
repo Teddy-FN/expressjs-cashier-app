@@ -6,10 +6,13 @@ exports.user = async (req, res, next) => {
     (err, response) => {
       console.log("response =>", response?.rows);
       if (res.statusCode === 200) {
-        res.render("admin/home.ejs", {
+        res.render("home.ejs", {
           pageTitle: "Admin Page",
           prod: response?.rows,
           admin: false,
+          // New
+          name: "test",
+          // End New
           url: req.protocol + "://" + req.header.host,
           onPage: "list",
           navigationActive: {
