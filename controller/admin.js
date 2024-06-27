@@ -14,33 +14,45 @@ const dataGraph = {
 };
 
 exports.home = async (req, res, next) => {
+  var getDataTotal = null;
+
+  console.log("getDataTotal =>", getDataTotal);
+
   return await db.pool.query(
     'SELECT * FROM public."ListProduct"',
-    (err, response) => {
-      console.log("response =>", response?.rows);
-      if (res.statusCode === 200) {
-        res.render("admin/home.ejs", {
-          pageTitle: "Admin Page",
-          prod: response?.rows,
-          admin: true,
-          url: req.protocol + "://" + req.header.host,
-          onPage: "list",
-          navigationActive: {
-            list: "list",
-            cart: "cart",
-            addProduct: "add-product",
-            editProduct: "edit-product",
-            reportSelling: "report-selling",
-          },
-          urlNavigation: {
-            list: "/admin/list",
-            cart: "/admin/cart",
-            addProduct: "/admin/add-product",
-            editProduct: "/admin/edit-product",
-            reportSelling: "/admin/report-selling",
-          },
-        });
-      }
+    (err, responseProd) => {
+      return db.pool.query(
+        'SELECT * FROM public."Cart" ORDER BY id ASC',
+        (err, responseCart) => {
+          if (res.statusCode === 200) {
+            res.render("home.ejs", {
+              pageTitle: "Admin Page",
+              prod: responseProd?.rows,
+              cart: responseCart.rows,
+              admin: true,
+              url: req.protocol + "://" + req.header.host,
+              // New
+              name: "test",
+              // End New
+              onPage: "list",
+              navigationActive: {
+                list: "list",
+                cart: "cart",
+                addProduct: "add-product",
+                editProduct: "edit-product",
+                reportSelling: "report-selling",
+              },
+              urlNavigation: {
+                list: "/admin/list",
+                cart: "/admin/cart",
+                addProduct: "/admin/add-product",
+                editProduct: "/admin/edit-product",
+                reportSelling: "/admin/report-selling",
+              },
+            });
+          }
+        }
+      );
     }
   );
 };
