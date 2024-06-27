@@ -13,9 +13,6 @@ const dataGraph = {
   },
 };
 
-// Models
-const AdminModels = require("../model/admin");
-
 exports.home = async (req, res, next) => {
   return await db.pool.query(
     'SELECT * FROM public."ListProduct"',
