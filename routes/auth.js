@@ -29,6 +29,10 @@ router.post("/login", (req, res, next) => {
 // Logout
 router.post("/logout", (req, res, next) => {
   console.log("req.body =>", req.body);
+  localStorage.removeItem("userName");
+  localStorage.removeItem("id");
+  localStorage.removeItem("password");
+  localStorage.removeItem("role");
   return res.redirect("/");
 });
 
