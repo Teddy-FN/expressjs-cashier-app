@@ -2,23 +2,38 @@ const express = require("express");
 
 const router = express.Router();
 
+// Contollers
+const authController = require("../controller/auth");
+
 // Form Login
 router.get("/", (req, res, next) => {
   res.render("login.ejs", {
     pageTitle: "Login",
     url: req.protocol + "://" + req.header.host,
+    error: "",
   });
 });
 
 // Login Post
-router.post("/login", (req, res, next) => {
-  const { body } = req;
+router.post("/login", authController.login);
 
-  if (body.username === "admin" && body.password === "123") {
-    return res.redirect("/admin/list");
-  } else {
-    return res.redirect("/user/list");
-  }
+// Login With Error
+router.post("/login", (req, res, next) => {
+  res.render("login.ejs", {
+    pageTitle: "Login",
+    url: req.protocol + "://" + req.header.host,
+    error: "Error Invalid User",
+  });
+});
+
+// Logout
+router.post("/logout", (req, res, next) => {
+  console.log("req.body =>", req.body);
+  localStorage.removeItem("userName");
+  localStorage.removeItem("id");
+  localStorage.removeItem("password");
+  localStorage.removeItem("role");
+  return res.redirect("/");
 });
 
 module.exports = router;

@@ -39,6 +39,11 @@
             />
           </div>
         </form>
+        <% if(error.length > 0){ %>
+          <div class="p-4 bg-red-200 text-center">
+            <h1 class="text-red-700"><%= error %></h1>
+          </div>
+        <% } %>
         <footer>
           <a
             class="text-indigo-700 hover:text-pink-700 text-sm float-left"
