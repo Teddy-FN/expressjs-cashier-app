@@ -153,7 +153,7 @@ exports.EditProduct = async (req, res, next) => {
     [id],
     (err, response) => {
       const [product] = response?.rows || {};
-      fs.unlink(product.img);
+      // fs.unlink(product.img);
     }
   );
 

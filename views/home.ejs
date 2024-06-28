@@ -113,8 +113,9 @@
           </div>
         <% }) %>
       </div>
-      <div class="container mx-auto grid gap-4 flex-[0.5] border border-slate-700 overflow-scroll">
-        <ul class="p-8">  
+      <div class="container mx-auto flex-[0.5] border border-slate-700 overflow-scroll flex flex-col justify-between p-8">
+        <!-- List Cart -->
+        <ul>  
           <% cart.forEach(function(item, index) {%>
             <li class="flex bg-white p-5 rounded-lg shadow-lg mb-5">
               <div class="flex-grow flex flex-col md:flex-row items-center justify-center md:justify-between">
@@ -128,6 +129,11 @@
             </li>  
           <% }) %>
         </ul>
+
+
+        <form action="/cart/invoice" method="post" class="px-4">
+          <button class="bg-green-700 w-full text-base font-bold text-white py-2 rounded-md hover:bg-yellow-300 duration-200">Add Cart</button>
+        </form>
       </div>
     </main>
     <footer class="fixed z-10 overflow-y-auto top-0 w-full left-0 hidden" id="contact-popup">
