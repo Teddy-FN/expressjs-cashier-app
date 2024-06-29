@@ -17,7 +17,7 @@
             <img
               src="/<%= item.img %>"
               alt="<%= item.productName %>"
-              class="object-cover rounded-t-xl"
+              class="object-cover rounded-t-xl h-40 w-full"
             />
 
             <div class="px-4 py-3">
@@ -85,8 +85,6 @@
                     <button class="bg-green-700 w-full text-base font-bold text-white px-4 py-2 rounded-md hover:bg-yellow-300 duration-200">Add Cart</button>
                   </div>
                 </form>
-
-                
               </div>
               <% if(admin){ %>
               <div class="flex items-center justify-between my-4">
@@ -130,9 +128,7 @@
               </div>
 
               <div class="flex justify-end gap-4">
-                <form action="/cart/edit-cart/<%= item.id %>/<%= item.userId %>/<%= item.userName %>" method="post">
-                  <button class="bg-green-700 text-base font-bold text-white p-2 rounded-md hover:bg-yellow-300 duration-200">Edit Item</button>
-                </form>
+                <button class="bg-green-700 text-base font-bold text-white p-2 rounded-md hover:bg-yellow-300 duration-200" onclick="toggle_visibility_edit_cart('edit-popup', '<%= item.id %>', '<%= item.productName %>', '<%= item.price %>', '<%= item.count %>')">Edit Item</button>
                 <form action="/cart/delete-cart/<%= item.id %>/<%= item.userId %>/<%= item.userName %>" method="post">
                   <button class="bg-green-700 text-base font-bold text-white p-2 rounded-md hover:bg-yellow-300 duration-200">Delete Item</button>
                 </form>
@@ -147,7 +143,9 @@
         </form>
       </div>
     </main>
-    <footer class="fixed z-10 overflow-y-auto top-0 w-full left-0 hidden" id="contact-popup">
+    
+    
+    <main class="fixed z-10 overflow-y-auto top-0 w-full left-0 hidden" id="contact-popup">
       <div class="flex items-center justify-center min-height-100vh pt-4 px-4 pb-20 text-center sm:block sm:p-0">
         <div class="fixed inset-0 transition-opacity">
           <div class="absolute inset-0 bg-gray-900 opacity-75" />
@@ -166,12 +164,91 @@
           </div>
         </div>
       </div>
-    </footer>
+    </main>
+
+
+    <main class="fixed z-10 overflow-y-auto top-0 w-full left-0 hidden" id="edit-popup">
+      <div class="flex items-center justify-center min-height-100vh pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+        <div class="fixed inset-0 transition-opacity">
+          <div class="absolute inset-0 bg-gray-900 opacity-75" />
+        </div>
+        <span class="hidden sm:inline-block sm:align-middle sm:h-screen">&#8203;</span>
+        <div class="inline-block align-center bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full" role="dialog" aria-modal="true" aria-labelledby="modal-headline">
+          <form action="/cart/edit-cart" method="post" class="p-4" id="edit-cart">
+            <div class="w-full mb-6 md:mb-0 hidden">
+              <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="idEditCart">id</label>
+              <input 
+                class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" 
+                id="idEditCart" 
+                type="text" 
+                name="idEditCart"
+                value=""
+              >
+            </div>
+            <div class="w-full mb-6 md:mb-0 hidden">
+              <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="productNameCart">productNameCart</label>
+              <input 
+                class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" 
+                id="productNameCart" 
+                type="text" 
+                name="productNameCart"
+                value=""
+              >
+            </div>
+            <div class="w-full mb-6 md:mb-0 hidden">
+              <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="priceCart">priceCart</label>
+              <input 
+                class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" 
+                id="priceCart" 
+                type="text" 
+                name="priceCart"
+                value=""
+              >
+            </div>
+            <div class="w-full mb-6 md:mb-0 hidden">
+              <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="countCart">countCart</label>
+              <input 
+                class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" 
+                id="countCart" 
+                type="number" 
+                name="countCart"
+                value=""
+              >
+            </div>
+            <div class="w-full mb-6 md:mb-0">
+              <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="countNewCart">Banyak Jumlah</label>
+              <input 
+                class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" 
+                id="countNewCart" 
+                type="number" 
+                name="countNewCart"
+              >
+            </div>
+            <div class="text-right">
+              <button type="button" class="py-2 px-4 bg-gray-500 text-white rounded hover:bg-gray-700 mr-2" onclick="toggle_visibility_edit_cart('edit-popup')"><i class="fas fa-times"></i> Cancel</button>
+              <button type="submit" class="py-2 px-4 bg-blue-500 text-white rounded font-medium hover:bg-blue-700 transition duration-500"><i class="fas fa-plus"></i> Edit</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </main>
 
     <script>
       function toggle_visibility(id) {
          var e = document.getElementById(id);
- 
+         if (e.style.display == "block") e.style.display = "none";
+         else e.style.display = "block";
+       }
+
+
+      function toggle_visibility_edit_cart(id, idCart ,productName, price, count) {
+         var e = document.getElementById(id);
+         let formEditCart = document.getElementById('edit-cart').elements
+         formEditCart.idEditCart.value += idCart
+         formEditCart.productNameCart.value += productName
+         formEditCart.priceCart.value += price
+         formEditCart.countCart.value += count
+         
          if (e.style.display == "block") e.style.display = "none";
          else e.style.display = "block";
        }

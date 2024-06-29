@@ -24,7 +24,7 @@ exports.home = async (req, res, next) => {
             res.render("home.ejs", {
               pageTitle: "Admin Page",
               prod: responseProd?.rows,
-              cart: responseCart.rows,
+              cart: responseCart?.rows,
               admin: true,
               url: req.protocol + "://" + req.header.host,
               // New

@@ -11,6 +11,9 @@ router.post("/add-cart", cartController.Addcart);
 // Delete Cart
 router.post("/delete-cart/:id/:userId/:userName", cartController.deleteCart);
 
+// Edit Cart
+router.post("/edit-cart", cartController.editCart);
+
 // Generate Invoice
 router.post("/invoice:/id/:userId/:userName", cartController.invoice);
 

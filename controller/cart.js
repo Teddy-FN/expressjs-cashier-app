@@ -46,6 +46,11 @@ exports.deleteCart = async (req, res, next) => {
   );
 };
 
+// Edit List In Cart
+exports.editCart = async (req, res, next) => {
+  console.log('REQ =>', req.body);
+};
+
 exports.invoice = async (req, res, next) => {
   console.log("REQ =>", req.body);
   // const SetLocalStorage = require("node-localstorage").LocalStorage;
