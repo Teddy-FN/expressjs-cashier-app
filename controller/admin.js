@@ -14,10 +14,6 @@ const dataGraph = {
 };
 
 exports.home = async (req, res, next) => {
-  var getDataTotal = null;
-
-  console.log("getDataTotal =>", getDataTotal);
-
   return await db.pool.query(
     'SELECT * FROM public."ListProduct"',
     (err, responseProd) => {
