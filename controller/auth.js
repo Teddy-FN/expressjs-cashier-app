@@ -6,20 +6,18 @@ exports.login = (req, res, next) => {
     'SELECT id, "userName", password, role FROM public."User"',
     [],
     (err, response) => {
-      console.log("RESPONSE =>", response);
-      console.log("err =>", err);
-
-      const dataResponse = response.rows.filter(
+      const dataResponse = response?.rows?.filter(
         (items) => items.userName === username && items.password === password
-      )[0];
-      console.log("dataResponse =>", dataResponse);
-      if (dataResponse) {
-        const role =
-          dataResponse.role === "super-admin" || dataResponse.role === "admin";
-        localStorage.setItem("userName", dataResponse.userName);
-        localStorage.setItem("password", dataResponse.password);
-        localStorage.setItem("role", dataResponse.role);
-        localStorage.setItem("id", dataResponse.id);
+      );
+      const [data] = dataResponse || [];
+      if (data) {
+        const role = data.role === "super-admin" || data.role === "admin";
+        const SetLocalStorage = require("node-localstorage").LocalStorage;
+        const localStorage = new SetLocalStorage("./user");
+        localStorage.setItem("userName", data.userName);
+        localStorage.setItem("password", data.password);
+        localStorage.setItem("role", data.role);
+        localStorage.setItem("id", data.id);
         res.redirect(`/${role ? "admin" : "user"}/list`);
       } else {
         return next();
