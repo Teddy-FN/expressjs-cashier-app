@@ -48,9 +48,37 @@ exports.deleteCart = async (req, res, next) => {
 
 // Edit List In Cart
 exports.editCart = async (req, res, next) => {
-  console.log('REQ =>', req.body);
+  console.log("REQ =>", req.body);
+
+  const {
+    idEditCart,
+    productNameCart,
+    priceCart,
+    countCart,
+    countNewCart,
+    getUserId,
+    getUserName,
+  } = req.body;
+
+  // Get All And Filter By ID
+  // return await db.pool.query(
+  //   'UPDATE public."Cart" SET "productName" = $1, category = $2, count = $3, price = $4, "totalPrice" = $5, "userId" = $6, "userName" = $7 WHERE id = $8',
+  //   [
+  //     productName,
+  //     category,
+  //     count,
+  //     price.toString(),
+  //     total.toString(),
+  //     getUserId,
+  //     getUserName,
+  //   ],
+  //   (err, response) => {
+  //     res.redirect("/admin/list");
+  //   }
+  // );
 };
 
+// Checkout Invoice
 exports.invoice = async (req, res, next) => {
   console.log("REQ =>", req.body);
   // const SetLocalStorage = require("node-localstorage").LocalStorage;

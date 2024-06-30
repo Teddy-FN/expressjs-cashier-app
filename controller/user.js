@@ -4,7 +4,6 @@ exports.user = async (req, res, next) => {
   return await db.pool.query(
     'SELECT * FROM public."ListProduct"',
     (err, response) => {
-      console.log("response =>", response?.rows);
       if (res.statusCode === 200) {
         res.render("home.ejs", {
           pageTitle: "Admin Page",
