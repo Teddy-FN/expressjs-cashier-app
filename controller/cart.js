@@ -1,8 +1,6 @@
 // Connect DB
 const db = require("../db");
 
-let totalPrice = 0;
-
 // User Add To Cart
 exports.Addcart = async (req, res, next) => {
   const SetLocalStorage = require("node-localstorage").LocalStorage;
@@ -54,28 +52,34 @@ exports.editCart = async (req, res, next) => {
     idEditCart,
     productNameCart,
     priceCart,
-    countCart,
     countNewCart,
     getUserId,
     getUserName,
+    getCategory,
   } = req.body;
 
+  const priceNumber = Number(priceCart);
+  const countNumber = Number(countNewCart);
+
+  const total = priceNumber * countNumber;
+
   // Get All And Filter By ID
-  // return await db.pool.query(
-  //   'UPDATE public."Cart" SET "productName" = $1, category = $2, count = $3, price = $4, "totalPrice" = $5, "userId" = $6, "userName" = $7 WHERE id = $8',
-  //   [
-  //     productName,
-  //     category,
-  //     count,
-  //     price.toString(),
-  //     total.toString(),
-  //     getUserId,
-  //     getUserName,
-  //   ],
-  //   (err, response) => {
-  //     res.redirect("/admin/list");
-  //   }
-  // );
+  return await db.pool.query(
+    'UPDATE public."Cart" SET "productName" = $1, category = $2, count = $3, price = $4, "totalPrice" = $5, "userId" = $6, "userName" = $7 WHERE id = $8',
+    [
+      productNameCart,
+      getCategory,
+      countNewCart,
+      priceCart.toString(),
+      total.toString(),
+      getUserId,
+      getUserName,
+      idEditCart,
+    ],
+    (err, response) => {
+      res.redirect("/admin/list");
+    }
+  );
 };
 
 // Checkout Invoice
