@@ -271,7 +271,8 @@
        }
 
 
-      function toggle_visibility_edit_cart(id, idCart ,productName, price, count, getUserId, getUserName) {
+      function toggle_visibility_edit_cart(id, idCart ,productName, price, count, getUserId, getUserName, getCategory) {
+        console.log('getCategory =>', getCategory);
          var e = document.getElementById(id);
          let formEditCart = document.getElementById('edit-cart').elements
          formEditCart.idEditCart.value += idCart
