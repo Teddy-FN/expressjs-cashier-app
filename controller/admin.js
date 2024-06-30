@@ -93,7 +93,6 @@ exports.postAddProduct = async (req, res, next) => {
     'INSERT INTO public."ListProduct"("productName", category, img, price, "createdDate", "modifiedDate") VALUES ($1, $2, $3, $4, $5, $6)',
     [product, category, path, price, date, date]
   );
-  console.log("postData =>", postData);
   res.redirect("/admin/list");
 };
 
@@ -104,7 +103,6 @@ exports.renderFormEdit = async (req, res, next) => {
     [req.params.id],
     (err, response) => {
       const [product] = response?.rows || {};
-      console.log("renderFormEdit", product);
       if (res.statusCode === 200) {
         res.render("admin/formProduct.ejs", {
           pageTitle: "Edit Product",

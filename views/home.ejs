@@ -128,7 +128,7 @@
               </div>
 
               <div class="flex justify-end gap-4">
-                <button class="bg-green-700 text-base font-bold text-white p-2 rounded-md hover:bg-yellow-300 duration-200" onclick="toggle_visibility_edit_cart('edit-popup', '<%= item.id %>', '<%= item.productName %>', '<%= item.price %>', '<%= item.count %>')">Edit Item</button>
+                <button class="bg-green-700 text-base font-bold text-white p-2 rounded-md hover:bg-yellow-300 duration-200" onclick="toggle_visibility_edit_cart('edit-popup', '<%= item.id %>', '<%= item.productName %>', '<%= item.price %>', '<%= item.count %>', '<%= item.userId %>', '<%= item.userName %>', '<%= item.category %>')">Edit Item</button>
                 <form action="/cart/delete-cart/<%= item.id %>/<%= item.userId %>/<%= item.userName %>" method="post">
                   <button class="bg-green-700 text-base font-bold text-white p-2 rounded-md hover:bg-yellow-300 duration-200">Delete Item</button>
                 </form>
@@ -215,6 +215,36 @@
                 value=""
               >
             </div>
+            <div class="w-full mb-6 md:mb-0 hidden">
+              <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="getUserId">getUserId</label>
+              <input 
+                class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" 
+                id="getUserId" 
+                type="number" 
+                name="getUserId"
+                value=""
+              >
+            </div>
+            <div class="w-full mb-6 md:mb-0 hidden">
+              <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="getUserName">getUserName</label>
+              <input 
+                class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" 
+                id="getUserName" 
+                type="text" 
+                name="getUserName"
+                value=""
+              >
+            </div>
+            <div class="w-full mb-6 md:mb-0 hidden">
+              <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="getCategory">getCategory</label>
+              <input 
+                class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" 
+                id="getCategory" 
+                type="text" 
+                name="getCategory"
+                value=""
+              >
+            </div>
             <div class="w-full mb-6 md:mb-0">
               <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="countNewCart">Banyak Jumlah</label>
               <input 
@@ -241,13 +271,16 @@
        }
 
 
-      function toggle_visibility_edit_cart(id, idCart ,productName, price, count) {
+      function toggle_visibility_edit_cart(id, idCart ,productName, price, count, getUserId, getUserName) {
          var e = document.getElementById(id);
          let formEditCart = document.getElementById('edit-cart').elements
          formEditCart.idEditCart.value += idCart
          formEditCart.productNameCart.value += productName
          formEditCart.priceCart.value += price
          formEditCart.countCart.value += count
+         formEditCart.getUserId.value += getUserId
+         formEditCart.getUserName.value += getUserName
+         formEditCart.getCategory.value += getCategory
          
          if (e.style.display == "block") e.style.display = "none";
          else e.style.display = "block";

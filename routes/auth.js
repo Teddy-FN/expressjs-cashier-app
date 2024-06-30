@@ -28,7 +28,6 @@ router.post("/login", (req, res, next) => {
 
 // Logout
 router.post("/logout", (req, res, next) => {
-  console.log("req.body =>", req.body);
   const SetLocalStorage = require("node-localstorage").LocalStorage;
   const localStorage = new SetLocalStorage("./user");
   localStorage.removeItem("userName");
