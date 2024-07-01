@@ -85,25 +85,17 @@ exports.editCart = async (req, res, next) => {
 // Checkout Invoice
 exports.invoice = async (req, res, next) => {
   console.log("REQ =>", req.body);
-  // const SetLocalStorage = require("node-localstorage").LocalStorage;
-  // const localStorage = new SetLocalStorage("./user");
-  // const getUserName = localStorage.getItem("userName");
-  // const getUserId = localStorage.getItem("id");
-  // const getUserPassword = localStorage.getItem("password");
-  // const getUserRole = localStorage.getItem("role");
+  const SetLocalStorage = require("node-localstorage").LocalStorage;
+  const localStorage = new SetLocalStorage("./user");
+  const getUserId = localStorage.getItem("id");
+  console.log("getUserId =>", getUserId);
+  console.log("getUstypoferId =>", typeof getUserId);
 
-  // const { category, price, productName, count } = req.body;
-
-  // const priceNumber = Number(price);
-  // const countNumber = Number(count);
-
-  // totalPrice = priceNumber * countNumber;
-
-  // await db.pool.query(
-  //   'INSERT INTO public."Cart"("productName", category, count, price, "totalPrice") VALUES ($1, $2, $3, $4, $5)',
-  //   [productName, category, count, price, total.toString()],
-  //   (err, response) => {
-  //     res.redirect("/admin/list");
-  //   }
-  // );
+  await db.pool.query(
+    'SELECT * FROM public."Cart" WHERE ("userId" = $1)',
+    [Number(getUserId)],
+    async (err, response) => {
+      console.log("RESPONSE =>", response);
+    }
+  );
 };
