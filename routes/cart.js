@@ -15,6 +15,6 @@ router.post("/delete-cart/:id/:userId/:userName", cartController.deleteCart);
 router.post("/edit-cart", cartController.editCart);
 
 // Generate Invoice
-router.post("/invoice:/id/:userId/:userName", cartController.invoice);
+router.post("/invoice", cartController.invoice);
 
 module.exports = router;
