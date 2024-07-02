@@ -7,109 +7,265 @@
       navigationActive: navigationActive,
       urlNavigation: urlNavigation,
     }) %>
-    <main class="flex justify-between px-4 gap-10 h-screen my-10">
-      <div class="container mx-auto grid flex-1 grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-4 border border-slate-700 p-4 overflow-scroll">
+    <main class="flex justify-between">
+      <div class="flex-1 flex flex-col gap-10 overflow-hidden">
         <!-- Filter -->
-
-        <!-- Map Product -->
-        <% prod.forEach(function(item) {%>
-          <div class="w-full bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl h-fit">
-            <img
-              src="/<%= item.img %>"
-              alt="<%= item.productName %>"
-              class="object-cover rounded-t-xl h-40 w-full"
-            />
-            <div class="px-4 py-3">
-              <span class="text-gray-400 mr-3 uppercase text-xs"
-                ><%= item.category %></span
-              >
-              <p class="text-lg font-bold text-black truncate block capitalize">
-                <%= item.productName %>
-              </p>
-              <p class="text-lg font-semibold text-black cursor-auto">
-                <%= item.price %>
-              </p>
-              <div class="flex items-center justify-between my-4">
-                <form action="/cart/add-cart/" method="post">
-                  <div class="w-full mb-6 md:mb-0 hidden">
-                    <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="category">Category</label>
-                    <input 
-                      class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" 
-                      id="category" 
-                      type="text" 
-                      name="category"
-                      value="<%= item.category %>"
-                    >
-                  </div>
-                  <div class="w-full mb-6 md:mb-0 hidden">
-                    <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="price">Price</label>
-                    <input 
-                      class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" 
-                      id="price" 
-                      type="text" 
-                      name="price"
-                      value="<%= item.price %>"
-                    >
-                  </div>
-                  <div class="w-full mb-6 md:mb-0 hidden">
-                    <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="productName">Product Name</label>
-                    <input 
-                      class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" 
-                      id="productName" 
-                      type="text" 
-                      name="productName"
-                      value="<%= item.productName %>"
-                    >
-                  </div>
-                  <div class="w-full mb-6 md:mb-0 hidden">
-                    <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="id">ID</label>
-                    <input 
-                      class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" 
-                      id="id" 
-                      type="number" 
-                      name="id"
-                      value="<%= item.id %>"
-                    >
-                  </div>
-                  <div class="w-full mb-6 md:mb-0">
-                    <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="count">Banyak Jumlah</label>
-                    <input 
-                      class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" 
-                      id="count" 
-                      type="number" 
-                      name="count"
-                    >
-                  </div>
-                  <div class="py-3 w-full">
-                    <button class="bg-green-700 w-full text-base font-bold text-white px-4 py-2 rounded-md hover:bg-yellow-300 duration-200">Add Cart</button>
-                  </div>
-                </form>
+        <div class="container grid grid-flow-col gap-4 overflow-y-scroll px-4 no-scrollbar">
+          <div class="group col-span-1 cursor-pointer">
+            <div class="flex w-full flex-col gap-2">
+              <div class="relative aspect-square w-full overflow-hidden rounded-xl">
+                <img src="https://picsum.photos/1000/1000?4" class="h-full w-full object-cover transition group-hover:scale-110" />
+                <div class="absolute right-3 top-3">
+                  <HeartButton>HeartButton</HeartButton>
+                </div>
               </div>
-              <% if(admin){ %>
-              <div class="flex items-center justify-between my-4">
-                <a href="/admin/edit-product/<%= item.id %>" class="btn">
-                  <button
-                    class="bg-red-700 w-full text-base font-bold text-white px-4 py-2 rounded-md hover:bg-green-300 duration-200"
-                    type="submit"
-                  >
-                    Edit
-                  </button>
-                </a>
-                <form action="/admin/delete-product" method="POST">
-                  <input type="text" hidden value="<%= item.id %>" name="id" />
-                  <button
-                    class="bg-red-700 text-base font-bold text-white px-4 py-2 rounded-md hover:bg-green-300 duration-200"
-                    type="submit"
-                  >
-                    Delete
-                  </button>
-                </form>
+              <div class="text-lg font-semibold" style="color: white">{reservationDate || data.title}</div>
+              <div class="font-light text-neutral-500">{location?.region}, {location?.label}</div>
+              <div class="flex flex-row items-center gap-1">
+                <div class="font-semibold">Rp. {price}</div>
               </div>
-              <% } %>
             </div>
           </div>
-        <% }) %>
+          <div class="group col-span-1 cursor-pointer">
+            <div class="flex w-full flex-col gap-2">
+              <div class="relative aspect-square w-full overflow-hidden rounded-xl">
+                <img src="https://picsum.photos/1000/1000?4" class="h-full w-full object-cover transition group-hover:scale-110" />
+                <div class="absolute right-3 top-3">
+                  <HeartButton>HeartButton</HeartButton>
+                </div>
+              </div>
+              <div class="text-lg font-semibold" style="color: white">{reservationDate || data.title}</div>
+              <div class="font-light text-neutral-500">{location?.region}, {location?.label}</div>
+              <div class="flex flex-row items-center gap-1">
+                <div class="font-semibold">Rp. {price}</div>
+              </div>
+            </div>
+          </div>
+          <div class="group col-span-1 cursor-pointer">
+            <div class="flex w-full flex-col gap-2">
+              <div class="relative aspect-square w-full overflow-hidden rounded-xl">
+                <img src="https://picsum.photos/1000/1000?4" class="h-full w-full object-cover transition group-hover:scale-110" />
+                <div class="absolute right-3 top-3">
+                  <HeartButton>HeartButton</HeartButton>
+                </div>
+              </div>
+              <div class="text-lg font-semibold" style="color: white">{reservationDate || data.title}</div>
+              <div class="font-light text-neutral-500">{location?.region}, {location?.label}</div>
+              <div class="flex flex-row items-center gap-1">
+                <div class="font-semibold">Rp. {price}</div>
+              </div>
+            </div>
+          </div>
+          <div class="group col-span-1 cursor-pointer">
+            <div class="flex w-full flex-col gap-2">
+              <div class="relative aspect-square w-full overflow-hidden rounded-xl">
+                <img src="https://picsum.photos/1000/1000?4" class="h-full w-full object-cover transition group-hover:scale-110" />
+                <div class="absolute right-3 top-3">
+                  <HeartButton>HeartButton</HeartButton>
+                </div>
+              </div>
+              <div class="text-lg font-semibold" style="color: white">{reservationDate || data.title}</div>
+              <div class="font-light text-neutral-500">{location?.region}, {location?.label}</div>
+              <div class="flex flex-row items-center gap-1">
+                <div class="font-semibold">Rp. {price}</div>
+              </div>
+            </div>
+          </div>
+          <div class="group col-span-1 cursor-pointer">
+            <div class="flex w-full flex-col gap-2">
+              <div class="relative aspect-square w-full overflow-hidden rounded-xl">
+                <img src="https://picsum.photos/1000/1000?4" class="h-full w-full object-cover transition group-hover:scale-110" />
+                <div class="absolute right-3 top-3">
+                  <HeartButton>HeartButton</HeartButton>
+                </div>
+              </div>
+              <div class="text-lg font-semibold" style="color: white">{reservationDate || data.title}</div>
+              <div class="font-light text-neutral-500">{location?.region}, {location?.label}</div>
+              <div class="flex flex-row items-center gap-1">
+                <div class="font-semibold">Rp. {price}</div>
+              </div>
+            </div>
+          </div>
+          <div class="group col-span-1 cursor-pointer">
+            <div class="flex w-full flex-col gap-2">
+              <div class="relative aspect-square w-full overflow-hidden rounded-xl">
+                <img src="https://picsum.photos/1000/1000?4" class="h-full w-full object-cover transition group-hover:scale-110" />
+                <div class="absolute right-3 top-3">
+                  <HeartButton>HeartButton</HeartButton>
+                </div>
+              </div>
+              <div class="text-lg font-semibold" style="color: white">{reservationDate || data.title}</div>
+              <div class="font-light text-neutral-500">{location?.region}, {location?.label}</div>
+              <div class="flex flex-row items-center gap-1">
+                <div class="font-semibold">Rp. {price}</div>
+              </div>
+            </div>
+          </div>
+          <div class="group col-span-1 cursor-pointer">
+            <div class="flex w-full flex-col gap-2">
+              <div class="relative aspect-square w-full overflow-hidden rounded-xl">
+                <img src="https://picsum.photos/1000/1000?4" class="h-full w-full object-cover transition group-hover:scale-110" />
+                <div class="absolute right-3 top-3">
+                  <HeartButton>HeartButton</HeartButton>
+                </div>
+              </div>
+              <div class="text-lg font-semibold" style="color: white">{reservationDate || data.title}</div>
+              <div class="font-light text-neutral-500">{location?.region}, {location?.label}</div>
+              <div class="flex flex-row items-center gap-1">
+                <div class="font-semibold">Rp. {price}</div>
+              </div>
+            </div>
+          </div>
+          <div class="group col-span-1 cursor-pointer">
+            <div class="flex w-full flex-col gap-2">
+              <div class="relative aspect-square w-full overflow-hidden rounded-xl">
+                <img src="https://picsum.photos/1000/1000?4" class="h-full w-full object-cover transition group-hover:scale-110" />
+                <div class="absolute right-3 top-3">
+                  <HeartButton>HeartButton</HeartButton>
+                </div>
+              </div>
+              <div class="text-lg font-semibold" style="color: white">{reservationDate || data.title}</div>
+              <div class="font-light text-neutral-500">{location?.region}, {location?.label}</div>
+              <div class="flex flex-row items-center gap-1">
+                <div class="font-semibold">Rp. {price}</div>
+              </div>
+            </div>
+          </div>
+          <div class="group col-span-1 cursor-pointer">
+            <div class="flex w-full flex-col gap-2">
+              <div class="relative aspect-square w-full overflow-hidden rounded-xl">
+                <img src="https://picsum.photos/1000/1000?4" class="h-full w-full object-cover transition group-hover:scale-110" />
+                <div class="absolute right-3 top-3">
+                  <HeartButton>HeartButton</HeartButton>
+                </div>
+              </div>
+              <div class="text-lg font-semibold" style="color: white">{reservationDate || data.title}</div>
+              <div class="font-light text-neutral-500">{location?.region}, {location?.label}</div>
+              <div class="flex flex-row items-center gap-1">
+                <div class="font-semibold">Rp. {price}</div>
+              </div>
+            </div>
+          </div>
+          <div class="group col-span-1 cursor-pointer">
+            <div class="flex w-full flex-col gap-2">
+              <div class="relative aspect-square w-full overflow-hidden rounded-xl">
+                <img src="https://picsum.photos/1000/1000?4" class="h-full w-full object-cover transition group-hover:scale-110" />
+                <div class="absolute right-3 top-3">
+                  <HeartButton>HeartButton</HeartButton>
+                </div>
+              </div>
+              <div class="text-lg font-semibold" style="color: white">{reservationDate || data.title}</div>
+              <div class="font-light text-neutral-500">{location?.region}, {location?.label}</div>
+              <div class="flex flex-row items-center gap-1">
+                <div class="font-semibold">Rp. {price}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        
+        <!-- Map Product -->
+        <div class="container mx-auto grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-4 border border-slate-700 p-4">
+          <% prod.forEach(function(item) {%>
+            <div class="w-full bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl h-fit">
+              <img
+                src="/<%= item.img %>"
+                alt="<%= item.productName %>"
+                class="object-cover rounded-t-xl h-40 w-full"
+              />
+              <div class="px-4 py-3">
+                <span class="text-gray-400 mr-3 uppercase text-xs"
+                  ><%= item.category %></span
+                >
+                <p class="text-lg font-bold text-black truncate block capitalize">
+                  <%= item.productName %>
+                </p>
+                <p class="text-lg font-semibold text-black cursor-auto">
+                  <%= item.price %>
+                </p>
+                <div class="flex items-center justify-between my-4">
+                  <form action="/cart/add-cart/" method="post">
+                    <div class="w-full mb-6 md:mb-0 hidden">
+                      <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="category">Category</label>
+                      <input 
+                        class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" 
+                        id="category" 
+                        type="text" 
+                        name="category"
+                        value="<%= item.category %>"
+                      >
+                    </div>
+                    <div class="w-full mb-6 md:mb-0 hidden">
+                      <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="price">Price</label>
+                      <input 
+                        class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" 
+                        id="price" 
+                        type="text" 
+                        name="price"
+                        value="<%= item.price %>"
+                      >
+                    </div>
+                    <div class="w-full mb-6 md:mb-0 hidden">
+                      <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="productName">Product Name</label>
+                      <input 
+                        class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" 
+                        id="productName" 
+                        type="text" 
+                        name="productName"
+                        value="<%= item.productName %>"
+                      >
+                    </div>
+                    <div class="w-full mb-6 md:mb-0 hidden">
+                      <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="id">ID</label>
+                      <input 
+                        class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" 
+                        id="id" 
+                        type="number" 
+                        name="id"
+                        value="<%= item.id %>"
+                      >
+                    </div>
+                    <div class="w-full mb-6 md:mb-0">
+                      <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="count">Banyak Jumlah</label>
+                      <input 
+                        class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" 
+                        id="count" 
+                        type="number" 
+                        name="count"
+                      >
+                    </div>
+                    <div class="py-3 w-full">
+                      <button class="bg-green-700 w-full text-base font-bold text-white px-4 py-2 rounded-md hover:bg-yellow-300 duration-200">Add Cart</button>
+                    </div>
+                  </form>
+                </div>
+                <% if(admin){ %>
+                <div class="flex items-center justify-between my-4">
+                  <a href="/admin/edit-product/<%= item.id %>" class="btn">
+                    <button
+                      class="bg-red-700 w-full text-base font-bold text-white px-4 py-2 rounded-md hover:bg-green-300 duration-200"
+                      type="submit"
+                    >
+                      Edit
+                    </button>
+                  </a>
+                  <form action="/admin/delete-product" method="POST">
+                    <input type="text" hidden value="<%= item.id %>" name="id" />
+                    <button
+                      class="bg-red-700 text-base font-bold text-white px-4 py-2 rounded-md hover:bg-green-300 duration-200"
+                      type="submit"
+                    >
+                      Delete
+                    </button>
+                  </form>
+                </div>
+                <% } %>
+              </div>
+            </div>
+          <% }) %>
+        </div>
       </div>
+      <!-- Cart Container -->
       <div class="container mx-auto flex-[0.5] border border-slate-700 overflow-scroll flex flex-col justify-between p-8">
         <!-- List Cart -->
         <ul>  
