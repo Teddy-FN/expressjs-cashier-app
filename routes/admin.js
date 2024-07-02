@@ -19,8 +19,11 @@ const adminController = require("../controller/admin");
 // Import Home Conctoller
 const homeController = require("../controller/home");
 
-// List Home
+// List Home Default
 router.get("/list", homeController.home);
+
+// List Home By Value
+router.post("/filter/:value", homeController.filteringHome);
 
 // Render Form Add Product
 router.get("/add-product", adminController.renderFormAdd);
