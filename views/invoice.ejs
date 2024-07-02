@@ -1,7 +1,6 @@
 <div class="max-w-3xl mx-auto p-6 bg-white rounded shadow-sm" id="invoice">
-  <div class="grid grid-cols-2 items-center">
+  <!-- <div class="grid grid-cols-2 items-center">
     <div>
-      <!--  Company logo  -->
       <img
         src="https://upload.wikimedia.org/wikipedia/commons/f/f1/Vue.png"
         alt="company-logo"
@@ -16,7 +15,7 @@
       <p class="text-gray-500 text-sm mt-1">+41-442341232</p>
       <p class="text-gray-500 text-sm mt-1">VAT: 8657671212</p>
     </div>
-  </div>
+  </div> -->
 
   <!-- Client info -->
   <div class="grid grid-cols-2 items-center mt-8">
@@ -35,11 +34,7 @@
         Invoice number:
         <span class="text-gray-500">INV-2023786123</span>
       </p>
-      <p>
-        Invoice date: <span class="text-gray-500">03/07/2023</span>
-        <br />
-        Due date:<span class="text-gray-500">31/07/2023</span>
-      </p>
+      <p>Invoice date: <span class="text-gray-500"><%= invoiceDate %></span></p>
     </div>
   </div>
 
@@ -47,7 +42,7 @@
 
   <table class="min-w-full">
     <colgroup>
-      <col class="w-full sm:w-1/2" />
+      <col class="sm:w-1/6" />
       <col class="sm:w-1/6" />
       <col class="sm:w-1/6" />
       <col class="sm:w-1/6" />
@@ -58,96 +53,52 @@
           scope="col"
           class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0"
         >
-          Items
+          Pesanan
         </th>
         <th
           scope="col"
           class="hidden px-3 py-3.5 text-right text-sm font-semibold text-gray-900 sm:table-cell"
         >
-          Quantity
+          Jumlah Pesanan
         </th>
         <th
           scope="col"
           class="hidden px-3 py-3.5 text-right text-sm font-semibold text-gray-900 sm:table-cell"
         >
-          Price
+          Harga
         </th>
         <th
           scope="col"
           class="py-3.5 pl-3 pr-4 text-right text-sm font-semibold text-gray-900 sm:pr-0"
         >
-          Amount
+          Total Harga
         </th>
       </tr>
     </thead>
     <tbody>
+      <% cart.forEach(function(item, index) {%>
       <tr class="border-b border-gray-200">
         <td class="max-w-0 py-5 pl-4 pr-3 text-sm sm:pl-0">
-          <div class="font-medium text-gray-900">E-commerce Platform</div>
-          <div class="mt-1 truncate text-gray-500">
-            Laravel based e-commerce platform.
-          </div>
+          <div class="font-medium text-gray-900"><%= item.productName %></div>
         </td>
         <td
           class="hidden px-3 py-5 text-right text-sm text-gray-500 sm:table-cell"
         >
-          500.0
+          <%= item.count %>
         </td>
         <td
           class="hidden px-3 py-5 text-right text-sm text-gray-500 sm:table-cell"
         >
-          $100.00
+          Rp. <%= item.price %>
         </td>
         <td class="py-5 pl-3 pr-4 text-right text-sm text-gray-500 sm:pr-0">
-          $5,000.00
+          Rp. <%= item.totalPrice %>
         </td>
       </tr>
-
-      <tr class="border-b border-gray-200">
-        <td class="max-w-0 py-5 pl-4 pr-3 text-sm sm:pl-0">
-          <div class="font-medium text-gray-900">Frontend Design</div>
-          <div class="mt-1 truncate text-gray-500">
-            Frontend design using Vue.js and Tailwind CSS.
-          </div>
-        </td>
-        <td
-          class="hidden px-3 py-5 text-right text-sm text-gray-500 sm:table-cell"
-        >
-          500.0
-        </td>
-        <td
-          class="hidden px-3 py-5 text-right text-sm text-gray-500 sm:table-cell"
-        >
-          $100.00
-        </td>
-        <td class="py-5 pl-3 pr-4 text-right text-sm text-gray-500 sm:pr-0">
-          $5,000.00
-        </td>
-      </tr>
-      <tr class="border-b border-gray-200">
-        <td class="max-w-0 py-5 pl-4 pr-3 text-sm sm:pl-0">
-          <div class="font-medium text-gray-900">Shop SEO</div>
-          <div class="mt-1 truncate text-gray-500">
-            Website SEO and Social Media marketing.
-          </div>
-        </td>
-        <td
-          class="hidden px-3 py-5 text-right text-sm text-gray-500 sm:table-cell"
-        >
-          50.0
-        </td>
-        <td
-          class="hidden px-3 py-5 text-right text-sm text-gray-500 sm:table-cell"
-        >
-          $100.00
-        </td>
-        <td class="py-5 pl-3 pr-4 text-right text-sm text-gray-500 sm:pr-0">
-          $500.00
-        </td>
-      </tr>
+      <% }) %>
     </tbody>
     <tfoot>
-      <tr>
+      <!-- <tr>
         <th
           scope="row"
           colspan="3"
@@ -164,8 +115,8 @@
         <td class="pl-3 pr-6 pt-6 text-right text-sm text-gray-500 sm:pr-0">
           $10,500.00
         </td>
-      </tr>
-      <tr>
+      </tr> -->
+      <!-- <tr>
         <th
           scope="row"
           colspan="3"
@@ -182,8 +133,8 @@
         <td class="pl-3 pr-6 pt-4 text-right text-sm text-gray-500 sm:pr-0">
           $1,050.00
         </td>
-      </tr>
-      <tr>
+      </tr> -->
+      <!-- <tr>
         <th
           scope="row"
           colspan="3"
@@ -200,7 +151,7 @@
         <td class="pl-3 pr-6 pt-4 text-right text-sm text-gray-500 sm:pr-0">
           - 10%
         </td>
-      </tr>
+      </tr> -->
       <tr>
         <th
           scope="row"
@@ -218,7 +169,7 @@
         <td
           class="pl-3 pr-4 pt-4 text-right text-sm font-semibold text-gray-900 sm:pr-0"
         >
-          $11,550.00
+          <%= totalInvoice %>
         </td>
       </tr>
     </tfoot>
