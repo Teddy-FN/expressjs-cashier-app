@@ -39,7 +39,12 @@ exports.deleteCart = async (req, res, next) => {
     'DELETE FROM public."Cart" WHERE id = $1',
     [Number(id)],
     (err, response) => {
-      res.redirect("/admin/list");
+      const dataResponse = response?.rows?.filter(
+        (items) => items.userName === username && items.password === password
+      );
+      const [data] = dataResponse || [];
+      const role = data.role === "super-admin" || data.role === "admin";
+      res.redirect(`/${role ? "admin" : "user"}/list`);
     }
   );
 };
@@ -58,7 +63,7 @@ exports.editCart = async (req, res, next) => {
     getCategory,
   } = req.body;
 
-  const priceNumber = Number(priceCart);
+  const priceNumber = Number(priceCart.replace("Rp", "").replace(".", ""));
   const countNumber = Number(countNewCart);
 
   const total = priceNumber * countNumber;
@@ -70,7 +75,7 @@ exports.editCart = async (req, res, next) => {
       productNameCart,
       getCategory,
       countNewCart,
-      priceCart.toString(),
+      priceCart.replace("Rp", "").replace(".", ""),
       total.toString(),
       getUserId,
       getUserName,
@@ -84,18 +89,20 @@ exports.editCart = async (req, res, next) => {
 
 // Checkout Invoice
 exports.invoice = async (req, res, next) => {
-  console.log("REQ =>", req.body);
-  const SetLocalStorage = require("node-localstorage").LocalStorage;
-  const localStorage = new SetLocalStorage("./user");
-  const getUserId = localStorage.getItem("id");
-  console.log("getUserId =>", getUserId);
-  console.log("getUstypoferId =>", typeof getUserId);
-
-  await db.pool.query(
-    'SELECT * FROM public."Cart" WHERE ("userId" = $1)',
-    [Number(getUserId)],
-    async (err, response) => {
-      console.log("RESPONSE =>", response);
-    }
-  );
+  // console.log("REQ =>", req.app);
+  // console.log("REQ POST =>", req.app.post());
+  // console.log("REQ POST =>", req.app.post());
+  // const SetLocalStorage = require("node-localstorage").LocalStorage;
+  // const localStorage = new SetLocalStorage("./user");
+  // const getUserId = localStorage.getItem("id");
+  // console.log("getUserId =>", getUserId);
+  // console.log("getUstypoferId =>", typeof getUserId);
+  // await db.pool.query(
+  //   'SELECT * FROM public."Cart" WHERE ("userId" = $1)',
+  //   [Number(getUserId)],
+  //   async (err, response) => {
+  //     res.redirect("/");
+  //     // admin.home(response);
+  //   }
+  // );
 };
