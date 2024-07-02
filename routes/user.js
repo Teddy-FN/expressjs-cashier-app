@@ -3,8 +3,11 @@ const express = require("express");
 const router = express.Router();
 
 // Import Controller User
-const userController = require("../controller/user");
+// const userController = require("../controller/user");
 
-router.use("/list", userController.user);
+// Import Home Controller
+const homeController = require("../controller/home");
+
+router.use("/list", homeController.home);
 
 module.exports = router;

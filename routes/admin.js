@@ -16,9 +16,11 @@ const router = express.Router();
 
 // Import Admin Controller
 const adminController = require("../controller/admin");
+// Import Home Conctoller
+const homeController = require("../controller/home");
 
 // List Home
-router.get("/list", adminController.home);
+router.get("/list", homeController.home);
 
 // Render Form Add Product
 router.get("/add-product", adminController.renderFormAdd);
