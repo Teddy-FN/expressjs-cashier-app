@@ -7,160 +7,29 @@
       navigationActive: navigationActive,
       urlNavigation: urlNavigation,
     }) %>
-    <main class="flex justify-between">
+    <main class="flex justify-between my-8">
       <div class="flex-1 flex flex-col gap-10 overflow-hidden">
         <!-- Filter -->
-        <div class="container grid grid-flow-col gap-4 overflow-y-scroll px-4 no-scrollbar">
-          <div class="group col-span-1 cursor-pointer">
-            <div class="flex w-full flex-col gap-2">
-              <div class="relative aspect-square w-full overflow-hidden rounded-xl">
-                <img src="https://picsum.photos/1000/1000?4" class="h-full w-full object-cover transition group-hover:scale-110" />
-                <div class="absolute right-3 top-3">
-                  <HeartButton>HeartButton</HeartButton>
+        <div class="container flex items-center gap-4 overflow-y-scroll px-4 no-scrollbar">
+          <% filter.forEach(function(item) {%>
+            <div class="group col-span-1 cursor-pointer">
+              <form action="<% if(admin){ %>/admin/filter/<%= item.value %><% } else { %>/user/filter/<%= item.value %><% } %>" method="post" id="edit-cart">
+                <div class="w-full mb-6 md:mb-0 hidden">
+                  <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="filtering">filtering</label>
+                  <input 
+                    class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" 
+                    id="filtering" 
+                    type="text" 
+                    name="filtering"
+                    value="<%= item.value %>"
+                  >
                 </div>
-              </div>
-              <div class="text-lg font-semibold" style="color: white">{reservationDate || data.title}</div>
-              <div class="font-light text-neutral-500">{location?.region}, {location?.label}</div>
-              <div class="flex flex-row items-center gap-1">
-                <div class="font-semibold">Rp. {price}</div>
-              </div>
+                <button type="submit" class="py-2 px-4 bg-blue-500 text-white rounded font-medium hover:bg-blue-700 transition duration-500">
+                  <%= item.name %>
+                </button>
+              </form>
             </div>
-          </div>
-          <div class="group col-span-1 cursor-pointer">
-            <div class="flex w-full flex-col gap-2">
-              <div class="relative aspect-square w-full overflow-hidden rounded-xl">
-                <img src="https://picsum.photos/1000/1000?4" class="h-full w-full object-cover transition group-hover:scale-110" />
-                <div class="absolute right-3 top-3">
-                  <HeartButton>HeartButton</HeartButton>
-                </div>
-              </div>
-              <div class="text-lg font-semibold" style="color: white">{reservationDate || data.title}</div>
-              <div class="font-light text-neutral-500">{location?.region}, {location?.label}</div>
-              <div class="flex flex-row items-center gap-1">
-                <div class="font-semibold">Rp. {price}</div>
-              </div>
-            </div>
-          </div>
-          <div class="group col-span-1 cursor-pointer">
-            <div class="flex w-full flex-col gap-2">
-              <div class="relative aspect-square w-full overflow-hidden rounded-xl">
-                <img src="https://picsum.photos/1000/1000?4" class="h-full w-full object-cover transition group-hover:scale-110" />
-                <div class="absolute right-3 top-3">
-                  <HeartButton>HeartButton</HeartButton>
-                </div>
-              </div>
-              <div class="text-lg font-semibold" style="color: white">{reservationDate || data.title}</div>
-              <div class="font-light text-neutral-500">{location?.region}, {location?.label}</div>
-              <div class="flex flex-row items-center gap-1">
-                <div class="font-semibold">Rp. {price}</div>
-              </div>
-            </div>
-          </div>
-          <div class="group col-span-1 cursor-pointer">
-            <div class="flex w-full flex-col gap-2">
-              <div class="relative aspect-square w-full overflow-hidden rounded-xl">
-                <img src="https://picsum.photos/1000/1000?4" class="h-full w-full object-cover transition group-hover:scale-110" />
-                <div class="absolute right-3 top-3">
-                  <HeartButton>HeartButton</HeartButton>
-                </div>
-              </div>
-              <div class="text-lg font-semibold" style="color: white">{reservationDate || data.title}</div>
-              <div class="font-light text-neutral-500">{location?.region}, {location?.label}</div>
-              <div class="flex flex-row items-center gap-1">
-                <div class="font-semibold">Rp. {price}</div>
-              </div>
-            </div>
-          </div>
-          <div class="group col-span-1 cursor-pointer">
-            <div class="flex w-full flex-col gap-2">
-              <div class="relative aspect-square w-full overflow-hidden rounded-xl">
-                <img src="https://picsum.photos/1000/1000?4" class="h-full w-full object-cover transition group-hover:scale-110" />
-                <div class="absolute right-3 top-3">
-                  <HeartButton>HeartButton</HeartButton>
-                </div>
-              </div>
-              <div class="text-lg font-semibold" style="color: white">{reservationDate || data.title}</div>
-              <div class="font-light text-neutral-500">{location?.region}, {location?.label}</div>
-              <div class="flex flex-row items-center gap-1">
-                <div class="font-semibold">Rp. {price}</div>
-              </div>
-            </div>
-          </div>
-          <div class="group col-span-1 cursor-pointer">
-            <div class="flex w-full flex-col gap-2">
-              <div class="relative aspect-square w-full overflow-hidden rounded-xl">
-                <img src="https://picsum.photos/1000/1000?4" class="h-full w-full object-cover transition group-hover:scale-110" />
-                <div class="absolute right-3 top-3">
-                  <HeartButton>HeartButton</HeartButton>
-                </div>
-              </div>
-              <div class="text-lg font-semibold" style="color: white">{reservationDate || data.title}</div>
-              <div class="font-light text-neutral-500">{location?.region}, {location?.label}</div>
-              <div class="flex flex-row items-center gap-1">
-                <div class="font-semibold">Rp. {price}</div>
-              </div>
-            </div>
-          </div>
-          <div class="group col-span-1 cursor-pointer">
-            <div class="flex w-full flex-col gap-2">
-              <div class="relative aspect-square w-full overflow-hidden rounded-xl">
-                <img src="https://picsum.photos/1000/1000?4" class="h-full w-full object-cover transition group-hover:scale-110" />
-                <div class="absolute right-3 top-3">
-                  <HeartButton>HeartButton</HeartButton>
-                </div>
-              </div>
-              <div class="text-lg font-semibold" style="color: white">{reservationDate || data.title}</div>
-              <div class="font-light text-neutral-500">{location?.region}, {location?.label}</div>
-              <div class="flex flex-row items-center gap-1">
-                <div class="font-semibold">Rp. {price}</div>
-              </div>
-            </div>
-          </div>
-          <div class="group col-span-1 cursor-pointer">
-            <div class="flex w-full flex-col gap-2">
-              <div class="relative aspect-square w-full overflow-hidden rounded-xl">
-                <img src="https://picsum.photos/1000/1000?4" class="h-full w-full object-cover transition group-hover:scale-110" />
-                <div class="absolute right-3 top-3">
-                  <HeartButton>HeartButton</HeartButton>
-                </div>
-              </div>
-              <div class="text-lg font-semibold" style="color: white">{reservationDate || data.title}</div>
-              <div class="font-light text-neutral-500">{location?.region}, {location?.label}</div>
-              <div class="flex flex-row items-center gap-1">
-                <div class="font-semibold">Rp. {price}</div>
-              </div>
-            </div>
-          </div>
-          <div class="group col-span-1 cursor-pointer">
-            <div class="flex w-full flex-col gap-2">
-              <div class="relative aspect-square w-full overflow-hidden rounded-xl">
-                <img src="https://picsum.photos/1000/1000?4" class="h-full w-full object-cover transition group-hover:scale-110" />
-                <div class="absolute right-3 top-3">
-                  <HeartButton>HeartButton</HeartButton>
-                </div>
-              </div>
-              <div class="text-lg font-semibold" style="color: white">{reservationDate || data.title}</div>
-              <div class="font-light text-neutral-500">{location?.region}, {location?.label}</div>
-              <div class="flex flex-row items-center gap-1">
-                <div class="font-semibold">Rp. {price}</div>
-              </div>
-            </div>
-          </div>
-          <div class="group col-span-1 cursor-pointer">
-            <div class="flex w-full flex-col gap-2">
-              <div class="relative aspect-square w-full overflow-hidden rounded-xl">
-                <img src="https://picsum.photos/1000/1000?4" class="h-full w-full object-cover transition group-hover:scale-110" />
-                <div class="absolute right-3 top-3">
-                  <HeartButton>HeartButton</HeartButton>
-                </div>
-              </div>
-              <div class="text-lg font-semibold" style="color: white">{reservationDate || data.title}</div>
-              <div class="font-light text-neutral-500">{location?.region}, {location?.label}</div>
-              <div class="flex flex-row items-center gap-1">
-                <div class="font-semibold">Rp. {price}</div>
-              </div>
-            </div>
-          </div>
+          <% }) %>
         </div>
 
         
