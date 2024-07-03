@@ -28,7 +28,6 @@ exports.home = async (req, res, next) => {
                   let newResponseCart = [];
 
                   responseProd?.rows?.forEach((items) => {
-                    console.log("items =>", items);
                     newProduct.push({
                       ...items,
                       price: new Intl.NumberFormat("id-ID", {
@@ -62,7 +61,6 @@ exports.home = async (req, res, next) => {
                   });
 
                   responseCheckout?.rows?.forEach((prod) => {
-                    console.log("PROD =>", prod);
                     totalInvoice += Number(prod.totalPrice);
                   });
 
@@ -118,7 +116,7 @@ exports.home = async (req, res, next) => {
   );
 };
 
-// When Filter
+// When User Filter
 exports.filteringHome = (req, res, next) => {
   const { filtering } = req.body;
   const SetLocalStorage = require("node-localstorage").LocalStorage;
@@ -153,7 +151,6 @@ exports.filteringHome = (req, res, next) => {
                     let newResponseCart = [];
 
                     responseProd?.rows?.forEach((items) => {
-                      console.log("items =>", items);
                       newProduct.push({
                         ...items,
                         price: new Intl.NumberFormat("id-ID", {
@@ -187,11 +184,8 @@ exports.filteringHome = (req, res, next) => {
                     });
 
                     responseCheckout?.rows?.forEach((prod) => {
-                      console.log("PROD =>", prod);
                       totalInvoice += Number(prod.totalPrice);
                     });
-
-                    console.log("prod.totalPrice =>", totalInvoice);
 
                     if (res.statusCode === 200) {
                       res.render("home.ejs", {

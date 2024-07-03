@@ -2,6 +2,7 @@
 const db = require("../db");
 const moment = require("moment");
 const date = moment().format("YYYY-MM-DD");
+const fs = require("fs/promises");
 
 const dataGraph = {
   data: {
@@ -48,11 +49,13 @@ exports.postAddProduct = async (req, res, next) => {
   const { category, product, price } = req.body;
   const { path } = req.file;
 
-  const postData = await db.pool.query(
+  await db.pool.query(
     'INSERT INTO public."ListProduct"("productName", category, img, price, "createdDate", "modifiedDate") VALUES ($1, $2, $3, $4, $5, $6)',
-    [product, category, path, price, date, date]
+    [product, category, path, price, date, date],
+    (err, response) => {
+      res.redirect("/admin/list");
+    }
   );
-  res.redirect("/admin/list");
 };
 
 // Render Edit Form Product
@@ -97,25 +100,35 @@ exports.renderFormEdit = async (req, res, next) => {
 
 // Function Put Edit Form Product
 exports.EditProduct = async (req, res, next) => {
-  const id = Number(req.params.id);
-  const { product, price, category } = req.body;
-  const { path } = req.file;
+  const id = Number(req?.params.id);
+  const { product, price, category } = req?.body;
+
   // Function Get Detail By ID and remove Image From Assets
   await db.pool.query(
     'SELECT * FROM public."ListProduct" WHERE id = $1',
     [id],
     (err, response) => {
-      const [product] = response?.rows || {};
-      // fs.unlink(product.img);
-    }
-  );
+      const [products] = response?.rows || {};
+      if (req?.file?.path) {
+        fs.unlink(products.img);
+      }
 
-  // Function Edit Product
-  await db.pool.query(
-    'UPDATE public."ListProduct" SET "productName" = $1, category = $2, img = $3, price = $4, "createdDate" = $5, "modifiedDate" = $6 WHERE id = $7 RETURNING *;',
-    [product, category, path, price, date, date, id],
-    (err, response) => {
-      res.redirect("/admin/list");
+      // Function Edit Product
+      return db.pool.query(
+        'UPDATE public."ListProduct" SET "productName" = $1, category = $2, img = $3, price = $4, "createdDate" = $5, "modifiedDate" = $6 WHERE id = $7',
+        [
+          product,
+          category,
+          req?.file?.path ? req?.file?.path : products?.img,
+          price,
+          date,
+          date,
+          id,
+        ],
+        (err, response) => {
+          res.redirect("/admin/list");
+        }
+      );
     }
   );
 };
