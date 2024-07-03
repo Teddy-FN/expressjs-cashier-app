@@ -6,13 +6,7 @@ const router = express.Router();
 const authController = require("../controller/auth");
 
 // Form Login
-router.get("/", (req, res, next) => {
-  res.render("login.ejs", {
-    pageTitle: "Login",
-    url: req.protocol + "://" + req.header.host,
-    error: "",
-  });
-});
+router.get("/", authController.renderFormLogin);
 
 // Login Post
 router.post("/login", authController.login);
@@ -27,14 +21,6 @@ router.post("/login", (req, res, next) => {
 });
 
 // Logout
-router.post("/logout", (req, res, next) => {
-  const SetLocalStorage = require("node-localstorage").LocalStorage;
-  const localStorage = new SetLocalStorage("./user");
-  localStorage.removeItem("userName");
-  localStorage.removeItem("id");
-  localStorage.removeItem("password");
-  localStorage.removeItem("role");
-  return res.redirect("/");
-});
+router.post("/logout", authController.logout);
 
 module.exports = router;
