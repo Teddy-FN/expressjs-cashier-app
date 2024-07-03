@@ -13,7 +13,7 @@
         <div class="container flex items-center gap-4 overflow-y-scroll px-4 no-scrollbar">
           <% filter.forEach(function(item) {%>
             <div class="group col-span-1 cursor-pointer">
-              <form action="<% if(admin){ %>/admin/filter/<%= item.value %><% } else { %>/user/filter/<%= item.value %><% } %>" method="post" id="edit-cart">
+              <form action="<% if(admin){ %>/admin/filter/<%= item.value %><% } else { %>/user/filter/<%= item.value %><% } %>" method="post">
                 <div class="w-full mb-6 md:mb-0 hidden">
                   <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="filtering">filtering</label>
                   <input 
@@ -207,7 +207,6 @@
                 id="idEditCart" 
                 type="text" 
                 name="idEditCart"
-                value=""
               >
             </div>
             <div class="w-full mb-6 md:mb-0 hidden">
@@ -313,35 +312,32 @@
         </div>
       </div>
     </main>
-    
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script type="text/javascript">
-      const toggle_visibility = (id) => {
+    <script>
+      function toggle_visibility(id) {
          var e = document.getElementById(id);
          if (e.style.display == "block") e.style.display = "none";
          else e.style.display = "block";
        }
 
       // Edit Cart
-      const toggle_visibility_edit_cart = (id, idCart ,productName, price, count, getUserId, getUserName, getCategory) => {
-        console.log('getCategory =>', getCategory);
+      function toggle_visibility_edit_cart(id, idCart ,productName, price, count, getUserId, getUserName, getCategory) {
          var e = document.getElementById(id);
-         let formEditCart = document.getElementById('edit-cart').elements
-         formEditCart.idEditCart.value += idCart
-         formEditCart.productNameCart.value += productName
-         formEditCart.priceCart.value += price
-         formEditCart.countCart.value += count
-         formEditCart.getUserId.value += getUserId
-         formEditCart.getUserName.value += getUserName
-         formEditCart.getCategory.value += getCategory
-         
+         let formEditCart = document.getElementById('edit-cart')
+        document.getElementById('idEditCart').value = idCart
+        document.getElementById('productNameCart').value = productName
+        document.getElementById('priceCart').value = price
+        document.getElementById('countCart').value = count
+        document.getElementById('getUserId').value = getUserId
+        document.getElementById('getUserName').value = getUserName
+        document.getElementById('getCategory').value = getCategory   
          if (e.style.display == "block") e.style.display = "none";
          else e.style.display = "block";
        }
 
        // Select To Invoice
-       const toggle_visibility_invoice = (id) => {
+      function toggle_visibility_invoice(id) {
         var e = document.getElementById(id);
         if (e.style.display == "block") e.style.display = "none";
         else e.style.display = "block";

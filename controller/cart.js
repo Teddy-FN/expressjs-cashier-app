@@ -3,13 +3,16 @@ const db = require("../db");
 
 // User Add To Cart
 exports.Addcart = async (req, res, next) => {
-  const SetLocalStorage = require("node-localstorage").LocalStorage;
-  const localStorage = new SetLocalStorage("./user");
-  const getUserName = localStorage.getItem("userName");
-  const getUserId = localStorage.getItem("id");
+  const allCokies = req.headers.cookie.split("; ");
+  const getUserName = allCokies
+    ?.filter((items) => items.includes("userName"))?.[0]
+    ?.replace("userName=", "");
+  const getUserId = allCokies
+    ?.filter((items) => items.includes("id="))?.[0]
+    ?.replace("id=", "");
   const { category, price, productName, count } = req.body;
 
-  const priceNumber = Number(price);
+  const priceNumber = Number(price.replace("Rp", "").replace(".", ""));
   const countNumber = Number(count);
 
   const total = priceNumber * countNumber;
@@ -20,9 +23,9 @@ exports.Addcart = async (req, res, next) => {
       productName,
       category,
       count,
-      price.toString(),
+      price.replace("Rp", "").replace(".", ""),
       total.toString(),
-      getUserId,
+      Number(getUserId),
       getUserName,
     ],
     (err, response) => {
@@ -36,15 +39,15 @@ exports.deleteCart = async (req, res, next) => {
   const { id, userId, userName } = req.params;
 
   await db.pool.query(
-    'DELETE FROM public."Cart" WHERE id = $1',
-    [Number(id)],
+    'DELETE FROM public."Cart" WHERE (id = $1) AND ("userId" = $2) AND ("userName" = $3)',
+    [id, Number(userId), userName],
     (err, response) => {
-      const dataResponse = response?.rows?.filter(
-        (items) => items.userName === username && items.password === password
-      );
-      const [data] = dataResponse || [];
-      const role = data.role === "super-admin" || data.role === "admin";
-      res.redirect(`/${role ? "admin" : "user"}/list`);
+      // const dataResponse = response?.rows?.filter(
+      //   (items) => items.userName === userName && items.password === password
+      // );
+      // const [data] = dataResponse || [];
+      // const role = data.role === "super-admin" || data.role === "admin";
+      res.redirect(`/admin/list`);
     }
   );
 };

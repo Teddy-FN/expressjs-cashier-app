@@ -1,6 +1,8 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const path = require("path");
+const cookieParser = require("cookie-parser");
+const { credentials } = require("./config");
 const port = 5000;
 
 // Routes
@@ -13,6 +15,7 @@ const cartRoutes = require("./routes/cart");
 const errorController = require("./controller/error");
 
 const app = express();
+app.use(cookieParser(credentials.secretCookie));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
