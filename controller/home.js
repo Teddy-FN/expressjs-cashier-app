@@ -3,9 +3,10 @@ const moment = require("moment");
 const invoiceDate = new Date();
 
 exports.home = async (req, res, next) => {
-  const SetLocalStorage = require("node-localstorage").LocalStorage;
-  const localStorage = new SetLocalStorage("./user");
-  const getUserId = localStorage.getItem("id");
+  const allCokies = req.headers.cookie.split("; ");
+  const getUserId = allCokies
+    ?.filter((items) => items.includes("id="))?.[0]
+    ?.replace("id=", "");
   return db.pool.query(
     // Query Get All Product
     'SELECT * FROM public."ListProduct"',
@@ -119,9 +120,10 @@ exports.home = async (req, res, next) => {
 // When User Filter
 exports.filteringHome = (req, res, next) => {
   const { filtering } = req.body;
-  const SetLocalStorage = require("node-localstorage").LocalStorage;
-  const localStorage = new SetLocalStorage("./user");
-  const getUserId = localStorage.getItem("id");
+  const allCokies = req.headers.cookie.split("; ");
+  const getUserId = allCokies
+    ?.filter((items) => items.includes("id="))?.[0]
+    ?.replace("id=", "");
 
   const query =
     filtering === "lihat semua"

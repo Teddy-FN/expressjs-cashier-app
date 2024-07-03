@@ -12,12 +12,10 @@ exports.login = (req, res, next) => {
       const [data] = dataResponse || [];
       if (data) {
         const role = data.role === "super-admin" || data.role === "admin";
-        const SetLocalStorage = require("node-localstorage").LocalStorage;
-        const localStorage = new SetLocalStorage("./user");
-        localStorage.setItem("userName", data.userName);
-        localStorage.setItem("password", data.password);
-        localStorage.setItem("role", data.role);
-        localStorage.setItem("id", data.id);
+        res.cookie("userName", data.userName);
+        res.cookie("password", data.password);
+        res.cookie("role", data.role);
+        res.cookie("id", data.id);
         res.redirect(`/${role ? "admin" : "user"}/list`);
       } else {
         return next();
