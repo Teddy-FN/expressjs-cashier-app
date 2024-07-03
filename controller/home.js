@@ -7,19 +7,28 @@ exports.home = async (req, res, next) => {
   const getUserId = allCokies
     ?.filter((items) => items.includes("id="))?.[0]
     ?.replace("id=", "");
+  const role = allCokies
+    ?.filter((items) => items.includes("role="))?.[0]
+    ?.replace("role=", "");
+  const getUserName = allCokies
+    ?.filter((items) => items.includes("userName"))?.[0]
+    ?.replace("userName=", "");
+
   return db.pool.query(
     // Query Get All Product
     'SELECT * FROM public."ListProduct"',
     (err, responseProd) => {
       return db.pool.query(
         // Query Get Product Checkout
-        'SELECT * FROM public."Cart" ORDER BY id ASC',
+        'SELECT * FROM public."Cart" WHERE "userId" = $1 AND "userName" = $2',
+        [Number(getUserId), getUserName],
         (err, responseCart) => {
           return db.pool.query(
             // Query Get Product Checkout By Id
-            'SELECT * FROM public."Cart" WHERE ("userId" = $1)',
-            [Number(getUserId)],
+            'SELECT * FROM public."Cart" WHERE "userId" = $1 AND "userName" = $2',
+            [Number(getUserId), getUserName],
             async (err, responseCheckout) => {
+              console.log("responseCheckout =>", responseCheckout);
               return db.pool.query(
                 // Query Get Filter By Category
                 'SELECT * FROM public."Filtering"',
@@ -61,18 +70,20 @@ exports.home = async (req, res, next) => {
                     });
                   });
 
-                  responseCheckout?.rows?.forEach((prod) => {
-                    totalInvoice += Number(prod.totalPrice);
-                  });
+                  if (responseCheckout.rows) {
+                    responseCheckout?.rows?.forEach((prod) => {
+                      totalInvoice += Number(prod.totalPrice);
+                    });
+                  }
 
                   console.log("prod.totalPrice =>", totalInvoice);
 
                   if (res.statusCode === 200) {
                     res.render("home.ejs", {
-                      pageTitle: "Admin Page",
+                      pageTitle: role === "user" ? "User Page" : "Admin Page",
                       prod: newProduct,
                       cart: newResponseCart,
-                      admin: true,
+                      admin: role === "user" ? false : true,
                       url: req.protocol + "://" + req.header.host,
 
                       // Filtering
@@ -84,7 +95,7 @@ exports.home = async (req, res, next) => {
                       // End New
 
                       // Cart
-                      checkout: responseCheckout?.rows,
+                      checkout: responseCheckout?.rows || [],
                       // End Cart
                       invoiceDate: moment(invoiceDate).format("DD/MM/YYYY"),
                       // Total Invoice
@@ -124,6 +135,12 @@ exports.filteringHome = (req, res, next) => {
   const getUserId = allCokies
     ?.filter((items) => items.includes("id="))?.[0]
     ?.replace("id=", "");
+  const role = allCokies
+    ?.filter((items) => items.includes("role="))?.[0]
+    ?.replace("role=", "");
+  const getUserName = allCokies
+    ?.filter((items) => items.includes("userName"))?.[0]
+    ?.replace("userName=", "");
 
   const query =
     filtering === "lihat semua"
@@ -137,12 +154,13 @@ exports.filteringHome = (req, res, next) => {
       (err, responseProd) => {
         return db.pool.query(
           // Query Get Product Checkout
-          'SELECT * FROM public."Cart" ORDER BY id ASC',
+          'SELECT * FROM public."Cart" WHERE "userId" = $1 AND "userName" = $2',
+          [Number(getUserId), getUserName],
           (err, responseCart) => {
             return db.pool.query(
               // Query Get Product Checkout By Id
-              'SELECT * FROM public."Cart" WHERE ("userId" = $1)',
-              [Number(getUserId)],
+              'SELECT * FROM public."Cart" WHERE "userId" = $1 AND "userName" = $2',
+              [Number(getUserId), getUserName],
               async (err, responseCheckout) => {
                 return db.pool.query(
                   // Query Get Filter By Category
@@ -185,20 +203,22 @@ exports.filteringHome = (req, res, next) => {
                       });
                     });
 
-                    responseCheckout?.rows?.forEach((prod) => {
-                      totalInvoice += Number(prod.totalPrice);
-                    });
+                    if (responseCheckout.rows) {
+                      responseCheckout?.rows?.forEach((prod) => {
+                        totalInvoice += Number(prod.totalPrice);
+                      });
+                    }
 
                     if (res.statusCode === 200) {
                       res.render("home.ejs", {
-                        pageTitle: "Admin Page",
+                        pageTitle: role === "user" ? "User Page" : "Admin Page",
                         prod: newProduct,
                         cart: newResponseCart,
-                        admin: true,
+                        admin: role === "user" ? false : true,
                         url: req.protocol + "://" + req.header.host,
 
                         // Filtering
-                        filter: responseFiltering?.rows,
+                        filter: responseFiltering?.rows || [],
                         // End Filtering
 
                         // New
@@ -206,7 +226,7 @@ exports.filteringHome = (req, res, next) => {
                         // End New
 
                         // Cart
-                        checkout: responseCheckout?.rows,
+                        checkout: responseCheckout?.rows || [],
                         // End Cart
                         invoiceDate: moment(invoiceDate).format("DD/MM/YYYY"),
                         // Total Invoice

@@ -1,5 +1,13 @@
 const db = require("../db");
 
+exports.renderFormLogin = (req, res, next) => {
+  res.render("login.ejs", {
+    pageTitle: "Login",
+    url: req.protocol + "://" + req.header.host,
+    error: "",
+  });
+};
+
 exports.login = (req, res, next) => {
   const { username, password } = req.body;
   return db.pool.query(
@@ -22,4 +30,13 @@ exports.login = (req, res, next) => {
       }
     }
   );
+};
+
+exports.logout = (req, res, next) => {
+  res.clearCookie("userName");
+  res.clearCookie("password");
+  res.clearCookie("role");
+  res.clearCookie("id");
+  res.redirect("/");
+  return res.end();
 };
