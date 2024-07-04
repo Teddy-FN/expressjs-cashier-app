@@ -3,6 +3,7 @@ const moment = require("moment");
 const invoiceDate = new Date();
 
 exports.home = async (req, res, next) => {
+  const { search = "" } = req.body;
   const allCokies = req.headers.cookie.split("; ");
   const getUserId = allCokies
     ?.filter((items) => items.includes("id="))?.[0]
@@ -14,9 +15,14 @@ exports.home = async (req, res, next) => {
     ?.filter((items) => items.includes("userName"))?.[0]
     ?.replace("userName=", "");
 
+  const querySearch = !search
+    ? 'SELECT * FROM public."ListProduct"'
+    : 'SELECT * FROM public."ListProduct" WHERE LOWER("productName") = $1';
+
   return db.pool.query(
     // Query Get All Product
-    'SELECT * FROM public."ListProduct"',
+    querySearch,
+    !search ? [] : [search.toLowerCase()],
     (err, responseProd) => {
       return db.pool.query(
         // Query Get Product Checkout
@@ -145,7 +151,7 @@ exports.filteringHome = (req, res, next) => {
   const query =
     filtering === "lihat semua"
       ? 'SELECT * FROM public."ListProduct"'
-      : 'SELECT * FROM public."ListProduct" WHERE (category = $1)';
+      : 'SELECT * FROM public."ListProduct" WHERE("category" = $1)';
   if (filtering !== "lihat semua") {
     return db.pool.query(
       // Query Get All Product
@@ -258,6 +264,7 @@ exports.filteringHome = (req, res, next) => {
       }
     );
   } else {
-    res.redirect("/admin/list");
+    const roleLogin = role === "admin" ? "admin" : "user";
+    res.redirect(`/${roleLogin}/list`);
   }
 };

@@ -22,6 +22,9 @@ const homeController = require("../controller/home");
 // List Home Default
 router.get("/list", homeController.home);
 
+// Search
+router.post("/list", homeController.home);
+
 // List Home By Value
 router.post("/filter/:value", homeController.filteringHome);
 
