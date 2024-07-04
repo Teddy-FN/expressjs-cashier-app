@@ -4,7 +4,7 @@ const invoiceDate = new Date();
 
 exports.home = async (req, res, next) => {
   const { search = "" } = req.body;
-  const allCokies = req.headers.cookie.split("; ");
+  const allCokies = req?.headers?.cookie?.split("; ") || [];
   const getUserId = allCokies
     ?.filter((items) => items.includes("id="))?.[0]
     ?.replace("id=", "");
@@ -19,6 +19,13 @@ exports.home = async (req, res, next) => {
     ? 'SELECT * FROM public."ListProduct"'
     : 'SELECT * FROM public."ListProduct" WHERE LOWER("productName") = $1';
 
+  // Data User
+  const user = {
+    userId: getUserId,
+    role: role,
+    userData: getUserName,
+  };
+
   return db.pool.query(
     // Query Get All Product
     querySearch,
@@ -30,102 +37,97 @@ exports.home = async (req, res, next) => {
         [Number(getUserId), getUserName],
         (err, responseCart) => {
           return db.pool.query(
-            // Query Get Product Checkout By Id
-            'SELECT * FROM public."Cart" WHERE "userId" = $1 AND "userName" = $2',
-            [Number(getUserId), getUserName],
-            async (err, responseCheckout) => {
-              console.log("responseCheckout =>", responseCheckout);
-              return db.pool.query(
-                // Query Get Filter By Category
-                'SELECT * FROM public."Filtering"',
-                (err, responseFiltering) => {
-                  let totalInvoice = 0;
-                  let newProduct = [];
-                  let newResponseCart = [];
+            // Query Get Filter By Category
+            'SELECT * FROM public."Filtering"',
+            (err, responseFiltering) => {
+              let totalInvoice = 0;
+              let newProduct = [];
+              let newResponseCart = [];
 
-                  responseProd?.rows?.forEach((items) => {
-                    newProduct.push({
-                      ...items,
-                      price: new Intl.NumberFormat("id-ID", {
-                        style: "currency",
-                        currency: "IDR",
-                      })
-                        .format(Number(items.price))
-                        .toString()
-                        .replace(",00", ""),
-                    });
-                  });
+              responseProd?.rows?.forEach((items) => {
+                newProduct.push({
+                  ...items,
+                  price: new Intl.NumberFormat("id-ID", {
+                    style: "currency",
+                    currency: "IDR",
+                  })
+                    .format(Number(items.price))
+                    .toString()
+                    .replace(",00", ""),
+                });
+              });
 
-                  responseCart?.rows?.forEach((items) => {
-                    newResponseCart.push({
-                      ...items,
-                      price: new Intl.NumberFormat("id-ID", {
-                        style: "currency",
-                        currency: "IDR",
-                      })
-                        .format(Number(items.price))
-                        .toString()
-                        .replace(",00", ""),
-                      totalPrice: new Intl.NumberFormat("id-ID", {
-                        style: "currency",
-                        currency: "IDR",
-                      })
-                        .format(Number(items.totalPrice))
-                        .toString()
-                        .replace(",00", ""),
-                    });
-                  });
+              responseCart?.rows?.forEach((items) => {
+                newResponseCart.push({
+                  ...items,
+                  price: new Intl.NumberFormat("id-ID", {
+                    style: "currency",
+                    currency: "IDR",
+                  })
+                    .format(Number(items.price))
+                    .toString()
+                    .replace(",00", ""),
+                  totalPrice: new Intl.NumberFormat("id-ID", {
+                    style: "currency",
+                    currency: "IDR",
+                  })
+                    .format(Number(items.totalPrice))
+                    .toString()
+                    .replace(",00", ""),
+                });
+              });
 
-                  if (responseCheckout.rows) {
-                    responseCheckout?.rows?.forEach((prod) => {
-                      totalInvoice += Number(prod.totalPrice);
-                    });
-                  }
+              if (responseCart?.rows) {
+                responseCart?.rows?.forEach((prod) => {
+                  totalInvoice += Number(prod.totalPrice);
+                });
+              }
 
-                  console.log("prod.totalPrice =>", totalInvoice);
+              console.log("prod.totalPrice =>", totalInvoice);
 
-                  if (res.statusCode === 200) {
-                    res.render("home.ejs", {
-                      pageTitle: role === "user" ? "User Page" : "Admin Page",
-                      prod: newProduct,
-                      cart: newResponseCart,
-                      admin: role === "user" ? false : true,
-                      url: req.protocol + "://" + req.header.host,
+              if (res.statusCode === 200) {
+                res.render("home.ejs", {
+                  pageTitle: role === "user" ? "User Page" : "Admin Page",
+                  prod: newProduct,
+                  cart: newResponseCart,
+                  admin: role === "user" ? false : true,
+                  url: req.protocol + "://" + req.header.host,
 
-                      // Filtering
-                      filter: responseFiltering?.rows,
-                      // End Filtering
+                  // Filtering
+                  filter: responseFiltering?.rows,
 
-                      // New
-                      name: "test",
-                      // End New
+                  // Cart
+                  checkout: responseCart?.rows || [],
 
-                      // Cart
-                      checkout: responseCheckout?.rows || [],
-                      // End Cart
-                      invoiceDate: moment(invoiceDate).format("DD/MM/YYYY"),
-                      // Total Invoice
-                      totalInvoice: totalInvoice,
+                  // End Cart
+                  invoiceDate: moment(invoiceDate).format("DD/MM/YYYY"),
 
-                      onPage: "list",
-                      navigationActive: {
-                        list: "list",
-                        cart: "cart",
-                        addProduct: "add-product",
-                        editProduct: "edit-product",
-                        reportSelling: "report-selling",
-                      },
-                      urlNavigation: {
-                        list: "/admin/list",
-                        cart: "/admin/cart",
-                        addProduct: "/admin/add-product",
-                        editProduct: "/admin/edit-product",
-                        reportSelling: "/admin/report-selling",
-                      },
-                    });
-                  }
-                }
-              );
+                  // Total Invoice
+                  totalInvoice: totalInvoice,
+
+                  // Auth Login
+                  auth: JSON.stringify(user),
+
+                  // Invoice
+                  invoiceProduct: JSON.stringify(responseCart?.rows),
+
+                  onPage: "list",
+                  navigationActive: {
+                    list: "list",
+                    cart: "cart",
+                    addProduct: "add-product",
+                    editProduct: "edit-product",
+                    reportSelling: "report-selling",
+                  },
+                  urlNavigation: {
+                    list: "/admin/list",
+                    cart: "/admin/cart",
+                    addProduct: "/admin/add-product",
+                    editProduct: "/admin/edit-product",
+                    reportSelling: "/admin/report-selling",
+                  },
+                });
+              }
             }
           );
         }
@@ -137,7 +139,7 @@ exports.home = async (req, res, next) => {
 // When User Filter
 exports.filteringHome = (req, res, next) => {
   const { filtering } = req.body;
-  const allCokies = req.headers.cookie.split("; ");
+  const allCokies = req?.headers?.cookie?.split("; ") || [];
   const getUserId = allCokies
     ?.filter((items) => items.includes("id="))?.[0]
     ?.replace("id=", "");
@@ -147,6 +149,13 @@ exports.filteringHome = (req, res, next) => {
   const getUserName = allCokies
     ?.filter((items) => items.includes("userName"))?.[0]
     ?.replace("userName=", "");
+
+  // Data User
+  const user = {
+    userId: getUserId,
+    role: role,
+    userData: getUserName,
+  };
 
   const query =
     filtering === "lihat semua"
@@ -164,99 +173,93 @@ exports.filteringHome = (req, res, next) => {
           [Number(getUserId), getUserName],
           (err, responseCart) => {
             return db.pool.query(
-              // Query Get Product Checkout By Id
-              'SELECT * FROM public."Cart" WHERE "userId" = $1 AND "userName" = $2',
-              [Number(getUserId), getUserName],
-              async (err, responseCheckout) => {
-                return db.pool.query(
-                  // Query Get Filter By Category
-                  'SELECT * FROM public."Filtering"',
-                  (err, responseFiltering) => {
-                    let totalInvoice = 0;
-                    let newProduct = [];
-                    let newResponseCart = [];
+              // Query Get Filter By Category
+              'SELECT * FROM public."Filtering"',
+              (err, responseFiltering) => {
+                let totalInvoice = 0;
+                let newProduct = [];
+                let newResponseCart = [];
 
-                    responseProd?.rows?.forEach((items) => {
-                      newProduct.push({
-                        ...items,
-                        price: new Intl.NumberFormat("id-ID", {
-                          style: "currency",
-                          currency: "IDR",
-                        })
-                          .format(Number(items.price))
-                          .toString()
-                          .replace(",00", ""),
-                      });
-                    });
+                responseProd?.rows?.forEach((items) => {
+                  newProduct.push({
+                    ...items,
+                    price: new Intl.NumberFormat("id-ID", {
+                      style: "currency",
+                      currency: "IDR",
+                    })
+                      .format(Number(items.price))
+                      .toString()
+                      .replace(",00", ""),
+                  });
+                });
 
-                    responseCart?.rows?.forEach((items) => {
-                      newResponseCart.push({
-                        ...items,
-                        price: new Intl.NumberFormat("id-ID", {
-                          style: "currency",
-                          currency: "IDR",
-                        })
-                          .format(Number(items.price))
-                          .toString()
-                          .replace(",00", ""),
-                        totalPrice: new Intl.NumberFormat("id-ID", {
-                          style: "currency",
-                          currency: "IDR",
-                        })
-                          .format(Number(items.totalPrice))
-                          .toString()
-                          .replace(",00", ""),
-                      });
-                    });
+                responseCart?.rows?.forEach((items) => {
+                  newResponseCart.push({
+                    ...items,
+                    price: new Intl.NumberFormat("id-ID", {
+                      style: "currency",
+                      currency: "IDR",
+                    })
+                      .format(Number(items.price))
+                      .toString()
+                      .replace(",00", ""),
+                    totalPrice: new Intl.NumberFormat("id-ID", {
+                      style: "currency",
+                      currency: "IDR",
+                    })
+                      .format(Number(items.totalPrice))
+                      .toString()
+                      .replace(",00", ""),
+                  });
+                });
 
-                    if (responseCheckout.rows) {
-                      responseCheckout?.rows?.forEach((prod) => {
-                        totalInvoice += Number(prod.totalPrice);
-                      });
-                    }
+                if (responseCart?.rows) {
+                  responseCart?.rows?.forEach((prod) => {
+                    totalInvoice += Number(prod.totalPrice);
+                  });
+                }
 
-                    if (res.statusCode === 200) {
-                      res.render("home.ejs", {
-                        pageTitle: role === "user" ? "User Page" : "Admin Page",
-                        prod: newProduct,
-                        cart: newResponseCart,
-                        admin: role === "user" ? false : true,
-                        url: req.protocol + "://" + req.header.host,
+                if (res.statusCode === 200) {
+                  res.render("home.ejs", {
+                    pageTitle: role === "user" ? "User Page" : "Admin Page",
+                    prod: newProduct,
+                    cart: newResponseCart,
+                    admin: role === "user" ? false : true,
+                    url: req.protocol + "://" + req.header.host,
 
-                        // Filtering
-                        filter: responseFiltering?.rows || [],
-                        // End Filtering
+                    // Filtering
+                    filter: responseFiltering?.rows || [],
 
-                        // New
-                        name: "test",
-                        // End New
+                    // Cart
+                    checkout: responseCart?.rows || [],
+                    // End Cart
+                    invoiceDate: moment(invoiceDate).format("DD/MM/YYYY"),
 
-                        // Cart
-                        checkout: responseCheckout?.rows || [],
-                        // End Cart
-                        invoiceDate: moment(invoiceDate).format("DD/MM/YYYY"),
-                        // Total Invoice
-                        totalInvoice: totalInvoice,
+                    // Total Invoice
+                    totalInvoice: totalInvoice,
 
-                        onPage: "list",
-                        navigationActive: {
-                          list: "list",
-                          cart: "cart",
-                          addProduct: "add-product",
-                          editProduct: "edit-product",
-                          reportSelling: "report-selling",
-                        },
-                        urlNavigation: {
-                          list: "/admin/list",
-                          cart: "/admin/cart",
-                          addProduct: "/admin/add-product",
-                          editProduct: "/admin/edit-product",
-                          reportSelling: "/admin/report-selling",
-                        },
-                      });
-                    }
-                  }
-                );
+                    invoiceProduct: JSON.stringify(responseCart?.rows),
+
+                    // Auth Login
+                    auth: user,
+
+                    onPage: "list",
+                    navigationActive: {
+                      list: "list",
+                      cart: "cart",
+                      addProduct: "add-product",
+                      editProduct: "edit-product",
+                      reportSelling: "report-selling",
+                    },
+                    urlNavigation: {
+                      list: "/admin/list",
+                      cart: "/admin/cart",
+                      addProduct: "/admin/add-product",
+                      editProduct: "/admin/edit-product",
+                      reportSelling: "/admin/report-selling",
+                    },
+                  });
+                }
               }
             );
           }

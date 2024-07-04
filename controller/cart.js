@@ -1,9 +1,11 @@
 // Connect DB
 const db = require("../db");
+const moment = require("moment");
+const invoiceDate = new Date();
 
 // User Add To Cart
 exports.Addcart = async (req, res, next) => {
-  const allCokies = req.headers.cookie.split("; ");
+  const allCokies = req?.headers?.cookie?.split("; ") || [];
   const getUserName = allCokies
     ?.filter((items) => items.includes("userName"))?.[0]
     ?.replace("userName=", "");
@@ -42,11 +44,6 @@ exports.deleteCart = async (req, res, next) => {
     'DELETE FROM public."Cart" WHERE (id = $1) AND ("userId" = $2) AND ("userName" = $3)',
     [id, Number(userId), userName],
     (err, response) => {
-      // const dataResponse = response?.rows?.filter(
-      //   (items) => items.userName === userName && items.password === password
-      // );
-      // const [data] = dataResponse || [];
-      // const role = data.role === "super-admin" || data.role === "admin";
       res.redirect(`/admin/list`);
     }
   );
@@ -54,8 +51,6 @@ exports.deleteCart = async (req, res, next) => {
 
 // Edit List In Cart
 exports.editCart = async (req, res, next) => {
-  console.log("REQ =>", req.body);
-
   const {
     idEditCart,
     productNameCart,
@@ -92,20 +87,53 @@ exports.editCart = async (req, res, next) => {
 
 // Checkout Invoice
 exports.invoice = async (req, res, next) => {
-  // console.log("REQ =>", req.app);
-  // console.log("REQ POST =>", req.app.post());
-  // console.log("REQ POST =>", req.app.post());
-  // const SetLocalStorage = require("node-localstorage").LocalStorage;
-  // const localStorage = new SetLocalStorage("./user");
-  // const getUserId = localStorage.getItem("id");
-  // console.log("getUserId =>", getUserId);
-  // console.log("getUstypoferId =>", typeof getUserId);
-  // await db.pool.query(
-  //   'SELECT * FROM public."Cart" WHERE ("userId" = $1)',
-  //   [Number(getUserId)],
-  //   async (err, response) => {
-  //     res.redirect("/");
-  //     // admin.home(response);
-  //   }
-  // );
+  const { invoiceProduct } = req.body;
+  let itemsCheckout = "";
+  let totalCheckout = 0;
+
+  const formatInvoice = JSON.parse(invoiceProduct);
+
+  formatInvoice.forEach((items, index) => {
+    let indexing = index + 1;
+    console.log(indexing);
+    itemsCheckout += `${items.productName}${
+      indexing === formatInvoice.length ? "." : ", "
+    }`;
+    totalCheckout += Number(items.totalPrice);
+  });
+
+  const allCokies = req?.headers?.cookie?.split("; ") || [];
+  const getUserId = allCokies
+    ?.filter((items) => items.includes("id="))?.[0]
+    ?.replace("id=", "");
+  const role = allCokies
+    ?.filter((items) => items.includes("role="))?.[0]
+    ?.replace("role=", "");
+  const getUserName = allCokies
+    ?.filter((items) => items.includes("userName"))?.[0]
+    ?.replace("userName=", "");
+
+  // So The Logic when invoice we delete from table cart by id and push to invoce table
+  // Delete Table Cart
+  await db.pool.query(
+    'DELETE FROM public."Cart" WHERE "userId" = $1 AND "userName" = $2',
+    [Number(getUserId), getUserName],
+    (err, responseDeleteCart) => {
+      console.log("RESPONSE =>", responseDeleteCart);
+      // Push / Insert Invoice Table
+      return db.pool.query(
+        'INSERT INTO public."Invoice"("itemCheckout", "totalCheckout", "userName", "userId", "createDate") VALUES ($1, $2, $3, $4, $5)',
+        [
+          itemsCheckout,
+          totalCheckout,
+          getUserName,
+          Number(getUserId),
+          moment(invoiceDate).format("DD/MM/YYYY"),
+        ],
+        (err, response) => {
+          res.redirect(`/${role === "user" ? "user" : "admin"}/list`);
+        }
+      );
+    }
+  );
 };
