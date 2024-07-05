@@ -122,13 +122,13 @@ exports.invoice = async (req, res, next) => {
       console.log("RESPONSE =>", responseDeleteCart);
       // Push / Insert Invoice Table
       return db.pool.query(
-        'INSERT INTO public."Invoice"("itemCheckout", "totalCheckout", "userName", "userId", "createDate") VALUES ($1, $2, $3, $4, $5)',
+        'INSERT INTO public."Invoice"(item_checkout, total_checkout, user_name, user_id, create_date) VALUES ($1, $2, $3, $4, $5)',
         [
           itemsCheckout,
           totalCheckout,
           getUserName,
           Number(getUserId),
-          moment(invoiceDate).format("DD/MM/YYYY"),
+          invoiceDate,
         ],
         (err, response) => {
           res.redirect(`/${role === "user" ? "user" : "admin"}/list`);

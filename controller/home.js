@@ -124,7 +124,7 @@ exports.home = async (req, res, next) => {
                     cart: "/admin/cart",
                     addProduct: "/admin/add-product",
                     editProduct: "/admin/edit-product",
-                    reportSelling: "/admin/report-selling",
+                    reportSelling: "/report-selling/show-graph",
                   },
                 });
               }
@@ -256,7 +256,7 @@ exports.filteringHome = (req, res, next) => {
                       cart: "/admin/cart",
                       addProduct: "/admin/add-product",
                       editProduct: "/admin/edit-product",
-                      reportSelling: "/admin/report-selling",
+                      reportSelling: "/report-selling/show-graph",
                     },
                   });
                 }

@@ -306,14 +306,30 @@
           </div>
           
 
-          <!-- <button 
-            class="bg-green-700 text-base font-bold text-white px-4 py-2 rounded-md hover:bg-yellow-300 duration-200 my-4"
-            id="generatePDF"
-          >
-            Cetak Invoice
-          </button> -->
-          
-          <!-- Button Print -->
+          <div class="text-right flex items-center justify-between">
+            <button type="submit" class="py-2 px-4 bg-gray-500 text-white rounded hover:bg-gray-700 mr-2" onclick="toggle_visibility_invoice('invoice')"><i class="fas fa-times"></i> Close</button>
+            <button 
+              class="bg-green-700 text-base font-bold text-white px-4 py-2 rounded-md hover:bg-yellow-300 duration-200 my-4"
+              id="generatePDF">
+              Cetak Invoice
+            </button>
+            </button>
+          </div>
+        </div>
+      </div>
+    </main>
+
+
+
+    <!-- Notification Succes -->
+    <main class="fixed z-10 overflow-scroll top-0 w-full left-0 hidden" id="notification">
+      <div class="flex items-center justify-center h-max pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+        <div class="fixed inset-0 transition-opacity overflow-scroll bg-[#111827c1]">
+          <div class="absolute inset-0" />
+        </div>
+        <span class="hidden sm:inline-block sm:align-middle sm:h-screen">&#8203;</span>
+        <div class="inline-block align-center bg-white rounded-lg text-left overflow-scroll shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full" role="dialog" aria-modal="true" aria-labelledby="modal-headline">
+          <h1 class="p-10 text-center">Success Payment</h1>
           <form action="/cart/invoice" method="post" id="invoiceForm">
             <div class="w-full mb-6 md:mb-0 hidden">
               <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="auth">auth</label>
@@ -335,19 +351,11 @@
                 value="<%= invoiceProduct %>"
               >
             </div>
-            <div class="text-right flex items-center justify-between">
-              <button type="submit" class="py-2 px-4 bg-gray-500 text-white rounded hover:bg-gray-700 mr-2" onclick="toggle_visibility_invoice('invoice')"><i class="fas fa-times"></i> Close</button>
-              <button 
-                class="bg-green-700 text-base font-bold text-white px-4 py-2 rounded-md hover:bg-yellow-300 duration-200 my-4"
-                id="generatePDF"
-                type="button"
-              >
-                Cetak Invoice
-              </button>
-            </div>
+            <button class="bg-green-700 text-base font-bold w-full text-white px-4 py-2 rounded-md hover:bg-yellow-300 duration-200"
+              type="submit">
+              Close
+            </button>
           </form>
-
-          
         </div>
       </div>
     </main>
@@ -381,12 +389,12 @@
         if (e.style.display == "block") e.style.display = "none";
         else e.style.display = "block";
       }
-
-
+      
+      
       let btnGeneratePdf = document.getElementById("generatePDF");
       const element = document.getElementById('htmlContent');
       const getFormInvoice = document.getElementById('invoiceForm');
-
+      
       const opt = {
         margin: 0, //top, left, buttom, right
         // filename: 'filename' + '.pdf',
@@ -395,16 +403,15 @@
         html2canvas:  { scale: 2, logging: true, dpi: 192, letterRendering: true, scrollY: 0 },
         jsPDF: { unit: 'mm', format: 'tabloid', orientation: 'portrait'},
       };
-
+      
       btnGeneratePdf.addEventListener("click", function(){
         const datasBaru = html2pdf().set(opt).from(element).save('filename.pdf')
         console.log('DATAS BARU =>', datasBaru);
+        var e = document.getElementById('notification');
+        e.style.display = "block";
         toggle_visibility_invoice('invoice')
-        if (datasBaru) {
-          return getFormInvoice.submit()
-        }
       });
-
+      
       
     </script>
 <%- include('./includes/end.ejs') %>
