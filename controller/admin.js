@@ -4,15 +4,6 @@ const moment = require("moment");
 const date = moment().format("YYYY-MM-DD");
 const fs = require("fs/promises");
 
-const dataGraph = {
-  data: {
-    2021: [1, 2, 3, 10, 20],
-    2022: [20, 30, 40, 50, 20, 10],
-    2023: [20, 30, 40, 50, 20, 50, 60, 70, 80],
-    2024: [20, 30, 40, 50, 20, 50, 60, 70, 80, 100, 120, 200],
-  },
-};
-
 // Render Add Form Product
 exports.renderFormAdd = (req, res, next) => {
   res.render("admin/formProduct.ejs", {
@@ -32,7 +23,7 @@ exports.renderFormAdd = (req, res, next) => {
       cart: "/admin/cart",
       addProduct: "/admin/add-product",
       editProduct: "/admin/edit-product",
-      reportSelling: "/admin/report-selling",
+      reportSelling: "/report-selling/show-graph",
     },
     item: {
       id: null,
@@ -83,7 +74,7 @@ exports.renderFormEdit = async (req, res, next) => {
             cart: "/admin/cart",
             addProduct: "/admin/add-product",
             editProduct: "/admin/edit-product",
-            reportSelling: "/admin/report-selling",
+            reportSelling: "/report-selling/show-graph",
           },
           item: {
             id: product.id,
@@ -145,85 +136,6 @@ exports.deleteProduct = async (req, res, next) => {
   );
 };
 
-// Report Selling
-exports.showGraph = (req, res, next) => {
-  res.render("admin/reportSelling.ejs", {
-    pageTitle: "Report Selling",
-    admin: true,
-    url: req.protocol + "://" + req.header.host,
-    onPage: "report-selling",
-    navigationActive: {
-      list: "list",
-      cart: "cart",
-      addProduct: "add-product",
-      editProduct: "edit-product",
-      reportSelling: "report-selling",
-    },
-    urlNavigation: {
-      list: "/admin/list",
-      cart: "/admin/cart",
-      addProduct: "/admin/add-product",
-      editProduct: "/admin/edit-product",
-      reportSelling: "/admin/report-selling",
-    },
-    labels: [
-      "Januari",
-      "Februari",
-      "Maret",
-      "April",
-      "Mei",
-      "Juni",
-      "Juli",
-      "Agustus",
-      "September",
-      "Oktober",
-      "November",
-      "Desember",
-    ],
-    dataGraph: dataGraph.data[`${new Date().getFullYear()}`],
-  });
-};
-
-// Filter Report Selling By Year
-exports.filterGraph = (req, res, next) => {
-  const data = dataGraph.data[req.body.year];
-  res.render("admin/reportSelling.ejs", {
-    pageTitle: "Report Selling",
-    admin: true,
-    url: req.protocol + "://" + req.header.host,
-    onPage: "report-selling",
-    navigationActive: {
-      list: "list",
-      cart: "cart",
-      addProduct: "add-product",
-      editProduct: "edit-product",
-      reportSelling: "report-selling",
-    },
-    urlNavigation: {
-      list: "/admin/list",
-      cart: "/admin/cart",
-      addProduct: "/admin/add-product",
-      editProduct: "/admin/edit-product",
-      reportSelling: "/admin/report-selling",
-    },
-    labels: [
-      "Januari",
-      "Februari",
-      "Maret",
-      "April",
-      "Mei",
-      "Juni",
-      "Juli",
-      "Agustus",
-      "September",
-      "Oktober",
-      "November",
-      "Desember",
-    ],
-    dataGraph: data,
-  });
-};
-
 // Render Cart
 exports.renderCart = (req, res, next) => {
   res.render("user/cart.ejs", {
@@ -243,7 +155,7 @@ exports.renderCart = (req, res, next) => {
       cart: "/admin/cart",
       addProduct: "/admin/add-product",
       editProduct: "/admin/edit-product",
-      reportSelling: "/admin/report-selling",
+      reportSelling: "/report-selling/show-graph",
     },
   });
 };

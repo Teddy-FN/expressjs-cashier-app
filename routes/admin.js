@@ -51,12 +51,6 @@ router.post(
   adminController.EditProduct
 );
 
-// Function Show Graph
-router.get("/report-selling", adminController.showGraph);
-
-// Function Filter Graph
-router.post("/filter-chart", adminController.filterGraph);
-
 // Function Render Cart
 router.get("/cart", adminController.renderCart);
 

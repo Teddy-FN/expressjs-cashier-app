@@ -10,6 +10,7 @@ const authRoutes = require("./routes/auth");
 const adminRoutes = require("./routes/admin");
 const userRoutes = require("./routes/user");
 const cartRoutes = require("./routes/cart");
+const reportSellingRoutes = require("./routes/reportSelling");
 
 // Error Controller
 const errorController = require("./controller/error");
@@ -33,6 +34,9 @@ app.use("/user", userRoutes);
 
 // Cart Routes
 app.use("/cart", cartRoutes);
+
+// Report Selling Routes
+app.use("/report-selling", reportSellingRoutes);
 
 // Login Page
 app.use(authRoutes);
