@@ -8,6 +8,6 @@ const reportSellingController = require("../controller/reportSelling");
 router.get("/show-graph", reportSellingController.showGraph);
 
 // Function Filter Graph
-// router.post("/filter-chart", adminController.filterGraph);
+router.post("/show-graph", reportSellingController.showGraph);
 
 module.exports = router;

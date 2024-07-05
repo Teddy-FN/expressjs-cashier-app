@@ -10,9 +10,13 @@ SELECT EXTRACT(MONTH FROM create_date) AS MONTH, COUNT(item_checkout) FROM publi
 
 // Report Selling
 exports.showGraph = async (req, res, next) => {
+  const { year } = req.body;
+  console.log(new Date().getFullYear().toString());
   await db.pool.query(
-    'SELECT EXTRACT(MONTH FROM create_date), COUNT(item_checkout) FROM public."Invoice" GROUP BY EXTRACT(MONTH FROM create_date)',
-    [],
+    `SELECT EXTRACT(MONTH FROM create_date) AS MONTH, COUNT(item_checkout) FROM public."Invoice" 
+    WHERE EXTRACT(YEAR from create_date) = $1 
+    GROUP BY EXTRACT(MONTH FROM create_date)`,
+    [year ? year : new Date().getFullYear().toString()],
     (err, response) => {
       console.log("RES =>", response);
 
@@ -29,33 +33,35 @@ exports.showGraph = async (req, res, next) => {
         november = 0,
         december = 0;
 
-      response.rows.forEach((items) => {
-        if (items.extract === "1") {
-          januari = Number(items.count);
-        } else if (items.extract === "2") {
-          february = Number(items.count);
-        } else if (items.extract === "3") {
-          march = Number(items.count);
-        } else if (items.extract === "4") {
-          april = Number(items.count);
-        } else if (items.extract === "5") {
-          may = Number(items.count);
-        } else if (items.extract === "6") {
-          june = Number(items.count);
-        } else if (items.extract === "7") {
-          july = Number(items.count);
-        } else if (items.extract === "8") {
-          august = Number(items.count);
-        } else if (items.extract === "9") {
-          september = Number(items.count);
-        } else if (items.extract === "10") {
-          october = Number(items.count);
-        } else if (items.extract === "11") {
-          november = Number(items.count);
-        } else {
-          december = Number(items.count);
-        }
-      });
+      if (response?.rows) {
+        response?.rows?.forEach((items) => {
+          if (items.month === "1") {
+            januari = Number(items.count);
+          } else if (items.month === "2") {
+            february = Number(items.count);
+          } else if (items.month === "3") {
+            march = Number(items.count);
+          } else if (items.month === "4") {
+            april = Number(items.count);
+          } else if (items.month === "5") {
+            may = Number(items.count);
+          } else if (items.month === "6") {
+            june = Number(items.count);
+          } else if (items.month === "7") {
+            july = Number(items.count);
+          } else if (items.month === "8") {
+            august = Number(items.count);
+          } else if (items.month === "9") {
+            september = Number(items.count);
+          } else if (items.month === "10") {
+            october = Number(items.count);
+          } else if (items.month === "11") {
+            november = Number(items.count);
+          } else if (items.month === "12") {
+            december = Number(items.count);
+          }
+        });
+      }
 
       const datas = [
         januari,
@@ -71,6 +77,12 @@ exports.showGraph = async (req, res, next) => {
         november,
         december,
       ];
+
+      console.log("datas =>", datas);
+      console.log(
+        "year ? year : new Date().getFullYear().toString() =>",
+        year ? year : new Date().getFullYear().toString()
+      );
 
       res.render("admin/reportSelling.ejs", {
         pageTitle: "Report Selling",
@@ -91,6 +103,7 @@ exports.showGraph = async (req, res, next) => {
           editProduct: "/admin/edit-product",
           reportSelling: "/report-selling/show-graph",
         },
+        year: year ? year : new Date().getFullYear().toString(),
         labels: [
           "Januari",
           "Februari",
@@ -110,43 +123,3 @@ exports.showGraph = async (req, res, next) => {
     }
   );
 };
-
-// Filter Report Selling By Year
-// exports.filterGraph = (req, res, next) => {
-//   const data = dataGraph.data[req.body.year];
-//   res.render("admin/reportSelling.ejs", {
-//     pageTitle: "Report Selling",
-//     admin: true,
-//     url: req.protocol + "://" + req.header.host,
-//     onPage: "report-selling",
-//     navigationActive: {
-//       list: "list",
-//       cart: "cart",
-//       addProduct: "add-product",
-//       editProduct: "edit-product",
-//       reportSelling: "report-selling",
-//     },
-//     urlNavigation: {
-//       list: "/admin/list",
-//       cart: "/admin/cart",
-//       addProduct: "/admin/add-product",
-//       editProduct: "/admin/edit-product",
-//       reportSelling: "/report-selling/show-graph",
-//     },
-//     labels: [
-//       "Januari",
-//       "Februari",
-//       "Maret",
-//       "April",
-//       "Mei",
-//       "Juni",
-//       "Juli",
-//       "Agustus",
-//       "September",
-//       "Oktober",
-//       "November",
-//       "Desember",
-//     ],
-//     dataGraph: data,
-//   });
-// };
