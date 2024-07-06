@@ -16,7 +16,25 @@ router.post("/login", (req, res, next) => {
   res.render("login.ejs", {
     pageTitle: "Login",
     url: req.protocol + "://" + req.header.host,
+    error: "Error invalid user",
+  });
+});
+
+// Render Register Account
+router.get("/register", (req, res, next) => {
+  res.render("register.ejs", {
+    pageTitle: "Register New Account",
+    url: req.protocol + "://" + req.header.host,
     error: "Error Invalid User",
+  });
+});
+
+// Function Post New Account
+router.post("/register", (req, res, next) => {
+  res.render("register.ejs", {
+    pageTitle: "Register New Account",
+    url: req.protocol + "://" + req.header.host,
+    error: "",
   });
 });
 
