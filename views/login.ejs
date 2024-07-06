@@ -9,7 +9,7 @@
         <div class="flex m-auto flex-col w-1/2 gap-11">
           <p class="text-[#636363] text-[32px] font-semibold leading-[48px]">Login</p>
           <form action="/login" method="POST" class="flex flex-col">
-            <div class="flex flex-col gap-3 mb-11">
+            <div class="flex flex-col gap-3">
               <label class="block text-[#828282] text-lg font-semibold" for="username"
                 >Username</label
               >
@@ -27,7 +27,19 @@
                 class="w-full p-2 border-2 border-[#C5C5C5] rounded-full outline-none focus:bg-gray-300"
                 type="password"
                 name="password"
+                id="password"
               />
+              <div class="flex items-center gap-3 mb-[11px]">
+                <input
+                  class="p-2 border-2 w-[18px] h-[18px] bg-white"
+                  type="checkbox"
+                  name="showPassword"
+                  id="showPassword"
+                />
+                <label class="block text-[#828282] text-lg font-semibold" for="password"
+                  >Tampilkan Kata Sandi</label
+                >
+              </div>
             </div>
             <% if(error.length > 0){ %>
               <h1 class="text-[#E74444] text-lg text-center mb-[11px]"><%= error %></h1>
@@ -52,11 +64,11 @@
           </form>
         </div>
       </div>  
-      <div class="w-full flex-[0.7] bg-indigo-700 rounded p-[71px]">
-        <div class="bg-[#ADA3EC] h-full rounded-3xl flex flex-col justify-between relative">
-          <h1 class="py-[43px] px-[81px] text-[32px] font-bold leading-[48px] text-white">Optimalkan Efisiensi Transaksi, Tingkatkan Keuntungan</h1>
-          <img src="/assets/icon-cashier.png" class="h-24 w-24 absolute top-[42%] -left-10" />
-          <div class="overflow-hidden self-end">
+      <div class="w-full flex-[0.8] bg-indigo-700 rounded p-[71px]">
+        <div class="bg-[#ADA3EC] h-full rounded-3xl flex flex-col relative">
+          <p class="py-[43px] px-[81px] text-[32px] font-bold text-white">Optimalkan Efisiensi Transaksi, Tingkatkan Keuntungan</p>
+          <img src="/assets/icon-cashier.png" class="h-16 w-16 absolute top-[42%] -left-8" />
+          <div class="overflow-hidden self-end flex-1 absolute bottom-0 h-3/4">
             <img
                 class="w-full h-full object-contain group-hover:scale-125 group-hover:rotate-3 duration-500"
                 src="/assets/hero-login.png"
@@ -65,6 +77,21 @@
         </div>
       </div>  
     </div>
+
+
+
+    <script>
+      const idShowPassword = document.getElementById('showPassword')
+      const password = document.getElementById("password")
+
+      idShowPassword.addEventListener('change', (event) => {
+        if (event.target.checked) {
+          password.type = 'text'
+        } else {
+          password.type = 'password'
+        }
+      })
+    </script>
 <%- include('./includes/end.ejs') %>
 
 
