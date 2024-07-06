@@ -6,10 +6,10 @@
     <div class="flex h-screen justify-between">
       <div class="w-full flex flex-col flex-1 rounded p-[61px]">
         <img src="/assets/logo-app.png" class="w-1/4" />
-        <div class="flex m-auto flex-col w-1/2 gap-11">
-          <p class="text-[#636363] text-[32px] font-semibold leading-[48px]">Login</p>
-          <form action="/login" method="POST" class="flex flex-col">
-            <div class="flex flex-col gap-3 mb-11">
+        <div class="flex m-auto flex-col w-1/2 <% if(error.length > 0){ %>gap-8<% } else { %>gap-11<% }%>  mt-10">
+          <p class="text-[#636363] text-[32px] font-semibold leading-[48px]">Buat Akun</p>
+          <form action="/register" method="POST" class="flex flex-col">
+            <div class="flex flex-col gap-3 mb-2">
               <label class="block text-[#828282] text-lg font-semibold" for="username"
                 >Username</label
               >
@@ -19,7 +19,7 @@
                 name="username"
               />
             </div>
-            <div class="flex flex-col gap-3 <% if(!error.length > 0){ %>mb-11<% } else { %>mb-[11px]<% } %>">
+            <div class="flex flex-col gap-3 mb-2">
               <label class="block text-[#828282] text-lg font-semibold" for="password"
                 >Password</label
               >
@@ -27,46 +27,57 @@
                 class="w-full p-2 border-2 border-[#C5C5C5] rounded-full outline-none focus:bg-gray-300"
                 type="password"
                 name="password"
+                id="password"
               />
             </div>
             <div class="flex flex-col gap-3 <% if(!error.length > 0){ %>mb-11<% } else { %>mb-[11px]<% } %>">
-              <label class="block text-[#828282] text-lg font-semibold" for="password"
+              <label class="block text-[#828282] text-lg font-semibold" for="confirmationPassword"
                 >Confirmation Password</label
               >
               <input
                 class="w-full p-2 border-2 border-[#C5C5C5] rounded-full outline-none focus:bg-gray-300"
                 type="password"
                 name="confirmationPassword"
+                id="confirmationPassword"
               />
+              <div class="flex items-center gap-3 mb-[11px]">
+                <input
+                  class="p-2 border-2 w-[18px] h-[18px] bg-white"
+                  type="checkbox"
+                  name="showPassword"
+                  id="showPassword"
+                />
+                <label class="block text-[#828282] text-lg font-semibold" for="password"
+                  >Tampilkan Kata Sandi</label
+                >
+              </div>
             </div>
             <% if(error.length > 0){ %>
               <h1 class="text-[#E74444] text-lg text-center mb-[11px]"><%= error %></h1>
             <% } %>
             <div class="flex flex-col gap-3">
               <button type="submit" class="py-2 px-4 w-full bg-[#6853F0] rounded-full text-white font-bold text-lg hover:bg-yellow-300 duration-200">
-                Register
+                Login
               </button>
-              <div class="flex justify-between items-center">
-                <a
-                  class="text-[#CECECE] font-semibold hover:text-pink-700 text-lg"
-                  href="/register"
-                  >Buat Akun</a
-                >
-                <a
-                  class="text-[#CECECE] font-semibold hover:text-pink-700 text-lg"
-                  href="#"
-                  >Lupa Password ?</a
-                >
+              <div class="flex justify-center items-center">
+                <p class="text-[#CECECE] font-semibold text-lg">
+                  Jika sudah punya akun, silahkan 
+                  <a
+                  class="text-[#6853F0] hover:text-pink-700"
+                  href="/"
+                  >Login</a
+                ></p>
+                
               </div>
             </div>
           </form>
         </div>
       </div>  
-      <div class="w-full flex-[0.7] bg-indigo-700 rounded p-[71px]">
-        <div class="bg-[#ADA3EC] h-full rounded-3xl flex flex-col justify-between relative">
-          <h1 class="py-[43px] px-[81px] text-[32px] font-bold leading-[48px] text-white">Optimalkan Efisiensi Transaksi, Tingkatkan Keuntungan</h1>
-          <img src="/assets/icon-cashier.png" class="h-24 w-24 absolute top-[42%] -left-10" />
-          <div class="overflow-hidden self-end">
+      <div class="w-full flex-[0.8] bg-indigo-700 rounded p-[71px]">
+        <div class="bg-[#ADA3EC] h-full rounded-3xl flex flex-col relative">
+          <p class="py-[43px] px-[81px] text-[32px] font-bold text-white">Optimalkan Efisiensi Transaksi, Tingkatkan Keuntungan</p>
+          <img src="/assets/icon-cashier.png" class="h-16 w-16 absolute top-[42%] -left-8" />
+          <div class="overflow-hidden self-end flex-1 absolute bottom-0 h-3/4">
             <img
                 class="w-full h-full object-contain group-hover:scale-125 group-hover:rotate-3 duration-500"
                 src="/assets/hero-login.png"
@@ -75,6 +86,44 @@
         </div>
       </div>  
     </div>
+
+
+
+    <main class="fixed z-10 overflow-y-auto top-0 left-0 <% if(success){ %>block<% } else { %>hidden<% } %> " id="contact-popup">
+      <div class="flex items-center justify-center min-height-100vh pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+        <div class="fixed inset-0 transition-opacity">
+          <div class="absolute inset-0 bg-gray-900 opacity-90" />
+        </div>
+        <span class="hidden sm:inline-block sm:align-middle sm:h-screen">&#8203;</span>
+        <div class="inline-block align-center rounded-lg w-full text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full" role="dialog" aria-modal="true" aria-labelledby="modal-headline">
+          <div class="bg-[#6853F0] rounded-3xl py-[35px] px-[50px]"> 
+            <p class="font-bold text-white text-[32px] text-center">Hooray, Akun anda berhasil dibuat!</p>
+          </div>
+          <a href="/" class="flex justify-center mt-10 gap-2"> 
+            <p class="mr-2 text-white font-bold text-2xl ">Kembali</p>
+            <p class="text-[#6853F0] font-bold text-2xl ">login</p>
+          </a>
+        </div>
+      </div>
+    </main>
+
+
+
+    <script>
+      const idShowPassword = document.getElementById('showPassword')
+      const password = document.getElementById("password")
+      const confirmationPassword = document.getElementById("confirmationPassword")
+
+      idShowPassword.addEventListener('change', (event) => {
+        if (event.target.checked) {
+          password.type = 'text'
+          confirmationPassword.type = 'text'
+        } else {
+          password.type = 'password'
+          confirmationPassword.type = 'password'
+        }
+      })
+    </script>
 <%- include('./includes/end.ejs') %>
 
 

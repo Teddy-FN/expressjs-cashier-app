@@ -16,7 +16,7 @@ router.post("/login", (req, res, next) => {
   res.render("login.ejs", {
     pageTitle: "Login",
     url: req.protocol + "://" + req.header.host,
-    error: "Error invalid user",
+    error: "Username / Password tidak sesuai",
   });
 });
 
@@ -25,18 +25,13 @@ router.get("/register", (req, res, next) => {
   res.render("register.ejs", {
     pageTitle: "Register New Account",
     url: req.protocol + "://" + req.header.host,
-    error: "Error Invalid User",
+    error: "",
+    success: false,
   });
 });
 
 // Function Post New Account
-router.post("/register", (req, res, next) => {
-  res.render("register.ejs", {
-    pageTitle: "Register New Account",
-    url: req.protocol + "://" + req.header.host,
-    error: "",
-  });
-});
+router.post("/register", authController.registerNewUser);
 
 // Logout
 router.post("/logout", authController.logout);
