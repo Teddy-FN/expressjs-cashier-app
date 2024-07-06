@@ -81,6 +81,45 @@ exports.registerNewUser = async (req, res, next) => {
   }
 };
 
+// Reset Password
+exports.resetPassword = async (req, res, next) => {
+  const { username, newPassword } = req.body;
+
+  return db.pool.query(
+    'SELECT * FROM public."User" ORDER BY id ASC',
+    [],
+    (err, response) => {
+      const checkUser = response.rows.filter(
+        (items) => items.userName === username
+      )[0];
+      console.log("checkUser =>", checkUser);
+
+      if (!checkUser) {
+        res.render("resetPassword.ejs", {
+          pageTitle: "Register New Account",
+          url: req.protocol + "://" + req.header.host,
+          error: "User Tidak Di temukan",
+          success: false,
+        });
+      } else {
+        return db.pool.query(
+          'UPDATE public."User" SET "userName"=$1, password=$2, role=$3 WHERE id = $4',
+          [username, newPassword, checkUser?.role, Number(checkUser.id)],
+          (err, response) => {
+            console.log("response response =>", response);
+            res.render("resetPassword.ejs", {
+              pageTitle: "Reset Password",
+              url: req.protocol + "://" + req.header.host,
+              error: "",
+              success: true,
+            });
+          }
+        );
+      }
+    }
+  );
+};
+
 // User Logout
 exports.logout = (req, res, next) => {
   res.clearCookie("userName");

@@ -33,6 +33,19 @@ router.get("/register", (req, res, next) => {
 // Function Post New Account
 router.post("/register", authController.registerNewUser);
 
+// Render Reset Password
+router.get("/reset-password", (req, res, next) => {
+  res.render("resetPassword.ejs", {
+    pageTitle: "Reset Password",
+    url: req.protocol + "://" + req.header.host,
+    error: "",
+    success: false,
+  });
+});
+
+// Function Reset Password
+router.post("/reset-password", authController.resetPassword);
+
 // Logout
 router.post("/logout", authController.logout);
 
