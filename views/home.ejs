@@ -1,16 +1,117 @@
 <%- include('./includes/head.ejs') %>
   </head>
   <body>
-    <%- include('./includes/nav.ejs', {
-      admin: admin,
-      onPage: onPage,
-      navigationActive: navigationActive,
-      urlNavigation: urlNavigation,
-    }) %>
-    <main class="flex justify-between my-8">
-      <div class="flex-1 flex flex-col gap-10 overflow-hidden">
+    <div class="relative min-h-screen md:flex" data-dev-hint="container">
+      <input type="checkbox" id="menu-open" class="hidden" />
+  
+      <label for="menu-open" class="absolute right-2 bottom-2 shadow-lg rounded-full p-2 bg-gray-100 text-gray-600 md:hidden" data-dev-hint="floating action button">
+          <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+      </label>
+  
+      <header class="bg-gray-600 text-gray-100 flex justify-between md:hidden" data-dev-hint="mobile menu bar">
+          <a href="#" class="block p-4 text-white font-bold whitespace-nowrap truncate">
+              Your App is cool
+          </a>
+  
+          <label for="menu-open" id="mobile-menu-button" class="m-2 p-2 focus:outline-none hover:text-white hover:bg-gray-700 rounded-md">
+              <svg id="menu-open-icon" class="h-6 w-6 transition duration-200 ease-in-out" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+              <svg id="menu-close-icon" class="h-6 w-6 transition duration-200 ease-in-out" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+          </label>
+      </header>
+  
+      <aside id="sidebar" class="bg-gray-800 text-gray-100 w-[112px] hover:w-60  space-y-6 pt-6 px-0 absolute inset-y-0 left-0 transform md:relative md:translate-x-0 transition duration-200 ease-in-out  md:flex md:flex-col md:justify-between overflow-y-auto" data-dev-hint="sidebar; px-0 for frameless; px-2 for visually inset the navigation overflow-hidden">
+          <div class="flex flex-col space-y-6" data-dev-hint="optional div for having an extra footer navigation">
+              <a href="#" class="text-white flex items-center space-x-2 px-4" title="Your App is cool">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 flex-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+                  </svg>
+                  <span class="text-2xl font-extrabold whitespace-nowrap truncate">Your App is cool</span>
+              </a>
+  
+              <%- include('./includes/nav.ejs', {
+                admin: admin,
+                onPage: onPage,
+                navigationActive: navigationActive,
+                urlNavigation: urlNavigation,
+              }) %>
+          </div>
+  
+          <!-- <nav data-dev-hint="second-main-navigation or footer navigation">
+              <a href="#" class="block py-2 px-4 transition duration-200 hover:bg-gray-700 hover:text-white">
+                  asd
+              </a>
+              <a href="#" class="block py-2 px-4 transition duration-200 hover:bg-gray-700 hover:text-white">
+                  asd
+              </a>
+              <a href="#" class="block py-2 px-4 transition duration-200 hover:bg-gray-700 hover:text-white">
+                  asd
+              </a>
+          </nav> -->
+      </aside>
+  
+      <main id="content" class="flex-1">
+        <div class="flex justify-between items-center bg-[#ffffff10] p-[34px] shadow-lg">
+          <div class="flex flex-1 space-x-7">
+            <!-- Website Logo -->
+            <form
+              action=""
+              method="post"
+              class="items-center gap-8 flex flex-1 md:flex-[0.8]"
+            >
+            <div class="w-2/3 flex justify-end items-center relative">
+              <input
+                class="appearance-none block w-full bg-gray-200 text-gray-700 border border-1 border-[#C5C5C5] rounded-full py-3 px-10 leading-tight focus:outline-none focus:bg-white"
+                id="search"
+                type="text"
+                name="search"
+                placeholder="Search category or menu"
+              />
+              <img src="/assets/search-icon.png" class="absolute w-5 left-3" alt="Search Icon" />
+            </div>
+              <button
+                type="submit"
+                class="bg-[#6853F0] text-lg font-bold text-white py-[14px] px-[80px] rounded-full hover:bg-yellow-300 duration-200"
+              >
+                Cari
+              </button>
+            </form>
+          </div>
+          <!-- Secondary Navbar items -->
+          <div class="hidden md:flex items-center gap-[18px] space-x-3 bg-green-300">
+            <div class="m-1 mr-2 w-12 h-12 relative flex justify-center items-center rounded-full bg-green-500 text-xl text-white uppercase">zxl</div>
+            <div>
+              <p>Welcome, John!</p>
+              <p>Cashier on bonta Coffee</p>
+            </div>
+            <form action="/logout" method="post" class="hidden md:block">
+              <button
+                class="bg-[#6853F0] w-full text-lg font-bold text-white py-[14px] px-[30px] rounded-full hover:bg-yellow-300 duration-200"
+              >
+                Logout
+              </button>
+            </form>
+          </div>
+        </div>
+          <div class="max-w-7xl mx-auto">
+              <!-- Replace with your content -->
+              <div class="px-4 py-6 sm:px-0">
+                  <div class="border-4 border-dashed border-gray-200 rounded-lg h-96"></div>
+              </div>
+              <!-- /End replace -->
+          </div>
+      </main>
+  </div>
+
+    <!-- <main class="flex justify-between my-8"> -->
+      <!-- <div class="flex-1 flex flex-col gap-10 overflow-hidden"> -->
         <!-- Filter -->
-        <div class="container flex items-center gap-4 overflow-y-scroll px-4 no-scrollbar">
+        <!-- <div class="container flex items-center gap-4 overflow-y-scroll px-4 no-scrollbar">
           <% filter.forEach(function(item) {%>
             <div class="group col-span-1 cursor-pointer">
               <form action="<% if(admin){ %>/admin/filter/<%= item.value %><% } else { %>/user/filter/<%= item.value %><% } %>" method="post">
@@ -30,11 +131,11 @@
               </form>
             </div>
           <% }) %>
-        </div>
+        </div> -->
 
         
         <!-- Map Product -->
-        <div class="container mx-auto grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-4 border border-slate-700 p-4">
+        <!-- <div class="container mx-auto grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-4 border border-slate-700 p-4">
           <% prod.forEach(function(item) {%>
             <div class="w-full bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl h-fit">
               <img
@@ -132,11 +233,10 @@
               </div>
             </div>
           <% }) %>
-        </div>
+        </div> -->
       </div>
-      <!-- Cart Container -->
-      <div class="container mx-auto flex-[0.5] border border-slate-700 overflow-scroll flex flex-col justify-between p-8">
-        <!-- List Cart -->
+      
+      <!-- <div class="container mx-auto flex-[0.5] border border-slate-700 overflow-scroll flex flex-col justify-between p-8">  
         <ul>  
           <% cart.forEach(function(item, index) {%>
             <li class="flex flex-col bg-white p-5 gap-8 rounded-lg shadow-lg mb-5">
@@ -166,11 +266,11 @@
           class="bg-green-700 w-full text-base font-bold text-white py-2 rounded-md hover:bg-yellow-300 duration-200"
           onclick="toggle_visibility_invoice('invoice')"
         >Invoice</button>
-      </div>
-    </main>
+      </div> -->
+    <!-- </main> -->
     
     
-    <main class="fixed z-10 overflow-y-auto top-0 w-full left-0 hidden" id="contact-popup">
+    <!-- <main class="fixed z-10 overflow-y-auto top-0 w-full left-0 hidden" id="contact-popup">
       <div class="flex items-center justify-center min-height-100vh pt-4 px-4 pb-20 text-center sm:block sm:p-0">
         <div class="fixed inset-0 transition-opacity">
           <div class="absolute inset-0 bg-gray-900 opacity-75" />
@@ -189,10 +289,10 @@
           </div>
         </div>
       </div>
-    </main>
+    </main> -->
 
 
-    <main class="fixed z-10 overflow-y-auto top-0 w-full left-0 hidden" id="edit-popup">
+    <!-- <main class="fixed z-10 overflow-y-auto top-0 w-full left-0 hidden" id="edit-popup">
       <div class="flex items-center justify-center min-height-100vh pt-4 px-4 pb-20 text-center sm:block sm:p-0">
         <div class="fixed inset-0 transition-opacity">
           <div class="absolute inset-0 bg-gray-900 opacity-75" />
@@ -285,11 +385,11 @@
           </form>
         </div>
       </div>
-    </main>
+    </main> -->
 
 
     <!-- Pop Up Invoice -->
-    <main class="fixed z-10 overflow-scroll top-0 w-full left-0 hidden" id="invoice">
+    <!-- <main class="fixed z-10 overflow-scroll top-0 w-full left-0 hidden" id="invoice">
       <div class="flex items-center justify-center h-max pt-4 px-4 pb-20 text-center sm:block sm:p-0">
         <div class="fixed inset-0 transition-opacity overflow-scroll bg-[#111827c1]">
           <div class="absolute inset-0" />
@@ -317,12 +417,12 @@
           </div>
         </div>
       </div>
-    </main>
+    </main> -->
 
 
 
     <!-- Notification Succes -->
-    <main class="fixed z-10 overflow-scroll top-0 w-full left-0 hidden" id="notification">
+    <!-- <main class="fixed z-10 overflow-scroll top-0 w-full left-0 hidden" id="notification">
       <div class="flex items-center justify-center h-max pt-4 px-4 pb-20 text-center sm:block sm:p-0">
         <div class="fixed inset-0 transition-opacity overflow-scroll bg-[#111827c1]">
           <div class="absolute inset-0" />
@@ -358,7 +458,7 @@
           </form>
         </div>
       </div>
-    </main>
+    </main> -->
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
