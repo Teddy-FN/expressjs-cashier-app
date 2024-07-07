@@ -6,7 +6,7 @@
     <div class="flex h-screen justify-between">
       <div class="w-full flex flex-col flex-1 rounded p-[61px]">
         <img src="/assets/logo-app.png" class="w-1/4" />
-        <div class="flex m-auto flex-col w-1/2 gap-11">
+        <div class="flex m-auto flex-col w-full md:w-10/12 xl:w-1/2 gap-11">
           <p class="text-[#636363] text-[32px] font-semibold leading-[48px]">Login</p>
           <form action="/login" method="POST" class="flex flex-col">
             <div class="flex flex-col gap-3">
@@ -64,11 +64,11 @@
           </form>
         </div>
       </div>  
-      <div class="w-full flex-[0.8] bg-indigo-700 rounded p-[71px]">
+      <div class="hidden lg:block w-full flex-[0.8] bg-indigo-700 p-[71px]">
         <div class="bg-[#ADA3EC] h-full rounded-3xl flex flex-col relative">
-          <p class="py-[43px] px-[81px] text-[32px] font-bold text-white">Optimalkan Efisiensi Transaksi, Tingkatkan Keuntungan</p>
+          <p class="text-[25px] px-[43px] py-[43px] xl:px-[81px] xl:text-[32px] font-bold text-white">Optimalkan Efisiensi Transaksi, Tingkatkan Keuntungan</p>
           <img src="/assets/icon-cashier.png" class="h-16 w-16 absolute top-[42%] -left-8" />
-          <div class="overflow-hidden self-end flex-1 absolute bottom-0 h-3/4">
+          <div class="overflow-hidden self-end flex-1 absolute bottom-0 h-[70%]">
             <img
                 class="w-full h-full object-contain group-hover:scale-125 group-hover:rotate-3 duration-500"
                 src="/assets/hero-login.png"
