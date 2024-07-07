@@ -1,133 +1,46 @@
-<nav class="bg-white shadow-lg">
-  <div class="flex justify-between">
-    <div class="flex flex-1 space-x-7">
-      <!-- Website Logo -->
-      <a
-        href="<% if(admin){ %>/admin/list<% } else { %>/user/list<% } %>"
-        class="flex items-center py-4 px-2"
-      >
-        <img alt="Logo" class="h-8 w-8 mr-4 text-red-600 text-lg font-bold" />
-        <span class="font-semibold text-gray-500 text-lg">Navigation</span>
-      </a>
-
-      <form
-        action=""
-        method="post"
-        class="items-center gap-8 hidden md:flex flex-[0.5]"
-      >
-        <input
-          class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white"
-          id="search"
-          type="text"
-          name="search"
-          placeholder="Cari Product....."
-        />
-        <button
-          type="submit"
-          class="py-2 px-4 bg-green-700 text-white rounded font-medium hover:bg-yellow-300 duration-200"
-        >
-          Cari
-        </button>
-      </form>
+<nav class="flex flex-col items-center">
+  <a
+    href="<%= urlNavigation.list %>"
+    class="py-4 px-2 font-semibold flex items-center"
+  >
+    <div
+      class="w-12 h-12 relative flex justify-center items-center rounded-full <% if(onPage === navigationActive.list){ %>bg-[#6853F0]<% } else{ %>bg-[#D9D9D9] hover:text-green-500 transition duration-300<% } %>"
+    >
+      <img
+        src="/assets/list-product-icon.png"
+        class="absolute w-5"
+        alt="list Icon"
+      />
     </div>
-    <!-- Secondary Navbar items -->
-    <div class="hidden md:flex items-center space-x-3">
-      <a
-        href="<%= urlNavigation.list %>"
-        class="py-4 px-2 font-semibold <% if(onPage === navigationActive.list){ %>text-green-500 border-b-4 border-green-500<% } else{ %>text-gray-500 hover:text-green-500 transition duration-300<% } %>"
-        >List Product</a
-      >
-      <% if(admin){ %>
-      <a
-        href="<%= urlNavigation.addProduct || urlNavigation.editProduct %>"
-        class="py-4 px-2 font-semibold <% if(onPage === navigationActive.addProduct || onPage === navigationActive.editProduct){ %>text-green-500 border-b-4 border-green-500<% } else{ %>text-gray-500 hover:text-green-500 transition duration-300<% } %>"
-        >Add Product</a
-      >
-      <a
-        href="<%= urlNavigation.reportSelling %>"
-        class="py-4 px-2 font-semibold <% if(onPage === navigationActive.reportSelling){ %>text-green-500 border-b-4 border-green-500<% } else{ %>text-gray-500 hover:text-green-500 transition duration-300<% } %>"
-        >Report Selling</a
-      >
-      <% } %>
-      <form action="/logout" method="post" class="p-4">
-        <button
-          class="bg-green-700 w-full text-base font-bold text-white p-2 rounded-md hover:bg-yellow-300 duration-200"
-        >
-          Logout
-        </button>
-      </form>
+  </a>
+  <% if(admin){ %>
+  <a
+    href="<%= urlNavigation.addProduct || urlNavigation.editProduct %>"
+    class="py-4 px-2 font-semibold flex items-center"
+  >
+    <div
+      class="w-12 h-12 relative flex justify-center items-center rounded-full <% if(onPage === navigationActive.addProduct || onPage === navigationActive.editProduct){ %>bg-[#6853F0]<% } else{ %>bg-[#D9D9D9] hover:text-green-500 transition duration-300<% } %>"
+    >
+      <img
+        src="/assets/add-product-icon.png"
+        class="absolute w-5"
+        alt="add list Icon"
+      />
     </div>
-    <!-- Mobile menu button -->
-    <div class="md:hidden flex items-center">
-      <button class="outline-none mobile-menu-button">
-        <svg
-          class="w-6 h-6 text-gray-500 hover:text-green-500"
-          x-show="!showMenu"
-          fill="none"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-        >
-          <path d="M4 6h16M4 12h16M4 18h16"></path>
-        </svg>
-      </button>
+  </a>
+  <a
+    href="<%= urlNavigation.reportSelling %>"
+    class="py-4 px-2 font-semibold flex items-center"
+  >
+    <div
+      class="w-12 h-12 relative flex justify-center items-center rounded-full <% if(onPage === navigationActive.reportSelling){ %>bg-[#6853F0]<% } else{ %>bg-[#D9D9D9] hover:text-green-500 transition duration-300<% } %>"
+    >
+      <img
+        src="/assets/report-selling-icon.png"
+        class="absolute w-5"
+        alt="report selling list Icon"
+      />
     </div>
-  </div>
-
-  <!-- mobile menu -->
-  <div class="hidden mobile-menu">
-    <ul class="">
-      <li class="active">
-        <a
-          href="<%= urlNavigation.list %>"
-          class="block text-sm py-4 px-2 font-semibold <% if(onPage === navigationActive.list){ %>text-white bg-green-500 font-semibold<% } else{ %>''<% } %>"
-          >List Product</a
-        >
-      </li>
-      <li class="active">
-        <form action="" method="post" class="items-center gap-8 flex flex-col">
-          <input
-            class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white"
-            id="filtering"
-            type="text"
-            name="filtering"
-            placeholder="Cari Product....."
-          />
-          <button
-            type="submit"
-            class="py-2 px-4 w-full bg-green-700 text-white rounded font-medium hover:bg-yellow-300 duration-200"
-          >
-            Cari
-          </button>
-        </form>
-      </li>
-
-      <% if(admin){ %>
-      <li>
-        <a
-          href="<%= urlNavigation.addProduct || urlNavigation.editProduct %>"
-          class="block text-sm py-4 px-2 font-semibold <% if(onPage === navigationActive.addProduct || onPage === navigationActive.editProduct){ %>text-white bg-green-500 font-semibold<% } else{ %>''<% } %>"
-          >Add Product</a
-        >
-      </li>
-      <li>
-        <a
-          href="<%= urlNavigation.reportSelling %>"
-          class="block text-sm py-4 px-2 font-semibold <% if(onPage === navigationActive.reportSelling){ %>text-white bg-green-500 font-semibold<% } else{ %>''<% } %>"
-          >Report Selling</a
-        >
-      </li>
-      <% } %>
-    </ul>
-  </div>
-  <script>
-    const btn = document.querySelector("button.mobile-menu-button");
-    const menu = document.querySelector(".mobile-menu");
-
-    btn.addEventListener("click", () => {
-      menu.classList.toggle("hidden");
-    });
-  </script>
+  </a>
+  <% } %>
 </nav>

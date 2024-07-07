@@ -25,13 +25,10 @@
           </label>
       </header>
   
-      <aside id="sidebar" class="bg-gray-800 text-gray-100 w-[112px] hover:w-60  space-y-6 pt-6 px-0 absolute inset-y-0 left-0 transform md:relative md:translate-x-0 transition duration-200 ease-in-out  md:flex md:flex-col md:justify-between overflow-y-auto" data-dev-hint="sidebar; px-0 for frameless; px-2 for visually inset the navigation overflow-hidden">
+      <aside id="sidebar" class="bg-white text-gray-100 w-[112px] space-y-6 pt-6 px-0 absolute inset-y-0 left-0 transform md:relative md:translate-x-0 transition duration-200 ease-in-out  md:flex md:flex-col md:justify-between overflow-y-auto shadow-lg" data-dev-hint="sidebar; px-0 for frameless; px-2 for visually inset the navigation">
           <div class="flex flex-col space-y-6" data-dev-hint="optional div for having an extra footer navigation">
-              <a href="#" class="text-white flex items-center space-x-2 px-4" title="Your App is cool">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 flex-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
-                  </svg>
-                  <span class="text-2xl font-extrabold whitespace-nowrap truncate">Your App is cool</span>
+              <a href="#" class="text-black flex items-center space-x-2 px-4 py-11 justify-center" title="Your App is cool">
+                <img src="/assets/icon-app.png" class="absolute w-9" alt="Icon app" />
               </a>
   
               <%- include('./includes/nav.ejs', {
@@ -56,7 +53,7 @@
       </aside>
   
       <main id="content" class="flex-1">
-        <div class="flex justify-between items-center bg-[#ffffff10] p-[34px] shadow-lg">
+        <div class="flex justify-between items-center bg-[#ffffff70] p-[34px] shadow-lg">
           <div class="flex flex-1 space-x-7">
             <!-- Website Logo -->
             <form
@@ -83,11 +80,11 @@
             </form>
           </div>
           <!-- Secondary Navbar items -->
-          <div class="hidden md:flex items-center gap-[18px] space-x-3 bg-green-300">
+          <div class="hidden md:flex items-center gap-[18px] space-x-3">
             <div class="m-1 mr-2 w-12 h-12 relative flex justify-center items-center rounded-full bg-green-500 text-xl text-white uppercase">zxl</div>
             <div>
-              <p>Welcome, John!</p>
-              <p>Cashier on bonta Coffee</p>
+              <p class="text-[#737373] font-medium text-lg">Welcome, John!</p>
+              <p class="text-[#D9D9D9] font-medium text-[12px]">Cashier on bonta Coffee</p>
             </div>
             <form action="/logout" method="post" class="hidden md:block">
               <button
@@ -101,7 +98,7 @@
           <div class="max-w-7xl mx-auto">
               <!-- Replace with your content -->
               <div class="px-4 py-6 sm:px-0">
-                  <div class="border-4 border-dashed border-gray-200 rounded-lg h-96"></div>
+                  <div class="border-4 border-dashed border-gray-200 rounded-lg h-96">hello</div>
               </div>
               <!-- /End replace -->
           </div>
