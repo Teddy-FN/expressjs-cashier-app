@@ -95,7 +95,7 @@
             </form>
           </div>
         </div>
-        <div class="max-w-[85rem] flex justify-between bg-green-300">
+        <div class="max-w-[85rem] flex justify-between">
             <div class="flex-1 flex flex-col gap-6 overflow-hidden bg-[#D9D9D9] p-[34px]">
               <!-- Filter -->
               <div class="container flex items-center gap-4 overflow-y-scroll no-scrollbar">
@@ -126,26 +126,20 @@
       
               
               <!-- Map Product -->
-              <div class="container mx-auto grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-4 border border-slate-700">
+              <div class="container mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 <% prod.forEach(function(item) {%>
-                  <div class="w-full bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl h-fit">
+                  <div class="w-full bg-white shadow-md p-[10px] rounded-xl duration-500 hover:scale-105 hover:shadow-xl h-fit">
                     <img
                       src="/<%= item.img %>"
                       alt="<%= item.productName %>"
-                      class="object-cover rounded-t-xl h-40 w-full"
+                      class="object-cover rounded-xl h-40 w-full"
                     />
-                    <div class="px-4 py-3">
-                      <span class="text-gray-400 mr-3 uppercase text-xs"
-                        ><%= item.category %></span
-                      >
-                      <p class="text-lg font-bold text-black truncate block capitalize">
-                        <%= item.productName %>
-                      </p>
-                      <p class="text-lg font-semibold text-black cursor-auto">
-                        <%= item.price %>
-                      </p>
-                      <div class="flex items-center justify-between my-4">
-                        <form action="/cart/add-cart/" method="post">
+                    <div class="py-3">
+                      <p class="text-base font-bold text-[#737373]"><%= item.productName %></p>
+                      <p class="text-sm text-[#737373]"><%= item.category %></p>
+                      <p class="text-base font-bold text-[#737373]"><%= item.price %></p>
+                      <div class="flex items-center justify-between mt-4">
+                        <form action="/cart/add-cart/" method="post" class="w-full">
                           <div class="w-full mb-6 md:mb-0 hidden">
                             <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="category">Category</label>
                             <input 
@@ -187,7 +181,7 @@
                             >
                           </div>
                           <div class="w-full mb-6 md:mb-0">
-                            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="count">Banyak Jumlah</label>
+                            <label class="block tracking-wide text-[#CECECE] text-sm font-bold" for="count">masukan jumlah</label>
                             <input 
                               class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" 
                               id="count" 
@@ -196,12 +190,12 @@
                             >
                           </div>
                           <div class="py-3 w-full">
-                            <button class="bg-green-700 w-full text-base font-bold text-white px-4 py-2 rounded-md hover:bg-yellow-300 duration-200">Add Cart</button>
+                            <button class="bg-[#6853F0] w-full text-xs font-bold text-white py-4 rounded-md hover:bg-yellow-300 duration-200">Masukan Keranjang</button>
                           </div>
                         </form>
                       </div>
                       <% if(admin){ %>
-                      <div class="flex items-center justify-between my-4">
+                      <div class="flex items-center justify-between">
                         <a href="/admin/edit-product/<%= item.id %>" class="btn">
                           <button
                             class="bg-red-700 w-full text-base font-bold text-white px-4 py-2 rounded-md hover:bg-green-300 duration-200"
@@ -227,7 +221,8 @@
               </div>
             </div>
             
-            <div class="container mx-auto flex-[0.5] border border-slate-700 overflow-scroll flex flex-col justify-between p-8">  
+            <div class="container mx-auto flex-[0.4] overflow-scroll flex flex-col justify-between p-8">  
+              <p class="text-[#737373] text-2xl font-semibold">Jumlah Orderan :</p>
               <ul>  
                 <% cart.forEach(function(item, index) {%>
                   <li class="flex flex-col bg-white p-5 gap-8 rounded-lg shadow-lg mb-5">
