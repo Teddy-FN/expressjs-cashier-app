@@ -93,6 +93,8 @@ exports.home = async (req, res, next) => {
                   admin: role === "user" ? false : true,
                   url: req.protocol + "://" + req.header.host,
 
+                  filteringCategory: "lihat semua",
+
                   emptyFilter: responseFiltering?.rows?.length < 1,
 
                   // Filtering
@@ -230,6 +232,8 @@ exports.filteringHome = (req, res, next) => {
                     url: req.protocol + "://" + req.header.host,
 
                     emptyFilter: responseFiltering?.rows?.length < 1,
+
+                    filteringCategory: filtering,
 
                     // Filtering
                     filter: responseFiltering?.rows || [],
