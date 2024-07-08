@@ -93,6 +93,8 @@ exports.home = async (req, res, next) => {
                   admin: role === "user" ? false : true,
                   url: req.protocol + "://" + req.header.host,
 
+                  emptyFilter: responseFiltering?.rows?.length < 1,
+
                   // Filtering
                   filter: responseFiltering?.rows,
 
@@ -226,6 +228,8 @@ exports.filteringHome = (req, res, next) => {
                     cart: newResponseCart,
                     admin: role === "user" ? false : true,
                     url: req.protocol + "://" + req.header.host,
+
+                    emptyFilter: responseFiltering?.rows?.length < 1,
 
                     // Filtering
                     filter: responseFiltering?.rows || [],

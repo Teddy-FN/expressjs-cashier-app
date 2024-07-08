@@ -95,179 +95,177 @@
             </form>
           </div>
         </div>
-          <div class="max-w-7xl mx-auto">
-              <!-- Replace with your content -->
-              <div class="px-4 py-6 sm:px-0">
-                  <div class="border-4 border-dashed border-gray-200 rounded-lg h-96">hello</div>
-              </div>
-              <!-- /End replace -->
-          </div>
-      </main>
-  </div>
-
-    <!-- <main class="flex justify-between my-8"> -->
-      <!-- <div class="flex-1 flex flex-col gap-10 overflow-hidden"> -->
-        <!-- Filter -->
-        <!-- <div class="container flex items-center gap-4 overflow-y-scroll px-4 no-scrollbar">
-          <% filter.forEach(function(item) {%>
-            <div class="group col-span-1 cursor-pointer">
-              <form action="<% if(admin){ %>/admin/filter/<%= item.value %><% } else { %>/user/filter/<%= item.value %><% } %>" method="post">
-                <div class="w-full mb-6 md:mb-0 hidden">
-                  <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="filtering">filtering</label>
-                  <input 
-                    class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" 
-                    id="filtering" 
-                    type="text" 
-                    name="filtering"
-                    value="<%= item.value %>"
-                  >
-                </div>
-                <button type="submit" class="py-2 px-4 bg-green-700 text-white rounded font-medium hover:bg-yellow-300 duration-200">
-                  <%= item.name %>
-                </button>
-              </form>
-            </div>
-          <% }) %>
-        </div> -->
-
-        
-        <!-- Map Product -->
-        <!-- <div class="container mx-auto grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-4 border border-slate-700 p-4">
-          <% prod.forEach(function(item) {%>
-            <div class="w-full bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl h-fit">
-              <img
-                src="/<%= item.img %>"
-                alt="<%= item.productName %>"
-                class="object-cover rounded-t-xl h-40 w-full"
-              />
-              <div class="px-4 py-3">
-                <span class="text-gray-400 mr-3 uppercase text-xs"
-                  ><%= item.category %></span
-                >
-                <p class="text-lg font-bold text-black truncate block capitalize">
-                  <%= item.productName %>
-                </p>
-                <p class="text-lg font-semibold text-black cursor-auto">
-                  <%= item.price %>
-                </p>
-                <div class="flex items-center justify-between my-4">
-                  <form action="/cart/add-cart/" method="post">
-                    <div class="w-full mb-6 md:mb-0 hidden">
-                      <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="category">Category</label>
-                      <input 
-                        class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" 
-                        id="category" 
-                        type="text" 
-                        name="category"
-                        value="<%= item.category %>"
-                      >
-                    </div>
-                    <div class="w-full mb-6 md:mb-0 hidden">
-                      <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="price">Price</label>
-                      <input 
-                        class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" 
-                        id="price" 
-                        type="text" 
-                        name="price"
-                        value="<%= item.price %>"
-                      >
-                    </div>
-                    <div class="w-full mb-6 md:mb-0 hidden">
-                      <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="productName">Product Name</label>
-                      <input 
-                        class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" 
-                        id="productName" 
-                        type="text" 
-                        name="productName"
-                        value="<%= item.productName %>"
-                      >
-                    </div>
-                    <div class="w-full mb-6 md:mb-0 hidden">
-                      <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="id">ID</label>
-                      <input 
-                        class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" 
-                        id="id" 
-                        type="number" 
-                        name="id"
-                        value="<%= item.id %>"
-                      >
-                    </div>
-                    <div class="w-full mb-6 md:mb-0">
-                      <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="count">Banyak Jumlah</label>
-                      <input 
-                        class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" 
-                        id="count" 
-                        type="number" 
-                        name="count"
-                      >
-                    </div>
-                    <div class="py-3 w-full">
-                      <button class="bg-green-700 w-full text-base font-bold text-white px-4 py-2 rounded-md hover:bg-yellow-300 duration-200">Add Cart</button>
-                    </div>
-                  </form>
-                </div>
-                <% if(admin){ %>
-                <div class="flex items-center justify-between my-4">
-                  <a href="/admin/edit-product/<%= item.id %>" class="btn">
-                    <button
-                      class="bg-red-700 w-full text-base font-bold text-white px-4 py-2 rounded-md hover:bg-green-300 duration-200"
-                      type="submit"
-                    >
-                      Edit
-                    </button>
-                  </a>
-                  <form action="/admin/delete-product" method="POST">
-                    <input type="text" hidden value="<%= item.id %>" name="id" />
-                    <button
-                      class="bg-red-700 text-base font-bold text-white px-4 py-2 rounded-md hover:bg-green-300 duration-200"
-                      type="submit"
-                    >
-                      Delete
-                    </button>
-                  </form>
-                </div>
+        <div class="max-w-[85rem] flex justify-between bg-green-300">
+            <div class="flex-1 flex flex-col gap-6 overflow-hidden bg-[#D9D9D9] p-[34px]">
+              <!-- Filter -->
+              <div class="container flex items-center gap-4 overflow-y-scroll no-scrollbar">
+                <% if(!emptyFilter){ %>
+                  <% filter.forEach(function(item) {%>
+                      <form action="<% if(admin){ %>/admin/filter/<%= item.value %><% } else { %>/user/filter/<%= item.value %><% } %>" method="post" class="min-w-[210px]">
+                        <div class="hidden">
+                          <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="filtering">filtering</label>
+                          <input 
+                            class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" 
+                            id="filtering" 
+                            type="text" 
+                            name="filtering"
+                            value="<%= item.value %>"
+                          >
+                        </div>
+                        <button type="submit" class="bg-white text-[#CECECE] w-full py-4 px-10 rounded-full">
+                          <%= item.name %>
+                        </button>
+                      </form>
+                  <% }) %>  
+                <% } else { %>
+                  <div class="group col-span-1 cursor-pointer">
+                    <h1>Category Is Empty</h1>
+                  </div>
                 <% } %>
               </div>
-            </div>
-          <% }) %>
-        </div> -->
-      </div>
       
-      <!-- <div class="container mx-auto flex-[0.5] border border-slate-700 overflow-scroll flex flex-col justify-between p-8">  
-        <ul>  
-          <% cart.forEach(function(item, index) {%>
-            <li class="flex flex-col bg-white p-5 gap-8 rounded-lg shadow-lg mb-5">
-              <div class="flex flex-col">
-                <div class="flex-grow flex flex-col md:flex-row items-center">
-                  <p class="title font-semibold text-sm md:text-lg mb-5 md:mb-0 md:pl-5"><%= index + 1 %></p>
-                  <p class="title font-semibold text-sm md:text-lg mb-5 md:mb-0 md:pl-5"><%= item.productName %></p>
-                </div>
-                <div class="flex-grow flex flex-col md:flex-row items-center justify-center md:justify-between">
-                  <p class="title font-semibold text-sm md:text-lg mb-5 md:mb-0 md:pl-5"><%= item.price %> x <%= item.count %></p>
-                  <p class="value font-bold text-sm mt-5 md:mt-0">Total: Rp. <%= item.totalPrice %></p>
-                </div>
+              
+              <!-- Map Product -->
+              <div class="container mx-auto grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-4 border border-slate-700">
+                <% prod.forEach(function(item) {%>
+                  <div class="w-full bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl h-fit">
+                    <img
+                      src="/<%= item.img %>"
+                      alt="<%= item.productName %>"
+                      class="object-cover rounded-t-xl h-40 w-full"
+                    />
+                    <div class="px-4 py-3">
+                      <span class="text-gray-400 mr-3 uppercase text-xs"
+                        ><%= item.category %></span
+                      >
+                      <p class="text-lg font-bold text-black truncate block capitalize">
+                        <%= item.productName %>
+                      </p>
+                      <p class="text-lg font-semibold text-black cursor-auto">
+                        <%= item.price %>
+                      </p>
+                      <div class="flex items-center justify-between my-4">
+                        <form action="/cart/add-cart/" method="post">
+                          <div class="w-full mb-6 md:mb-0 hidden">
+                            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="category">Category</label>
+                            <input 
+                              class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" 
+                              id="category" 
+                              type="text" 
+                              name="category"
+                              value="<%= item.category %>"
+                            >
+                          </div>
+                          <div class="w-full mb-6 md:mb-0 hidden">
+                            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="price">Price</label>
+                            <input 
+                              class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" 
+                              id="price" 
+                              type="text" 
+                              name="price"
+                              value="<%= item.price %>"
+                            >
+                          </div>
+                          <div class="w-full mb-6 md:mb-0 hidden">
+                            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="productName">Product Name</label>
+                            <input 
+                              class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" 
+                              id="productName" 
+                              type="text" 
+                              name="productName"
+                              value="<%= item.productName %>"
+                            >
+                          </div>
+                          <div class="w-full mb-6 md:mb-0 hidden">
+                            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="id">ID</label>
+                            <input 
+                              class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" 
+                              id="id" 
+                              type="number" 
+                              name="id"
+                              value="<%= item.id %>"
+                            >
+                          </div>
+                          <div class="w-full mb-6 md:mb-0">
+                            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="count">Banyak Jumlah</label>
+                            <input 
+                              class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" 
+                              id="count" 
+                              type="number" 
+                              name="count"
+                            >
+                          </div>
+                          <div class="py-3 w-full">
+                            <button class="bg-green-700 w-full text-base font-bold text-white px-4 py-2 rounded-md hover:bg-yellow-300 duration-200">Add Cart</button>
+                          </div>
+                        </form>
+                      </div>
+                      <% if(admin){ %>
+                      <div class="flex items-center justify-between my-4">
+                        <a href="/admin/edit-product/<%= item.id %>" class="btn">
+                          <button
+                            class="bg-red-700 w-full text-base font-bold text-white px-4 py-2 rounded-md hover:bg-green-300 duration-200"
+                            type="submit"
+                          >
+                            Edit
+                          </button>
+                        </a>
+                        <form action="/admin/delete-product" method="POST">
+                          <input type="text" hidden value="<%= item.id %>" name="id" />
+                          <button
+                            class="bg-red-700 text-base font-bold text-white px-4 py-2 rounded-md hover:bg-green-300 duration-200"
+                            type="submit"
+                          >
+                            Delete
+                          </button>
+                        </form>
+                      </div>
+                      <% } %>
+                    </div>
+                  </div>
+                <% }) %>
               </div>
+            </div>
+            
+            <div class="container mx-auto flex-[0.5] border border-slate-700 overflow-scroll flex flex-col justify-between p-8">  
+              <ul>  
+                <% cart.forEach(function(item, index) {%>
+                  <li class="flex flex-col bg-white p-5 gap-8 rounded-lg shadow-lg mb-5">
+                    <div class="flex flex-col">
+                      <div class="flex-grow flex flex-col md:flex-row items-center">
+                        <p class="title font-semibold text-sm md:text-lg mb-5 md:mb-0 md:pl-5"><%= index + 1 %></p>
+                        <p class="title font-semibold text-sm md:text-lg mb-5 md:mb-0 md:pl-5"><%= item.productName %></p>
+                      </div>
+                      <div class="flex-grow flex flex-col md:flex-row items-center justify-center md:justify-between">
+                        <p class="title font-semibold text-sm md:text-lg mb-5 md:mb-0 md:pl-5"><%= item.price %> x <%= item.count %></p>
+                        <p class="value font-bold text-sm mt-5 md:mt-0">Total: Rp. <%= item.totalPrice %></p>
+                      </div>
+                    </div>
+      
+                    <div class="flex justify-end gap-4">
+                      <button class="bg-green-700 text-base font-bold text-white p-2 rounded-md hover:bg-yellow-300 duration-200" onclick="toggle_visibility_edit_cart('edit-popup', '<%= item.id %>', '<%= item.productName %>', '<%= item.price %>', '<%= item.count %>', '<%= item.userId %>', '<%= item.userName %>', '<%= item.category %>')">Edit Item</button>
+                      <form action="/cart/delete-cart/<%= item.id %>/<%= item.userId %>/<%= item.userName %>" method="post">
+                        <button class="bg-green-700 text-base font-bold text-white p-2 rounded-md hover:bg-yellow-300 duration-200">Delete Item</button>
+                      </form>
+                    </div>
+                  </li>  
+                <% }) %>
+              </ul>
+      
+              <button 
+                type="submit"
+                class="bg-green-700 w-full text-base font-bold text-white py-2 rounded-md hover:bg-yellow-300 duration-200"
+                onclick="toggle_visibility_invoice('invoice')"
+              >Invoice</button>
+            </div>
+        </main>
+    </div>
+  </div>
 
-              <div class="flex justify-end gap-4">
-                <button class="bg-green-700 text-base font-bold text-white p-2 rounded-md hover:bg-yellow-300 duration-200" onclick="toggle_visibility_edit_cart('edit-popup', '<%= item.id %>', '<%= item.productName %>', '<%= item.price %>', '<%= item.count %>', '<%= item.userId %>', '<%= item.userName %>', '<%= item.category %>')">Edit Item</button>
-                <form action="/cart/delete-cart/<%= item.id %>/<%= item.userId %>/<%= item.userName %>" method="post">
-                  <button class="bg-green-700 text-base font-bold text-white p-2 rounded-md hover:bg-yellow-300 duration-200">Delete Item</button>
-                </form>
-              </div>
-            </li>  
-          <% }) %>
-        </ul>
-
-        <button 
-          type="submit"
-          class="bg-green-700 w-full text-base font-bold text-white py-2 rounded-md hover:bg-yellow-300 duration-200"
-          onclick="toggle_visibility_invoice('invoice')"
-        >Invoice</button>
-      </div> -->
-    <!-- </main> -->
     
     
-    <!-- <main class="fixed z-10 overflow-y-auto top-0 w-full left-0 hidden" id="contact-popup">
+    
+    <main class="fixed z-10 overflow-y-auto top-0 w-full left-0 hidden" id="contact-popup">
       <div class="flex items-center justify-center min-height-100vh pt-4 px-4 pb-20 text-center sm:block sm:p-0">
         <div class="fixed inset-0 transition-opacity">
           <div class="absolute inset-0 bg-gray-900 opacity-75" />
@@ -286,10 +284,10 @@
           </div>
         </div>
       </div>
-    </main> -->
+    </main>
 
 
-    <!-- <main class="fixed z-10 overflow-y-auto top-0 w-full left-0 hidden" id="edit-popup">
+    <main class="fixed z-10 overflow-y-auto top-0 w-full left-0 hidden" id="edit-popup">
       <div class="flex items-center justify-center min-height-100vh pt-4 px-4 pb-20 text-center sm:block sm:p-0">
         <div class="fixed inset-0 transition-opacity">
           <div class="absolute inset-0 bg-gray-900 opacity-75" />
@@ -382,11 +380,11 @@
           </form>
         </div>
       </div>
-    </main> -->
+    </main>
 
 
     <!-- Pop Up Invoice -->
-    <!-- <main class="fixed z-10 overflow-scroll top-0 w-full left-0 hidden" id="invoice">
+    <main class="fixed z-10 overflow-scroll top-0 w-full left-0 hidden" id="invoice">
       <div class="flex items-center justify-center h-max pt-4 px-4 pb-20 text-center sm:block sm:p-0">
         <div class="fixed inset-0 transition-opacity overflow-scroll bg-[#111827c1]">
           <div class="absolute inset-0" />
@@ -414,12 +412,12 @@
           </div>
         </div>
       </div>
-    </main> -->
+    </main>
 
 
 
     <!-- Notification Succes -->
-    <!-- <main class="fixed z-10 overflow-scroll top-0 w-full left-0 hidden" id="notification">
+    <main class="fixed z-10 overflow-scroll top-0 w-full left-0 hidden" id="notification">
       <div class="flex items-center justify-center h-max pt-4 px-4 pb-20 text-center sm:block sm:p-0">
         <div class="fixed inset-0 transition-opacity overflow-scroll bg-[#111827c1]">
           <div class="absolute inset-0" />
@@ -455,7 +453,7 @@
           </form>
         </div>
       </div>
-    </main> -->
+    </main>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
