@@ -112,7 +112,7 @@
                             value="<%= item.value %>"
                           >
                         </div>
-                        <button type="submit" class="bg-white text-[#CECECE] w-full py-4 px-10 rounded-full">
+                        <button type="submit" class="<% if(item.value === filteringCategory){ %>text-white bg-[#6853F0]<% } else { %>bg-white text-[#CECECE]<% } %>  w-full py-4 px-10 rounded-full">
                           <%= item.name %>
                         </button>
                       </form>
@@ -221,7 +221,7 @@
               </div>
             </div>
             
-            <div class="container mx-auto flex-[0.4] overflow-scroll flex flex-col justify-between p-8">  
+            <div class="container mx-auto flex-[0.4] overflow-scroll flex flex-col justify-between p-8 relative">  
               <p class="text-[#737373] text-2xl font-semibold">Jumlah Orderan :</p>
               <ul>  
                 <% cart.forEach(function(item, index) {%>
@@ -247,11 +247,24 @@
                 <% }) %>
               </ul>
       
-              <button 
-                type="submit"
-                class="bg-green-700 w-full text-base font-bold text-white py-2 rounded-md hover:bg-yellow-300 duration-200"
-                onclick="toggle_visibility_invoice('invoice')"
-              >Invoice</button>
+              <div class="fixed bottom-0 w-1/4 mb-8 flex flex-col gap-4 border-t border-[#D9D9D9]">
+                <div class="flex justify-between items-center mt-4">
+                  <p class="font-semibold text-2xl text-[#737373]">Total: </p>
+                  <p class="font-semibold text-2xl text-[#737373]">Rp. 60.000 </p>
+                </div>
+                <div class="flex justify-between items-center gap-10 mt-4">
+                  <button 
+                    type="submit"
+                    class="bg-[#D9D9D9] w-full text-lg font-bold text-white py-2 rounded-full hover:bg-yellow-300 duration-200"
+                    onclick="toggle_visibility_invoice('invoice')"
+                  >Custom Nota</button>
+                  <button 
+                    type="submit"
+                    class="bg-[#6853F0] w-full text-lg font-bold text-white py-2 rounded-full hover:bg-yellow-300 duration-200"
+                    onclick="toggle_visibility_invoice('invoice')"
+                  >Print Nota</button>
+                </div>
+              </div>
             </div>
         </main>
     </div>
