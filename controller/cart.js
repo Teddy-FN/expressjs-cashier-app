@@ -7,28 +7,29 @@ const invoiceDate = new Date();
 exports.Addcart = async (req, res, next) => {
   const allCokies = req?.headers?.cookie?.split("; ") || [];
   const getUserName = allCokies
-    ?.filter((items) => items.includes("userName"))?.[0]
+    ?.filter((items) => items?.includes("userName"))?.[0]
     ?.replace("userName=", "");
   const getUserId = allCokies
-    ?.filter((items) => items.includes("id="))?.[0]
+    ?.filter((items) => items?.includes("id="))?.[0]
     ?.replace("id=", "");
-  const { category, price, productName, count } = req.body;
+  const { category, price, productName, count, img } = req.body;
 
-  const priceNumber = Number(price.replace("Rp", "").replace(".", ""));
+  const priceNumber = Number(price?.replace("Rp", "")?.replace(".", ""));
   const countNumber = Number(count);
 
   const total = priceNumber * countNumber;
 
   await db.pool.query(
-    'INSERT INTO public."Cart"("productName", category, count, price, "totalPrice", "userId", "userName") VALUES ($1, $2, $3, $4, $5, $6, $7)',
+    'INSERT INTO public."Cart"("productName", category, count, price, "totalPrice", "userId", "userName", img) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)',
     [
       productName,
       category,
       count,
-      price.replace("Rp", "").replace(".", ""),
-      total.toString(),
+      price?.replace("Rp", "")?.replace(".", ""),
+      total?.toString(),
       Number(getUserId),
       getUserName,
+      img,
     ],
     (err, response) => {
       res.redirect("/admin/list");
@@ -59,6 +60,7 @@ exports.editCart = async (req, res, next) => {
     getUserId,
     getUserName,
     getCategory,
+    img,
   } = req.body;
 
   const priceNumber = Number(priceCart.replace("Rp", "").replace(".", ""));
@@ -68,7 +70,7 @@ exports.editCart = async (req, res, next) => {
 
   // Get All And Filter By ID
   return await db.pool.query(
-    'UPDATE public."Cart" SET "productName" = $1, category = $2, count = $3, price = $4, "totalPrice" = $5, "userId" = $6, "userName" = $7 WHERE id = $8',
+    'UPDATE public."Cart" SET "productName" = $1, category = $2, count = $3, price = $4, "totalPrice" = $5, "userId" = $6, "userName" = $7, img = $8 WHERE id = $9',
     [
       productNameCart,
       getCategory,
@@ -77,6 +79,7 @@ exports.editCart = async (req, res, next) => {
       total.toString(),
       getUserId,
       getUserName,
+      img,
       idEditCart,
     ],
     (err, response) => {
