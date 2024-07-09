@@ -96,7 +96,7 @@
           </div>
         </div>
         <div class="max-w-[85rem] flex justify-between">
-            <div class="flex-1 flex flex-col gap-6 overflow-hidden bg-[#D9D9D9] p-[34px]">
+            <div class="flex-1 flex flex-col gap-2 overflow-hidden bg-[#D9D9D9] py-[34px] pl-[34px]">
               <!-- Filter -->
               <div class="container flex items-center gap-4 overflow-y-scroll no-scrollbar">
                 <% if(!emptyFilter){ %>
@@ -112,7 +112,7 @@
                             value="<%= item.value %>"
                           >
                         </div>
-                        <button type="submit" class="<% if(item.value === filteringCategory){ %>text-white bg-[#6853F0]<% } else { %>bg-white text-[#CECECE]<% } %>  w-full py-4 px-10 rounded-full">
+                        <button type="submit" class="<% if(item.value === filteringCategory){ %>text-white bg-[#6853F0]<% } else { %>bg-white text-[#CECECE]<% } %> font-bold  w-full py-4 px-10 rounded-full">
                           <%= item.name %>
                         </button>
                       </form>
@@ -126,7 +126,7 @@
       
               
               <!-- Map Product -->
-              <div class="container mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              <div class="container mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 pr-[34px]">
                 <% prod.forEach(function(item) {%>
                   <div class="w-full bg-white shadow-md p-[10px] rounded-xl duration-500 hover:scale-105 hover:shadow-xl h-fit">
                     <img
@@ -180,6 +180,16 @@
                               value="<%= item.id %>"
                             >
                           </div>
+                          <div class="w-full mb-6 md:mb-0 hidden">
+                            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="img">img</label>
+                            <input 
+                              class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" 
+                              id="img" 
+                              type="text" 
+                              name="img"
+                              value="<%= item.img %>"
+                            >
+                          </div>
                           <div class="w-full mb-6 md:mb-0">
                             <label class="block tracking-wide text-[#CECECE] text-sm font-bold" for="count">masukan jumlah</label>
                             <input 
@@ -221,59 +231,78 @@
               </div>
             </div>
             
-            <div class="container mx-auto flex-[0.4] overflow-scroll flex flex-col justify-between p-8 relative">  
-              <p class="text-[#737373] text-2xl font-semibold">Jumlah Orderan :</p>
-              <ul>  
+            <div class="container mx-auto flex-[0.4] overflow-scroll flex flex-col relative">  
+              <p class="text-[#737373] text-2xl font-semibold mb-6 px-8 mt-8">Jumlah Orderan :</p>
+              <ul class="px-8">  
                 <% cart.forEach(function(item, index) {%>
-                  <li class="flex flex-col bg-white p-5 gap-8 rounded-lg shadow-lg mb-5">
-                    <div class="flex flex-col">
-                      <div class="flex-grow flex flex-col md:flex-row items-center">
-                        <p class="title font-semibold text-sm md:text-lg mb-5 md:mb-0 md:pl-5"><%= index + 1 %></p>
-                        <p class="title font-semibold text-sm md:text-lg mb-5 md:mb-0 md:pl-5"><%= item.productName %></p>
-                      </div>
-                      <div class="flex-grow flex flex-col md:flex-row items-center justify-center md:justify-between">
-                        <p class="title font-semibold text-sm md:text-lg mb-5 md:mb-0 md:pl-5"><%= item.price %> x <%= item.count %></p>
-                        <p class="value font-bold text-sm mt-5 md:mt-0">Total: Rp. <%= item.totalPrice %></p>
+                  <li class="flex bg-white gap-8 rounded-lg mb-5 relative">
+                    <div class="flex flex-1 gap-4">
+                      <img
+                        src="/<%= item.img %>"
+                        alt="<%= item.productName %>"
+                        class="object-cover rounded-xl w-20 h-20"
+                      />
+                      <div class="flex flex-col justify-evenly">
+                        <p class="title font-medium text-sm text-[#737373] md:text-lg"><%= item.productName %></p>
+                        <p class="title font-medium text-sm text-[#737373] md:text-lg"><%= item.count %>x</p>
                       </div>
                     </div>
+                    <div class="flex flex-col items-center justify-end flex-[0.4] mb-2">
+                      <p class="text-[#6853F0] font-medium text-base mt-5 md:mt-0"><%= item.totalPrice %></p>
+                    </div>
+
+                    <!-- Delete Icon -->
+                    <div
+                    class="w-8 h-8 flex justify-center items-center rounded-full bg-[#ff0f0f] absolute -top-[10px] -left-4 cursor-pointer"
+                  >
+                    <img
+                      src="/assets/trash-icon.png"
+                      class="w-4 fill-white"
+                      alt="list Icon"
+                    />
+                  </div>
+                    
+                    
       
-                    <div class="flex justify-end gap-4">
+                    <!-- <div class="flex justify-end gap-4">
                       <button class="bg-green-700 text-base font-bold text-white p-2 rounded-md hover:bg-yellow-300 duration-200" onclick="toggle_visibility_edit_cart('edit-popup', '<%= item.id %>', '<%= item.productName %>', '<%= item.price %>', '<%= item.count %>', '<%= item.userId %>', '<%= item.userName %>', '<%= item.category %>')">Edit Item</button>
                       <form action="/cart/delete-cart/<%= item.id %>/<%= item.userId %>/<%= item.userName %>" method="post">
                         <button class="bg-green-700 text-base font-bold text-white p-2 rounded-md hover:bg-yellow-300 duration-200">Delete Item</button>
                       </form>
-                    </div>
+                    </div> -->
                   </li>  
                 <% }) %>
               </ul>
       
-              <div class="fixed bottom-0 w-1/4 mb-8 flex flex-col gap-4 border-t border-[#D9D9D9]">
-                <div class="flex justify-between items-center mt-4">
-                  <p class="font-semibold text-2xl text-[#737373]">Total: </p>
-                  <p class="font-semibold text-2xl text-[#737373]">Rp. 60.000 </p>
-                </div>
-                <div class="flex justify-between items-center gap-10 mt-4">
-                  <button 
-                    type="submit"
-                    class="bg-[#D9D9D9] w-full text-lg font-bold text-white py-2 rounded-full hover:bg-yellow-300 duration-200"
-                    onclick="toggle_visibility_invoice('invoice')"
-                  >Custom Nota</button>
-                  <button 
-                    type="submit"
-                    class="bg-[#6853F0] w-full text-lg font-bold text-white py-2 rounded-full hover:bg-yellow-300 duration-200"
-                    onclick="toggle_visibility_invoice('invoice')"
-                  >Print Nota</button>
+              <div class="fixed bottom-0 w-[27%] mb-8 bg-white z-10 px-8">
+                <div class="flex flex-col gap-4 border-t border-[#D9D9D9]">
+                  <div class="flex justify-between items-center mt-4">
+                    <p class="font-semibold text-2xl text-[#737373]">Total: </p>
+                    <p class="font-semibold text-2xl text-[#737373]">Rp. 60.000 </p>
+                  </div>
+                  <div class="flex justify-between items-center gap-10 mt-4">
+                    <button 
+                      type="submit"
+                      class="bg-[#D9D9D9] w-full text-lg font-bold text-white py-2 rounded-full hover:bg-yellow-300 duration-200"
+                      onclick="toggle_visibility_invoice('invoice')"
+                    >Custom Nota</button>
+                    <button 
+                      type="submit"
+                      class="bg-[#6853F0] w-full text-lg font-bold text-white py-2 rounded-full hover:bg-yellow-300 duration-200"
+                      onclick="toggle_visibility_invoice('invoice')"
+                    >Print Nota</button>
                 </div>
               </div>
             </div>
-        </main>
+          </div>
+      </main>
     </div>
   </div>
 
     
     
     
-    <main class="fixed z-10 overflow-y-auto top-0 w-full left-0 hidden" id="contact-popup">
+  <main class="fixed z-10 overflow-y-auto top-0 w-full left-0 hidden" id="contact-popup">
       <div class="flex items-center justify-center min-height-100vh pt-4 px-4 pb-20 text-center sm:block sm:p-0">
         <div class="fixed inset-0 transition-opacity">
           <div class="absolute inset-0 bg-gray-900 opacity-75" />
@@ -292,10 +321,10 @@
           </div>
         </div>
       </div>
-    </main>
+  </main>
 
 
-    <main class="fixed z-10 overflow-y-auto top-0 w-full left-0 hidden" id="edit-popup">
+  <main class="fixed z-10 overflow-y-auto top-0 w-full left-0 hidden" id="edit-popup">
       <div class="flex items-center justify-center min-height-100vh pt-4 px-4 pb-20 text-center sm:block sm:p-0">
         <div class="fixed inset-0 transition-opacity">
           <div class="absolute inset-0 bg-gray-900 opacity-75" />
@@ -388,11 +417,11 @@
           </form>
         </div>
       </div>
-    </main>
+  </main>
 
 
     <!-- Pop Up Invoice -->
-    <main class="fixed z-10 overflow-scroll top-0 w-full left-0 hidden" id="invoice">
+  <main class="fixed z-10 overflow-scroll top-0 w-full left-0 hidden" id="invoice">
       <div class="flex items-center justify-center h-max pt-4 px-4 pb-20 text-center sm:block sm:p-0">
         <div class="fixed inset-0 transition-opacity overflow-scroll bg-[#111827c1]">
           <div class="absolute inset-0" />
@@ -420,12 +449,12 @@
           </div>
         </div>
       </div>
-    </main>
+  </main>
 
 
 
     <!-- Notification Succes -->
-    <main class="fixed z-10 overflow-scroll top-0 w-full left-0 hidden" id="notification">
+  <main class="fixed z-10 overflow-scroll top-0 w-full left-0 hidden" id="notification">
       <div class="flex items-center justify-center h-max pt-4 px-4 pb-20 text-center sm:block sm:p-0">
         <div class="fixed inset-0 transition-opacity overflow-scroll bg-[#111827c1]">
           <div class="absolute inset-0" />
@@ -461,18 +490,18 @@
           </form>
         </div>
       </div>
-    </main>
+  </main>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script>
-      function toggle_visibility(id) {
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script>
+    function toggle_visibility(id) {
         var e = document.getElementById(id);
         if (e.style.display == "block") e.style.display = "none";
         else e.style.display = "block";
       }
 
-      // Edit Cart
-      function toggle_visibility_edit_cart(id, idCart ,productName, price, count, getUserId, getUserName, getCategory) {
+    // Edit Cart
+    function toggle_visibility_edit_cart(id, idCart ,productName, price, count, getUserId, getUserName, getCategory) {
          var e = document.getElementById(id);
          let formEditCart = document.getElementById('edit-cart')
         document.getElementById('idEditCart').value = idCart
@@ -486,19 +515,19 @@
          else e.style.display = "block";
       }
 
-       // Select To Invoice
-      function toggle_visibility_invoice(id) {
+    // Select To Invoice
+    function toggle_visibility_invoice(id) {
         var e = document.getElementById(id);
         if (e.style.display == "block") e.style.display = "none";
         else e.style.display = "block";
       }
       
       
-      let btnGeneratePdf = document.getElementById("generatePDF");
-      const element = document.getElementById('htmlContent');
-      const getFormInvoice = document.getElementById('invoiceForm');
+    let btnGeneratePdf = document.getElementById("generatePDF");
+    const element = document.getElementById('htmlContent');
+    const getFormInvoice = document.getElementById('invoiceForm');
       
-      const opt = {
+    const opt = {
         margin: 0, //top, left, buttom, right
         // filename: 'filename' + '.pdf',
         filename:     'myfile.pdf',
@@ -507,14 +536,12 @@
         jsPDF: { unit: 'mm', format: 'tabloid', orientation: 'portrait'},
       };
       
-      btnGeneratePdf.addEventListener("click", function(){
-        const datasBaru = html2pdf().set(opt).from(element).save('filename.pdf')
-        console.log('DATAS BARU =>', datasBaru);
-        var e = document.getElementById('notification');
-        e.style.display = "block";
-        toggle_visibility_invoice('invoice')
-      });
-      
-      
-    </script>
+    btnGeneratePdf.addEventListener("click", function(){
+      const datasBaru = html2pdf().set(opt).from(element).save('filename.pdf')
+      console.log('DATAS BARU =>', datasBaru);
+      var e = document.getElementById('notification');
+      e.style.display = "block";
+      toggle_visibility_invoice('invoice')
+    });  
+  </script>
 <%- include('./includes/end.ejs') %>
