@@ -5,6 +5,8 @@ const cookieParser = require("cookie-parser");
 const { credentials } = require("./config");
 const port = 5000;
 
+require("dotenv").config({ path: path.resolve(__dirname, ".env") });
+
 // Routes
 const authRoutes = require("./routes/auth");
 const adminRoutes = require("./routes/admin");
