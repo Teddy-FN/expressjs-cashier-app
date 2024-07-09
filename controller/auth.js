@@ -14,6 +14,7 @@ exports.login = (req, res, next) => {
     'SELECT id, "userName", password, role FROM public."User"',
     [],
     (err, response) => {
+      console.log('RESPONSE =>', response);
       const dataResponse = response?.rows?.filter(
         (items) => items.userName === username && items.password === password
       );
