@@ -4,6 +4,7 @@ const invoiceDate = new Date();
 
 exports.home = async (req, res, next) => {
   const { search = "" } = req.body;
+  console.log("SEARCH =>", search);
   const allCokies = req?.headers?.cookie?.split("; ") || [];
   const getUserId = allCokies
     ?.filter((items) => items.includes("id="))?.[0]
@@ -17,7 +18,7 @@ exports.home = async (req, res, next) => {
 
   const querySearch = !search
     ? 'SELECT * FROM public."ListProduct"'
-    : 'SELECT * FROM public."ListProduct" WHERE LOWER("productName") = $1';
+    : `SELECT * FROM public."ListProduct" WHERE LOWER("productName") LIKE '%${search}%'`;
 
   // Data User
   const user = {
@@ -29,8 +30,10 @@ exports.home = async (req, res, next) => {
   return db.pool.query(
     // Query Get All Product
     querySearch,
-    !search ? [] : [search.toLowerCase()],
+    [],
     (err, responseProd) => {
+      console.log("ERR", err);
+      console.log("responseProd =>", responseProd);
       return db.pool.query(
         // Query Get Product Checkout
         'SELECT * FROM public."Cart" WHERE "userId" = $1 AND "userName" = $2',
@@ -83,8 +86,6 @@ exports.home = async (req, res, next) => {
                 });
               }
 
-              console.log("prod.totalPrice =>", totalInvoice);
-
               if (res.statusCode === 200) {
                 res.render("home.ejs", {
                   pageTitle: role === "user" ? "User Page" : "Admin Page",
@@ -107,7 +108,15 @@ exports.home = async (req, res, next) => {
                   invoiceDate: moment(invoiceDate).format("DD/MM/YYYY"),
 
                   // Total Invoice
-                  totalInvoice: totalInvoice,
+                  totalInvoice: totalInvoice
+                    ? new Intl.NumberFormat("id-ID", {
+                        style: "currency",
+                        currency: "IDR",
+                      })
+                        .format(Number(totalInvoice))
+                        .toString()
+                        .replace(",00", "")
+                    : "Rp. 0",
 
                   // Auth Login
                   auth: JSON.stringify(user),
@@ -244,7 +253,15 @@ exports.filteringHome = (req, res, next) => {
                     invoiceDate: moment(invoiceDate).format("DD/MM/YYYY"),
 
                     // Total Invoice
-                    totalInvoice: totalInvoice,
+                    totalInvoice: totalInvoice
+                      ? new Intl.NumberFormat("id-ID", {
+                          style: "currency",
+                          currency: "IDR",
+                        })
+                          .format(Number(totalInvoice))
+                          .toString()
+                          .replace(",00", "")
+                      : "Rp. 0",
 
                     invoiceProduct: JSON.stringify(responseCart?.rows),
 

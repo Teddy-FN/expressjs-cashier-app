@@ -1,111 +1,507 @@
-<%- include('../includes/head.ejs', {
-  url: url
-}) %>
+<%- include('../includes/head.ejs') %>
   </head>
   <body>
-    <%- include('../includes/nav.ejs', {
-      admin: admin,
-      onPage: onPage,
-      navigationActive: navigationActive,
-      urlNavigation: urlNavigation,
-    }) %>
-    <div class="h-screen my-10 flex flex-col items-center gap-4">
-      <% if(item.id){ %><h1>Edit Product</h1><% } else{ %><h1>Add Product</h1><% } %>
-      <form class="max-w-lg px-4 md:px-0" action="<% if(item.id){ %>/admin/edit-product/<%= item.id %><% } else{ %>/admin/add-product<% } %>" method="post" enctype="multipart/form-data">
-        <div class="flex flex-wrap mb-6">
-          <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="nameproduct">
-              Name Product
-            </label>
-            <input 
-              class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" 
-              id="nameproduct" 
-              type="text" 
-              name="product"
-              value="<%= item.product || '' %>"
-            >
+    <div class="relative min-h-screen md:flex" data-dev-hint="container">
+      <input type="checkbox" id="menu-open" class="hidden" />
+  
+      <label for="menu-open" class="absolute right-2 bottom-2 shadow-lg rounded-full p-2 bg-gray-100 text-gray-600 md:hidden" data-dev-hint="floating action button">
+          <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+      </label>
+  
+      <header class="bg-gray-600 text-gray-100 flex justify-between md:hidden" data-dev-hint="mobile menu bar">
+          <a href="#" class="block p-4 text-white font-bold whitespace-nowrap truncate">
+              Your App is cool
+          </a>
+  
+          <label for="menu-open" id="mobile-menu-button" class="m-2 p-2 focus:outline-none hover:text-white hover:bg-gray-700 rounded-md">
+              <svg id="menu-open-icon" class="h-6 w-6 transition duration-200 ease-in-out" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+              <svg id="menu-close-icon" class="h-6 w-6 transition duration-200 ease-in-out" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+          </label>
+      </header>
+  
+      <aside id="sidebar" class="bg-white text-gray-100 w-[80px] space-y-6 pt-6 px-0 absolute inset-y-0 left-0 transform md:relative md:translate-x-0 transition duration-200 ease-in-out  md:flex md:flex-col md:justify-between overflow-y-auto shadow-lg" data-dev-hint="sidebar; px-0 for frameless; px-2 for visually inset the navigation">
+          <div class="flex flex-col space-y-6" data-dev-hint="optional div for having an extra footer navigation">
+              <a href="#" class="text-black flex items-center space-x-2 px-4 py-11 justify-center" title="Your App is cool">
+                <img src="/assets/icon-app.png" class="absolute w-9" alt="Icon app" />
+              </a>
+  
+              <%- include('../includes/nav.ejs', {
+                admin: admin,
+                onPage: onPage,
+                navigationActive: navigationActive,
+                urlNavigation: urlNavigation,
+              }) %>
           </div>
-          <div class="w-full md:w-1/2 px-3">
-            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
-              Image Product
-            </label>
-            <input 
-              accept=".jpg,.jpeg,.png,.gif" 
-              class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" 
-              type="file"
-              name="image"
-              value="<%= item.img || '' %>"
-              id="uploadImage"
-              onchange="PreviewImage()"
+  
+          <!-- <nav data-dev-hint="second-main-navigation or footer navigation">
+              <a href="#" class="block py-2 px-4 transition duration-200 hover:bg-gray-700 hover:text-white">
+                  asd
+              </a>
+              <a href="#" class="block py-2 px-4 transition duration-200 hover:bg-gray-700 hover:text-white">
+                  asd
+              </a>
+              <a href="#" class="block py-2 px-4 transition duration-200 hover:bg-gray-700 hover:text-white">
+                  asd
+              </a>
+          </nav> -->
+      </aside>
+  
+      <main id="content" class="flex-1">
+        <div class="flex justify-between items-center bg-[#ffffff70] p-[34px] shadow-lg">
+          <div class="flex flex-1 space-x-7">
+            <!-- Website Logo -->
+            <form
+              action=""
+              method="post"
+              class="items-center gap-8 flex flex-1 md:flex-[0.8]"
             >
+            <div class="w-2/3 flex justify-end items-center relative">
+              <input
+                class="appearance-none block w-full bg-gray-200 text-gray-700 border border-1 border-[#C5C5C5] rounded-full py-3 px-10 leading-tight focus:outline-none focus:bg-white"
+                id="search"
+                type="text"
+                name="search"
+                placeholder="Search category or menu"
+              />
+              <img src="/assets/search-icon.png" class="absolute w-5 left-3" alt="Search Icon" />
+            </div>
+              <button
+                type="submit"
+                class="bg-[#6853F0] text-lg font-bold text-white py-[14px] px-[80px] rounded-full hover:bg-yellow-300 duration-200"
+              >
+                Cari
+              </button>
+            </form>
+          </div>
+          <!-- Secondary Navbar items -->
+          <div class="hidden md:flex items-center gap-[18px] space-x-3">
+            <div class="m-1 mr-2 w-12 h-12 relative flex justify-center items-center rounded-full bg-green-500 text-xl text-white uppercase">zxl</div>
+            <div>
+              <p class="text-[#737373] font-medium text-lg">Welcome, John!</p>
+              <p class="text-[#D9D9D9] font-medium text-[12px]">Cashier on bonta Coffee</p>
+            </div>
+            <form action="/logout" method="post" class="hidden md:block">
+              <button
+                class="bg-[#6853F0] w-full text-lg font-bold text-white py-[14px] px-[30px] rounded-full hover:bg-yellow-300 duration-200"
+              >
+                Logout
+              </button>
+            </form>
           </div>
         </div>
-        
-        <!-- Show Image -->
-        <img id="uploadPreview" class="border-pink-100 border w-full px-4 mb-6" src="<% if(item.id){ %>/<%= item.img || '' %><% } else{ %>#<% } %>" />
-        <!-- End Show Image -->
-         
-        <div class="flex flex-wrap mb-6">
-          <div class="w-full px-3">
-            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="price">
-              Price Product
-            </label>
-            <input 
-              class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" 
-              id="price"
-              type="number"
-              name="price"
-              value="<%= item.price || '' %>"
-              >
-          </div>
-        </div>
-        <div class="flex flex-wrap mb-6">
-          <div class="w-full px-3">
-            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="category">
-              Category Product
-            </label>
-            <div class="relative">
-              <select 
-                class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" 
-                id="category"
-                name="category"
-                value="<%= item.category || '' %>"
-              >
-                <option value="makanan">Makanan</option>
-                <option value="mainan">Mainan</option>
-                <option value="minuman">Minuman</option>
-              </select>
-              <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+        <div class="flex flex-col justify-center items-center py-20 gap-10">
+          <h1 class="text-[#636363] font-semibold text-[32px] leading-10"><% if(item.id){ %>Ubah Product<% } else{ %>Tambah Product<% } %></h1>
+          <form class="max-w-lg px-4 md:px-0" action="<% if(item.id){ %>/admin/edit-product/<%= item.id %><% } else{ %>/admin/add-product<% } %>" method="post" enctype="multipart/form-data">
+            <div class="flex flex-wrap mb-6">
+              <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                <label class="block tracking-wide text-[#828282] text-lg font-semibold mb-3" for="nameproduct">
+                  Nama Product
+                </label>
+                <input 
+                  class="appearance-none block w-full bg-gray-200 text-gray-700 border-2 border-[#C5C5C5] rounded-xl py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" 
+                  id="nameproduct" 
+                  type="text" 
+                  name="product"
+                  value="<%= item.product || '' %>"
+                  placeholder="Nama Product"
+                >
+              </div>
+              <div class="w-full md:w-1/2 px-3">
+                <label class="block tracking-wide text-[#828282] text-lg font-semibold mb-3">
+                  Harga Product
+                </label>
+                <input 
+                  class="appearance-none block w-full bg-gray-200 text-gray-700 border-2 border-[#C5C5C5] rounded-xl py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" 
+                  id="price"
+                  type="number"
+                  name="price"
+                  value="<%= item.price || '' %>" 
+                  placeholder="Harga Product"
+                >
               </div>
             </div>
+
+            <!-- Deskripsi -->
+            <div class="flex flex-col flex-wrap mb-6 w-full px-3">
+              <label class="block tracking-wide text-[#828282] text-lg font-semibold mb-3" for="description">
+                Deskripsi
+              </label>
+              <textarea 
+                class="appearance-none block w-full bg-gray-200 text-gray-700 border-2 border-[#C5C5C5] rounded-xl py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" 
+                id="description"
+                name="description"
+                value="<%= item.description || '' %>" 
+                placeholder="Deskripsi"
+              ></textarea>
+            </div>
+            
+            
+            
+            <div class="flex flex-col flex-wrap mb-6 w-full px-3">  
+              <label class="block tracking-wide text-[#828282] text-lg font-semibold mb-3" for="uploadImage">
+                Gambar
+              </label>
+              <div class="w-32 h-32 border-2 border-[#C5C5C5] rounded-xl py-3 px-4 relative" id="container-img">
+                <div class="border-2 rounded-xl p-1 border-dotted border-[#737373] w-full h-full flex justify-center items-center" >
+                  <label for="uploadImage">
+                    <img src="/assets/add-file-icon.png" class="cursor-pointer" />
+                  </label>
+                  <input 
+                    accept=".jpg,.jpeg,.png,.gif" 
+                    class="appearance-none w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500 hidden" 
+                    type="file"
+                    name="image"
+                    value="<%= item.img || '' %>"
+                    id="uploadImage"
+                    onchange="PreviewImage()"
+                  >
+                  <img id="uploadPreview" class="w-full h-full" src="<% if(item.id){ %>/<%= item.img || '' %><% } else{ %>#<% } %>" />
+                </div>
+                <img id="removeImg" class="hidden" src="/assets/remove.png" onclick="RemoveImg()" />
+              </div>
+              
+            </div>
+            <div class="flex flex-col flex-wrap mb-6 w-full px-3">
+              <label class="block tracking-wide text-[#828282] text-lg font-semibold mb-3" for="category">
+                Category Product
+              </label>
+              <div class="relative flex justify-between items-center">
+                <select 
+                  class="appearance-none block w-full bg-gray-200 text-gray-700 border-2 border-[#C5C5C5] rounded-xl py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" 
+                  id="category"
+                  name="category"
+                  value="<%= item.category || '' %>"
+                >
+                  <option value="makanan">Makanan</option>
+                  <option value="mainan">Mainan</option>
+                  <option value="minuman">Minuman</option>
+                </select>
+                <div class="pointer-events-none absolute -translate-x-[0.5rem] -translate-y-[0.3rem] right-0 flex items-center px-2 text-gray-700">
+                  <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+                </div>
+              </div>
+            </div>
+            <div class="flex items-center justify-between">
+            <button type="button" class="py-2 px-4 font-semibold text-lg text-[#ADA3EC] underline decoration-[#ADA3EC] rounded" onclick="toggle_visibility_delete_cart('delete-cart')">Kembali</button>
+            <button type="submit" class="py-2 px-4 font-semibold text-lg bg-[#6853F0] text-white rounded-full hover:bg-blue-700 transition duration-500">
+              <% if(item.id){ %>Ubah<% } else{ %>Tambahkan<% } %> 
+            </button>
+            </div>
+          </form>
+      </main>
+    </div>
+  </div>
+
+  <main class="fixed z-10 overflow-y-auto top-0 w-full left-0 hidden" id="contact-popup">
+      <div class="flex items-center justify-center min-height-100vh pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+        <div class="fixed inset-0 transition-opacity">
+          <div class="absolute inset-0 bg-gray-900 opacity-75" />
+        </div>
+        <span class="hidden sm:inline-block sm:align-middle sm:h-screen">&#8203;</span>
+        <div class="inline-block align-center bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full" role="dialog" aria-modal="true" aria-labelledby="modal-headline">
+          <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+            <label class="font-medium text-gray-800">Name</label>
+            <input type="text" class="w-full outline-none rounded bg-gray-100 p-2 mt-2 mb-3" />
+            <label class="font-medium text-gray-800">Url</label>
+            <input type="text" class="w-full outline-none rounded bg-gray-100 p-2 mt-2 mb-3" />
+          </div>
+          <div class="bg-gray-200 px-4 py-3 text-right">
+            <button type="button" class="py-2 px-4 bg-gray-500 text-white rounded hover:bg-gray-700 mr-2" onclick="toggle_visibility('contact-popup')"><i class="fas fa-times"></i> Cancel</button>
+            <button type="button" class="py-2 px-4 bg-blue-500 text-white rounded font-medium hover:bg-blue-700 mr-2 transition duration-500"><i class="fas fa-plus"></i> Create</button>
           </div>
         </div>
-        <div class="flex flex-wrap mb-6 px-2">
-          <button class="bg-green-700 text-base w-full font-bold text-white px-4 py-2 rounded-md hover:bg-yellow-300 duration-200" type="submit">
-            <% if(item.id){ %>Edit Product<% } else{ %>Add Product<% } %> 
-          </button>
+      </div>
+  </main>
+
+  <main class="fixed z-10 overflow-y-auto top-0 w-full left-0 hidden" id="edit-popup">
+      <div class="flex items-center justify-center min-height-100vh pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+        <div class="fixed inset-0 transition-opacity">
+          <div class="absolute inset-0 bg-gray-900 opacity-75" />
         </div>
-      </form>
+        <span class="hidden sm:inline-block sm:align-middle sm:h-screen">&#8203;</span>
+        <div class="inline-block align-center bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full" role="dialog" aria-modal="true" aria-labelledby="modal-headline">
+          <form action="/cart/edit-cart" method="post" class="p-4" id="edit-cart">
+            <div class="w-full mb-6 md:mb-0 hidden">
+              <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="idEditCart">id</label>
+              <input 
+                class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" 
+                id="idEditCart" 
+                type="text" 
+                name="idEditCart"
+              >
+            </div>
+            <div class="w-full mb-6 md:mb-0 hidden">
+              <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="productNameCart">productNameCart</label>
+              <input 
+                class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" 
+                id="productNameCart" 
+                type="text" 
+                name="productNameCart"
+                value=""
+              >
+            </div>
+            <div class="w-full mb-6 md:mb-0 hidden">
+              <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="priceCart">priceCart</label>
+              <input 
+                class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" 
+                id="priceCart" 
+                type="text" 
+                name="priceCart"
+                value=""
+              >
+            </div>
+            <div class="w-full mb-6 md:mb-0 hidden">
+              <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="countCart">countCart</label>
+              <input 
+                class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" 
+                id="countCart" 
+                type="number" 
+                name="countCart"
+                value=""
+              >
+            </div>
+            <div class="w-full mb-6 md:mb-0 hidden">
+              <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="getUserId">getUserId</label>
+              <input 
+                class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" 
+                id="getUserId" 
+                type="number" 
+                name="getUserId"
+                value=""
+              >
+            </div>
+            <div class="w-full mb-6 md:mb-0 hidden">
+              <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="getUserName">getUserName</label>
+              <input 
+                class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" 
+                id="getUserName" 
+                type="text" 
+                name="getUserName"
+                value=""
+              >
+            </div>
+            <div class="w-full mb-6 md:mb-0 hidden">
+              <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="getCategory">getCategory</label>
+              <input 
+                class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" 
+                id="getCategory" 
+                type="text" 
+                name="getCategory"
+                value=""
+              >
+            </div>
+            <div class="w-full mb-6 md:mb-0">
+              <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="countNewCart">Banyak Jumlah</label>
+              <input 
+                class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" 
+                id="countNewCart" 
+                type="number" 
+                name="countNewCart"
+              >
+            </div>
+            <div class="text-right">
+              <button type="button" class="py-2 px-4 bg-gray-500 text-white rounded hover:bg-gray-700 mr-2" onclick="toggle_visibility_edit_cart('edit-popup')"><i class="fas fa-times"></i> Cancel</button>
+              <button type="submit" class="py-2 px-4 bg-blue-500 text-white rounded font-medium hover:bg-blue-700 transition duration-500"><i class="fas fa-plus"></i> Edit</button>
+            </div>
+          </form>
+        </div>
+      </div>
+  </main>
+
+  <!-- pop up delete -->
+  <main class="fixed z-10 overflow-scroll top-0 w-full left-0 hidden" id="delete-cart">
+    <div class="flex items-center justify-center h-max pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+      <div class="fixed inset-0 transition-opacity overflow-scroll bg-[#111827c1]">
+        <div class="absolute inset-0" />
+      </div>
+      <span class="hidden sm:inline-block sm:align-middle sm:h-screen">&#8203;</span>
+      <div class="inline-block align-center bg-white rounded-lg text-left overflow-scroll shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full" role="dialog" aria-modal="true" aria-labelledby="modal-headline">
+        <h1 class="p-10 text-center">Apa kamu yakin ingin mendelete di dalam list ?</h1>
+        <form action="/cart/delete-cart" method="post" class="p-4" id="delete-cart">
+          <div class="w-full mb-6 md:mb-0 hidden">
+            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="idDeleteCart">id</label>
+            <input 
+              class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" 
+              id="idDeleteCart" 
+              type="text" 
+              name="idDeleteCart"
+            >
+          </div>
+          <div class="w-full mb-6 md:mb-0 hidden">
+            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="productNameCart">productNameCart</label>
+            <input 
+              class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" 
+              id="deleteproductNameCart" 
+              type="text" 
+              name="productNameCart"
+              value=""
+            >
+          </div>
+          <div class="w-full mb-6 md:mb-0 hidden">
+            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="deletePriceCart">deletePriceCart</label>
+            <input 
+              class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" 
+              id="deletePriceCart" 
+              type="text" 
+              name="deletePriceCart"
+              value=""
+            >
+          </div>
+          <div class="w-full mb-6 md:mb-0 hidden">
+            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="deleteCountCart">deleteCountCart</label>
+            <input 
+              class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" 
+              id="deleteCountCart" 
+              type="number" 
+              name="deleteCountCart"
+              value=""
+            >
+          </div>
+          <div class="w-full mb-6 md:mb-0 hidden">
+            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="deleteGetUserId">deleteGetUserId</label>
+            <input 
+              class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" 
+              id="deleteGetUserId" 
+              type="number" 
+              name="deleteGetUserId"
+              value=""
+            >
+          </div>
+          <div class="w-full mb-6 md:mb-0 hidden">
+            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="deleteGetUserName">deleteGetUserName</label>
+            <input 
+              class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" 
+              id="deleteGetUserName" 
+              type="text" 
+              name="deleteGetUserName"
+              value=""
+            >
+          </div>
+          <div class="w-full mb-6 md:mb-0 hidden">
+            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="deleteGetCategory">deleteGetCategory</label>
+            <input 
+              class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" 
+              id="deleteGetCategory" 
+              type="text" 
+              name="deleteGetCategory"
+              value=""
+            >
+          </div>
+          <div class="text-right">
+            <button type="button" class="py-2 px-4 bg-gray-500 text-white rounded hover:bg-gray-700 mr-2" onclick="toggle_visibility_delete_cart('delete-cart')"><i class="fas fa-times"></i> Cancel</button>
+            <button type="submit" class="py-2 px-4 bg-blue-500 text-white rounded font-medium hover:bg-blue-700 transition duration-500"><i class="fas fa-plus"></i> Delete</button>
+          </div>
+        </form>
+      </div>
     </div>
+  </main>
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script>
 
-    <script type="text/javascript">
-      function PreviewImage() {
+    function PreviewImage() {
+      const getContainerImg = document.getElementById('container-img')
+      const removeImg = document.getElementById('removeImg')
       var oFReader = new FileReader();
+      console.log('document.getElementById("uploadImage").files[0] =>', document.getElementById("uploadImage").files[0]);
       oFReader.readAsDataURL(document.getElementById("uploadImage").files[0]);
 
       oFReader.onload = function (oFREvent) {
+        document.getElementById("uploadPreview").classList = 'block';
         document.getElementById("uploadPreview").src = oFREvent.target.result;
+        getContainerImg.className = 'w-full relative'
+        removeImg.className = 'absolute h-8 w-8 top-[-12px] right-[-12px] cursor-pointer'
       };
     };
+
+
+    function RemoveImg() {
+      const getContainerImg = document.getElementById('container-img')
+      const removeImgId = document.getElementById('removeImg')
+
+      removeImgId.addEventListener('click', () => {
+        document.getElementById("uploadPreview").classList = 'hidden';
+        getContainerImg.className = 'w-32 h-32 border-2 border-[#C5C5C5] rounded-xl py-3 px-4 '
+        removeImgId.className = 'hidden'
+      })
+    };
+
+    function toggle_visibility(id) {
+      var e = document.getElementById(id);
+      if (e.style.display == "block") e.style.display = "none";
+      else e.style.display = "block";
+    }
+
+    // Edit Cart
+    function toggle_visibility_edit_cart(id, idCart ,productName, price, count, getUserId, getUserName, getCategory) {
+      var e = document.getElementById(id);
+      document.getElementById('idEditCart').value = idCart
+      document.getElementById('productNameCart').value = productName
+      document.getElementById('priceCart').value = price
+      document.getElementById('countCart').value = count
+      document.getElementById('getUserId').value = getUserId
+      document.getElementById('getUserName').value = getUserName
+      document.getElementById('getCategory').value = getCategory   
+      if (e.style.display == "block") e.style.display = "none";
+      else e.style.display = "block";
+    }
+    
+    // Select To Invoice
+    function toggle_visibility_invoice(id) {
+      var e = document.getElementById(id);
+      if (e.style.display == "block") e.style.display = "none";
+      else e.style.display = "block";
+    }
+    
+    // Select To Delete Cart
+    function toggle_visibility_delete_cart(id, idCart ,productName, price, count, getUserId, getUserName, getCategory) {
+      var e = document.getElementById(id);
+      let formEditCart = document.getElementById('delete-cart')
+      document.getElementById('idDeleteCart').value = idCart
+      document.getElementById('deleteproductNameCart').value = productName
+      document.getElementById('deletePriceCart').value = price
+      document.getElementById('deleteCountCart').value = count
+      document.getElementById('deleteGetUserId').value = getUserId
+      document.getElementById('deleteGetUserName').value = getUserName
+      document.getElementById('deleteGetCategory').value = getCategory   
+      if (e.style.display == "block") e.style.display = "none";
+      else e.style.display = "block";
+    }
+      
+      
+    let btnGeneratePdf = document.getElementById("generatePDF");
+    const element = document.getElementById('htmlContent');
+    const getFormInvoice = document.getElementById('invoiceForm');
+      
+    const opt = {
+      margin: 0, //top, left, buttom, right
+      // filename: 'filename' + '.pdf',
+      filename:     'myfile.pdf',
+      image: { type: 'jpeg', quality: 0.98 },
+      html2canvas:  { scale: 2, logging: true, dpi: 192, letterRendering: true, scrollY: 0 },
+      jsPDF: { unit: 'mm', format: 'tabloid', orientation: 'portrait'},
+    };
+      
+    btnGeneratePdf.addEventListener("click", function(){
+      const datasBaru = html2pdf().set(opt).from(element).save('filename.pdf')
+      console.log('DATAS BARU =>', datasBaru);
+      var e = document.getElementById('notification');
+      e.style.display = "block";
+      toggle_visibility_invoice('invoice')
+    });  
   </script>
 
   <style>
     [src='#'] {
-    display: none;
+      display: none;
     }
-  </style>
+</style>
 <%- include('../includes/end.ejs') %>
 
 
