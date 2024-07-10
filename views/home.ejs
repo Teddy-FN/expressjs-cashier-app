@@ -126,162 +126,181 @@
       
               
               <!-- Map Product -->
-              <div class="container mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 pr-[34px]">
-                <% prod.forEach(function(item) {%>
-                  <div class="w-full bg-white shadow-md p-[10px] rounded-xl duration-500 hover:scale-105 hover:shadow-xl h-fit">
-                    <img
-                      src="/<%= item.img %>"
-                      alt="<%= item.productName %>"
-                      class="object-cover rounded-xl h-40 w-full"
-                    />
-                    <div class="py-3">
-                      <p class="text-base font-bold text-[#737373]"><%= item.productName %></p>
-                      <p class="text-sm text-[#737373]"><%= item.category %></p>
-                      <p class="text-base font-bold text-[#737373]"><%= item.price %></p>
-                      <div class="flex items-center justify-between mt-4">
-                        <form action="/cart/add-cart/" method="post" class="w-full">
-                          <div class="w-full mb-6 md:mb-0 hidden">
-                            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="category">Category</label>
-                            <input 
-                              class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" 
-                              id="category" 
-                              type="text" 
-                              name="category"
-                              value="<%= item.category %>"
+              <% if (!emptyProduct) { %>
+                <div class="container mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 pr-[34px]">
+                  <% prod.forEach(function(item) {%>
+                    <div class="w-full bg-white shadow-md p-[10px] rounded-xl duration-500 hover:scale-105 hover:shadow-xl h-fit">
+                      <img
+                        src="/<%= item.img %>"
+                        alt="<%= item.productName %>"
+                        class="object-cover rounded-xl h-40 w-full"
+                      />
+                      <div class="py-3">
+                        <p class="text-base font-bold text-[#737373]"><%= item.productName %></p>
+                        <p class="text-sm text-[#737373]"><%= item.category %></p>
+                        <p class="text-base font-bold text-[#737373]"><%= item.price %></p>
+                        <div class="flex items-center justify-between mt-4">
+                          <form action="/cart/add-cart/" method="post" class="w-full">
+                            <div class="w-full mb-6 md:mb-0 hidden">
+                              <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="category">Category</label>
+                              <input 
+                                class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" 
+                                id="category" 
+                                type="text" 
+                                name="category"
+                                value="<%= item.category %>"
+                              >
+                            </div>
+                            <div class="w-full mb-6 md:mb-0 hidden">
+                              <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="price">Price</label>
+                              <input 
+                                class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" 
+                                id="price" 
+                                type="text" 
+                                name="price"
+                                value="<%= item.price %>"
+                              >
+                            </div>
+                            <div class="w-full mb-6 md:mb-0 hidden">
+                              <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="productName">Product Name</label>
+                              <input 
+                                class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" 
+                                id="productName" 
+                                type="text" 
+                                name="productName"
+                                value="<%= item.productName %>"
+                              >
+                            </div>
+                            <div class="w-full mb-6 md:mb-0 hidden">
+                              <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="id">ID</label>
+                              <input 
+                                class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" 
+                                id="id" 
+                                type="number" 
+                                name="id"
+                                value="<%= item.id %>"
+                              >
+                            </div>
+                            <div class="w-full mb-6 md:mb-0 hidden">
+                              <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="img">img</label>
+                              <input 
+                                class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" 
+                                id="img" 
+                                type="text" 
+                                name="img"
+                                value="<%= item.img %>"
+                              >
+                            </div>
+                            <div class="w-full mb-6 md:mb-0">
+                              <label class="block tracking-wide text-[#CECECE] text-sm font-bold" for="count">masukan jumlah</label>
+                              <input 
+                                class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" 
+                                id="count" 
+                                type="number" 
+                                name="count"
+                              >
+                            </div>
+                            <div class="py-3 w-full">
+                              <button class="bg-[#6853F0] w-full text-xs font-bold text-white py-4 rounded-md hover:bg-yellow-300 duration-200">Masukan Keranjang</button>
+                            </div>
+                          </form>
+                        </div>
+                        <% if(admin){ %>
+                        <div class="flex items-center justify-between">
+                          <a href="/admin/edit-product/<%= item.id %>" class="btn">
+                            <button
+                              class="bg-red-700 w-full text-base font-bold text-white px-4 py-2 rounded-md hover:bg-green-300 duration-200"
+                              type="submit"
                             >
-                          </div>
-                          <div class="w-full mb-6 md:mb-0 hidden">
-                            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="price">Price</label>
-                            <input 
-                              class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" 
-                              id="price" 
-                              type="text" 
-                              name="price"
-                              value="<%= item.price %>"
+                              Edit
+                            </button>
+                          </a>
+                          <form action="/admin/delete-product" method="POST">
+                            <input type="text" hidden value="<%= item.id %>" name="id" />
+                            <button
+                              class="bg-red-700 text-base font-bold text-white px-4 py-2 rounded-md hover:bg-green-300 duration-200"
+                              type="submit"
                             >
-                          </div>
-                          <div class="w-full mb-6 md:mb-0 hidden">
-                            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="productName">Product Name</label>
-                            <input 
-                              class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" 
-                              id="productName" 
-                              type="text" 
-                              name="productName"
-                              value="<%= item.productName %>"
-                            >
-                          </div>
-                          <div class="w-full mb-6 md:mb-0 hidden">
-                            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="id">ID</label>
-                            <input 
-                              class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" 
-                              id="id" 
-                              type="number" 
-                              name="id"
-                              value="<%= item.id %>"
-                            >
-                          </div>
-                          <div class="w-full mb-6 md:mb-0 hidden">
-                            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="img">img</label>
-                            <input 
-                              class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" 
-                              id="img" 
-                              type="text" 
-                              name="img"
-                              value="<%= item.img %>"
-                            >
-                          </div>
-                          <div class="w-full mb-6 md:mb-0">
-                            <label class="block tracking-wide text-[#CECECE] text-sm font-bold" for="count">masukan jumlah</label>
-                            <input 
-                              class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" 
-                              id="count" 
-                              type="number" 
-                              name="count"
-                            >
-                          </div>
-                          <div class="py-3 w-full">
-                            <button class="bg-[#6853F0] w-full text-xs font-bold text-white py-4 rounded-md hover:bg-yellow-300 duration-200">Masukan Keranjang</button>
-                          </div>
-                        </form>
+                              Delete
+                            </button>
+                          </form>
+                        </div>
+                        <% } %>
                       </div>
-                      <% if(admin){ %>
-                      <div class="flex items-center justify-between">
-                        <a href="/admin/edit-product/<%= item.id %>" class="btn">
-                          <button
-                            class="bg-red-700 w-full text-base font-bold text-white px-4 py-2 rounded-md hover:bg-green-300 duration-200"
-                            type="submit"
-                          >
-                            Edit
-                          </button>
-                        </a>
-                        <form action="/admin/delete-product" method="POST">
-                          <input type="text" hidden value="<%= item.id %>" name="id" />
-                          <button
-                            class="bg-red-700 text-base font-bold text-white px-4 py-2 rounded-md hover:bg-green-300 duration-200"
-                            type="submit"
-                          >
-                            Delete
-                          </button>
-                        </form>
-                      </div>
-                      <% } %>
                     </div>
+                  <% }) %>  
+                </div>
+              <% } else { %>
+                <div class="container pr-[34px]">
+                  <div class="border-2 border-[#737373] h-screen w-full flex flex-col justify-center items-center rounded-xl gap-7">
+                    <img src="/assets/empty-box.png" alt="empty box" class="w-44 h-44">
+                    <h1 class="font-bold text-[#6853F0] text-2xl">Belum Ada product, mohon di tambahkan dulu</h1>
+                    <a href="/admin/add-product">
+                      <button class="bg-[#6853F0] text-lg font-bold text-white py-[14px] px-[80px] rounded-full hover:bg-yellow-300 duration-200">Tambah Product</button>
+                    </a>
                   </div>
-                <% }) %>
-              </div>
+                </div>
+              <% } %>
             </div>
             
             <div class="container mx-auto flex-[0.4] overflow-scroll flex flex-col relative">  
               <p class="text-[#737373] text-2xl font-semibold mb-6 px-8 mt-8">Jumlah Orderan :</p>
-              <ul class="px-8">  
-                <% cart.forEach(function(item, index) {%>
-                  <li class="flex bg-white gap-8 rounded-lg mb-5 relative">
-                    <div class="flex flex-1 gap-4">
-                      <img
-                        src="/<%= item.img %>"
-                        alt="<%= item.productName %>"
-                        class="object-cover rounded-xl w-20 h-20"
-                      />
-                      <div class="flex flex-col justify-evenly">
-                        <p class="title font-medium text-sm text-[#737373] md:text-lg"><%= item.productName %></p>
-                        <p class="title font-medium text-sm text-[#737373] md:text-lg"><%= item.count %>x</p>
+              <% if(!cartEmpty) { %>
+                <ul class="px-8">  
+                  <% cart.forEach(function(item, index) {%>
+                    <li class="flex bg-white gap-8 rounded-lg mb-5 relative">
+                      <div class="flex flex-1 gap-4">
+                        <img
+                          src="/<%= item.img %>"
+                          alt="<%= item.productName %>"
+                          class="object-cover rounded-xl w-20 h-20"
+                        />
+                        <div class="flex flex-col justify-evenly">
+                          <p class="title font-medium text-sm text-[#737373] md:text-lg"><%= item.productName %></p>
+                          <p class="title font-medium text-sm text-[#737373] md:text-lg"><%= item.count %>x</p>
+                        </div>
                       </div>
+                      <div class="flex flex-col items-center justify-end flex-[0.4] mb-2">
+                        <p class="text-[#6853F0] font-medium text-base mt-5 md:mt-0"><%= item.totalPrice %></p>
+                      </div>
+  
+                      <!-- Delete Icon -->
+                      <div
+                      class="w-8 h-8 flex justify-center items-center rounded-full bg-[#ff0f0f] absolute -top-[10px] -left-4 cursor-pointer"
+                      onclick="toggle_visibility_delete_cart('delete-cart', '<%= item.id %>', '<%= item.productName %>', '<%= item.price %>', '<%= item.count %>', '<%= item.userId %>', '<%= item.userName %>', '<%= item.category %>')"
+                    >
+                      <img
+                        src="/assets/trash-icon.png"
+                        class="w-4 fill-white"
+                        alt="list Icon"
+                      />
                     </div>
-                    <div class="flex flex-col items-center justify-end flex-[0.4] mb-2">
-                      <p class="text-[#6853F0] font-medium text-base mt-5 md:mt-0"><%= item.totalPrice %></p>
-                    </div>
-
-                    <!-- Delete Icon -->
-                    <div
-                    class="w-8 h-8 flex justify-center items-center rounded-full bg-[#ff0f0f] absolute -top-[10px] -left-4 cursor-pointer"
-                    onclick="toggle_visibility_delete_cart('delete-cart', '<%= item.id %>', '<%= item.productName %>', '<%= item.price %>', '<%= item.count %>', '<%= item.userId %>', '<%= item.userName %>', '<%= item.category %>')"
-                  >
-                    <img
-                      src="/assets/trash-icon.png"
-                      class="w-4 fill-white"
-                      alt="list Icon"
-                    />
-                  </div>
-                    
-                    
+                      
+                      
+        
+                      <!-- <div class="flex justify-end gap-4">
+                        <button class="bg-green-700 text-base font-bold text-white p-2 rounded-md hover:bg-yellow-300 duration-200" onclick="toggle_visibility_edit_cart('edit-popup', '<%= item.id %>', '<%= item.productName %>', '<%= item.price %>', '<%= item.count %>', '<%= item.userId %>', '<%= item.userName %>', '<%= item.category %>')">Edit Item</button>
+                        <form action="/cart/delete-cart/<%= item.id %>/<%= item.userId %>/<%= item.userName %>" method="post">
+                          <button class="bg-green-700 text-base font-bold text-white p-2 rounded-md hover:bg-yellow-300 duration-200">Delete Item</button>
+                        </form>
+                      </div> -->
+                    </li>  
+                  <% }) %>
+                </ul>
+                <% } else { %>
+                <div class="flex flex-col gap-7 items-center justify-start h-full w-full">
+                  <img src="/assets/empty-cart.png" alt="empty cart" class="w-28 h-28">
+                  <h1 class="font-bold text-[#6853F0] text-2xl">Keranjang Masih Kosong</h1>
+                </div>
+                <% } %>
       
-                    <!-- <div class="flex justify-end gap-4">
-                      <button class="bg-green-700 text-base font-bold text-white p-2 rounded-md hover:bg-yellow-300 duration-200" onclick="toggle_visibility_edit_cart('edit-popup', '<%= item.id %>', '<%= item.productName %>', '<%= item.price %>', '<%= item.count %>', '<%= item.userId %>', '<%= item.userName %>', '<%= item.category %>')">Edit Item</button>
-                      <form action="/cart/delete-cart/<%= item.id %>/<%= item.userId %>/<%= item.userName %>" method="post">
-                        <button class="bg-green-700 text-base font-bold text-white p-2 rounded-md hover:bg-yellow-300 duration-200">Delete Item</button>
-                      </form>
-                    </div> -->
-                  </li>  
-                <% }) %>
-              </ul>
-      
-              <div class="fixed bottom-0 w-[27%] mb-8 bg-white z-10 px-8">
+              <div class="fixed bottom-0 w-[27%] bg-white z-10 px-8">
                 <div class="flex flex-col gap-4 border-t border-[#D9D9D9]">
                   <div class="flex justify-between items-center mt-4">
                     <p class="font-semibold text-2xl text-[#737373]">Total: </p>
                     <p class="font-semibold text-2xl text-[#737373]"><%= totalInvoice %></p>
                   </div>
-                  <div class="flex justify-between items-center gap-10 mt-4">
+                  <div class="flex justify-between items-center gap-10 my-4">
                     <button 
                       type="submit"
                       class="bg-[#D9D9D9] w-full text-lg font-bold text-white py-2 rounded-full hover:bg-yellow-300 duration-200"
