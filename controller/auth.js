@@ -14,7 +14,7 @@ exports.login = (req, res, next) => {
     'SELECT * FROM public."User" WHERE "userName" = $1 AND password = $2',
     [username, password],
     (err, response) => {
-      const [data] = response.rows || [];
+      const [data] = response?.rows || [];
       if (data) {
         const role = data.role === "super-admin" || data.role === "admin";
         res.cookie("userName", data.userName);

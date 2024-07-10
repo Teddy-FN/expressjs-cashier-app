@@ -11,6 +11,8 @@ exports.renderFormAdd = (req, res, next) => {
     admin: true,
     url: req.protocol + "://" + req.header.host,
     onPage: "add-product",
+    isEdit: false,
+    success: false,
     navigationActive: {
       list: "list",
       cart: "cart",
@@ -31,20 +33,50 @@ exports.renderFormAdd = (req, res, next) => {
       category: null,
       productName: null,
       price: null,
+      description: null,
     },
   });
 };
 
 // Function Post Add Form Product
 exports.postAddProduct = async (req, res, next) => {
-  const { category, product, price } = req.body;
+  const { category, product, price, description } = req.body;
   const { path } = req.file;
 
   await db.pool.query(
-    'INSERT INTO public."ListProduct"("productName", category, img, price, "createdDate", "modifiedDate") VALUES ($1, $2, $3, $4, $5, $6)',
-    [product, category, path, price, date, date],
+    'INSERT INTO public."ListProduct"("productName", category, img, price, "createdDate", "modifiedDate", description) VALUES ($1, $2, $3, $4, $5, $6, $7)',
+    [product, category, path, price, date, date, description],
     (err, response) => {
-      res.redirect("/admin/list");
+      res.render("admin/formProduct.ejs", {
+        pageTitle: "Add Product",
+        admin: true,
+        url: req.protocol + "://" + req.header.host,
+        onPage: "add-product",
+        isEdit: false,
+        success: true,
+        navigationActive: {
+          list: "list",
+          cart: "cart",
+          addProduct: "add-product",
+          editProduct: "edit-product",
+          reportSelling: "report-selling",
+        },
+        urlNavigation: {
+          list: "/admin/list",
+          cart: "/admin/cart",
+          addProduct: "/admin/add-product",
+          editProduct: "/admin/edit-product",
+          reportSelling: "/report-selling/show-graph",
+        },
+        item: {
+          id: null,
+          img: null,
+          category: null,
+          productName: null,
+          price: null,
+          description: null,
+        },
+      });
     }
   );
 };
@@ -53,15 +85,17 @@ exports.postAddProduct = async (req, res, next) => {
 exports.renderFormEdit = async (req, res, next) => {
   return await db.pool.query(
     'SELECT * FROM public."ListProduct" WHERE id = $1',
-    [req.params.id],
+    [req?.params?.id],
     (err, response) => {
-      const [product] = response?.rows || {};
+      const [product] = response?.rows || [];
       if (res.statusCode === 200) {
         res.render("admin/formProduct.ejs", {
           pageTitle: "Edit Product",
           admin: true,
           url: req.protocol + "://" + req.header.host,
           onPage: "edit-product",
+          isEdit: true,
+          success: false,
           navigationActive: {
             list: "list",
             cart: "cart",
@@ -77,11 +111,12 @@ exports.renderFormEdit = async (req, res, next) => {
             reportSelling: "/report-selling/show-graph",
           },
           item: {
-            id: product.id,
-            img: product.img,
-            category: product.category,
-            product: product.productName,
-            price: product.price,
+            id: product?.id,
+            img: product?.img,
+            category: product?.category,
+            product: product?.productName,
+            price: product?.price,
+            description: product?.description,
           },
         });
       }
@@ -91,22 +126,22 @@ exports.renderFormEdit = async (req, res, next) => {
 
 // Function Put Edit Form Product
 exports.EditProduct = async (req, res, next) => {
-  const id = Number(req?.params.id);
-  const { product, price, category } = req?.body;
+  const id = Number(req?.params?.id);
+  const { product, price, category, description } = req?.body;
 
   // Function Get Detail By ID and remove Image From Assets
   await db.pool.query(
     'SELECT * FROM public."ListProduct" WHERE id = $1',
     [id],
     (err, response) => {
-      const [products] = response?.rows || {};
+      const [products] = response?.rows || [];
       if (req?.file?.path) {
         fs.unlink(products.img);
       }
 
       // Function Edit Product
       return db.pool.query(
-        'UPDATE public."ListProduct" SET "productName" = $1, category = $2, img = $3, price = $4, "createdDate" = $5, "modifiedDate" = $6 WHERE id = $7',
+        'UPDATE public."ListProduct" SET "productName" = $1, category = $2, img = $3, price = $4, "createdDate" = $5, "modifiedDate" = $6, description = $7 WHERE id = $8',
         [
           product,
           category,
@@ -114,10 +149,40 @@ exports.EditProduct = async (req, res, next) => {
           price,
           date,
           date,
+          description,
           id,
         ],
         (err, response) => {
-          res.redirect("/admin/list");
+          res.render("admin/formProduct.ejs", {
+            pageTitle: "Edit Product",
+            admin: true,
+            url: req.protocol + "://" + req.header.host,
+            onPage: "edit-product",
+            isEdit: true,
+            success: true,
+            navigationActive: {
+              list: "list",
+              cart: "cart",
+              addProduct: "add-product",
+              editProduct: "edit-product",
+              reportSelling: "report-selling",
+            },
+            urlNavigation: {
+              list: "/admin/list",
+              cart: "/admin/cart",
+              addProduct: "/admin/add-product",
+              editProduct: "/admin/edit-product",
+              reportSelling: "/report-selling/show-graph",
+            },
+            item: {
+              id: null,
+              img: null,
+              category: null,
+              productName: null,
+              price: null,
+              description: null,
+            },
+          });
         }
       );
     }

@@ -89,8 +89,13 @@ exports.home = async (req, res, next) => {
               if (res.statusCode === 200) {
                 res.render("home.ejs", {
                   pageTitle: role === "user" ? "User Page" : "Admin Page",
+                  
+                  emptyProduct: newProduct.length < 1,
                   prod: newProduct,
+
+                  cartEmpty: newResponseCart.length < 1,
                   cart: newResponseCart,
+
                   admin: role === "user" ? false : true,
                   url: req.protocol + "://" + req.header.host,
 
@@ -235,8 +240,12 @@ exports.filteringHome = (req, res, next) => {
                 if (res.statusCode === 200) {
                   res.render("home.ejs", {
                     pageTitle: role === "user" ? "User Page" : "Admin Page",
+                    emptyProduct: newProduct.length < 1,
                     prod: newProduct,
+
+                    cartEmpty: newResponseCart.length < 1,
                     cart: newResponseCart,
+
                     admin: role === "user" ? false : true,
                     url: req.protocol + "://" + req.header.host,
 
