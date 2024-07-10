@@ -1,6 +1,5 @@
 // Connect DB
 const db = require("../db");
-const moment = require("moment");
 const invoiceDate = new Date();
 
 // User Add To Cart
@@ -19,7 +18,7 @@ exports.Addcart = async (req, res, next) => {
 
   const total = priceNumber * countNumber;
 
-  await db.pool.query(
+  return await db.pool.query(
     'INSERT INTO public."Cart"("productName", category, count, price, "totalPrice", "userId", "userName", img) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)',
     [
       productName,
@@ -39,11 +38,11 @@ exports.Addcart = async (req, res, next) => {
 
 // User Delete From List Cart
 exports.deleteCart = async (req, res, next) => {
-  const { id, userId, userName } = req.params;
+  const { idDeleteCart, deleteGetUserId, deleteGetUserName } = req.body;
 
-  await db.pool.query(
+  return await db.pool.query(
     'DELETE FROM public."Cart" WHERE (id = $1) AND ("userId" = $2) AND ("userName" = $3)',
-    [id, Number(userId), userName],
+    [idDeleteCart, Number(deleteGetUserId), deleteGetUserName],
     (err, response) => {
       res.redirect(`/admin/list`);
     }
@@ -118,7 +117,7 @@ exports.invoice = async (req, res, next) => {
 
   // So The Logic when invoice we delete from table cart by id and push to invoce table
   // Delete Table Cart
-  await db.pool.query(
+  return await db.pool.query(
     'DELETE FROM public."Cart" WHERE "userId" = $1 AND "userName" = $2',
     [Number(getUserId), getUserName],
     (err, responseDeleteCart) => {
