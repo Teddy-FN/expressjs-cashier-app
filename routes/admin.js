@@ -44,6 +44,9 @@ router.post("/delete-product", adminController.deleteProduct);
 // Render Form Edit Product
 router.get("/edit-product/:id", adminController.renderFormEdit);
 
+// Router delete Image
+router.post("/delete-image", adminController.deleteImage);
+
 // Function Post Edit Product
 router.post(
   "/edit-product/:id",

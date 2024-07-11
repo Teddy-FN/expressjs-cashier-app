@@ -2,33 +2,131 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   </head>
   <body>
-    <%- include('../includes/nav.ejs', {
-      admin: admin,
-      onPage: onPage,
-      navigationActive: navigationActive,
-      urlNavigation: urlNavigation,
-    }) %>
-    <div class="container mx-auto my-10">
-    <form class="flex flex-wrap items-center justify-between" action="/report-selling/show-graph" method="post">
-        <div class="flex flex-wrap items-center gap-10">
-          <div class="relative ml-4">
-            <select 
-              class="w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" 
-              id="year"
-              name="year"              
-            ></select>
+    <div class="relative min-h-screen md:flex" data-dev-hint="container">
+      <input type="checkbox" id="menu-open" class="hidden" />
+      <label for="menu-open" class="absolute right-2 bottom-2 shadow-lg rounded-full p-2 bg-gray-100 text-gray-600 md:hidden" data-dev-hint="floating action button">
+          <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+      </label>
+  
+      <header class="bg-gray-600 text-gray-100 flex justify-between md:hidden" data-dev-hint="mobile menu bar">
+          <a href="#" class="block p-4 text-white font-bold whitespace-nowrap truncate">
+              Your App is cool
+          </a>
+  
+          <label for="menu-open" id="mobile-menu-button" class="m-2 p-2 focus:outline-none hover:text-white hover:bg-gray-700 rounded-md">
+              <svg id="menu-open-icon" class="h-6 w-6 transition duration-200 ease-in-out" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+              <svg id="menu-close-icon" class="h-6 w-6 transition duration-200 ease-in-out" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+          </label>
+      </header>
+  
+      <aside id="sidebar" class="bg-white text-gray-100 w-[80px] space-y-6 pt-6 px-0 absolute inset-y-0 left-0 transform md:relative md:translate-x-0 transition duration-200 ease-in-out  md:flex md:flex-col md:justify-between overflow-y-auto shadow-lg" data-dev-hint="sidebar; px-0 for frameless; px-2 for visually inset the navigation">
+          <div class="flex flex-col space-y-6" data-dev-hint="optional div for having an extra footer navigation">
+              <a href="#" class="text-black flex items-center space-x-2 px-4 py-11 justify-center" title="Your App is cool">
+                <img src="/assets/icon-app.png" class="absolute w-9" alt="Icon app" />
+              </a>
+  
+              <%- include('../includes/nav.ejs', {
+                admin: admin,
+                onPage: onPage,
+                navigationActive: navigationActive,
+                urlNavigation: urlNavigation,
+              }) %>
+          </div>
+  
+          <!-- <nav data-dev-hint="second-main-navigation or footer navigation">
+              <a href="#" class="block py-2 px-4 transition duration-200 hover:bg-gray-700 hover:text-white">
+                  asd
+              </a>
+              <a href="#" class="block py-2 px-4 transition duration-200 hover:bg-gray-700 hover:text-white">
+                  asd
+              </a>
+              <a href="#" class="block py-2 px-4 transition duration-200 hover:bg-gray-700 hover:text-white">
+                  asd
+              </a>
+          </nav> -->
+      </aside>
+  
+      <main id="content" class="flex-1">
+        <div class="flex justify-between items-center bg-[#ffffff70] p-[34px] shadow-lg">
+          <div class="flex flex-1 space-x-7">
+            <!-- Website Logo -->
+            <form
+              action=""
+              method="post"
+              class="items-center gap-8 flex flex-1 md:flex-[0.8]"
+            >
+            <div class="w-2/3 flex justify-end items-center relative">
+              <input
+                class="appearance-none block w-full bg-gray-200 text-gray-700 border border-1 border-[#C5C5C5] rounded-full py-3 px-10 leading-tight focus:outline-none focus:bg-white"
+                id="search"
+                type="text"
+                name="search"
+                placeholder="Search category or menu"
+              />
+              <img src="/assets/search-icon.png" class="absolute w-5 left-3" alt="Search Icon" />
+            </div>
+              <button
+                type="submit"
+                class="bg-[#6853F0] text-lg font-bold text-white py-[14px] px-[80px] rounded-full hover:bg-yellow-300 duration-200"
+              >
+                Cari
+              </button>
+            </form>
+          </div>
+          <!-- Secondary Navbar items -->
+          <div class="hidden md:flex items-center gap-[18px] space-x-3">
+            <div class="m-1 mr-2 w-12 h-12 relative flex justify-center items-center rounded-full bg-green-500 text-xl text-white uppercase">zxl</div>
+            <div>
+              <p class="text-[#737373] font-medium text-lg">Welcome, John!</p>
+              <p class="text-[#D9D9D9] font-medium text-[12px]">Cashier on bonta Coffee</p>
+            </div>
+            <form action="/logout" method="post" class="hidden md:block">
+              <button
+                class="bg-[#6853F0] w-full text-lg font-bold text-white py-[14px] px-[30px] rounded-full hover:bg-yellow-300 duration-200"
+              >
+                Logout
+              </button>
+            </form>
           </div>
         </div>
-        <div class="flex flex-wrap mb-6 px-2">
-          <button class="bg-green-700 text-base w-full font-bold text-white px-4 py-2 rounded-md hover:bg-yellow-300 duration-200" type="submit">
-            Apply
-          </button>
+        <div class="flex flex-col py-20 gap-10">
+          <h1 class="text-[#636363] font-semibold text-[32px] leading-10 text-center">Report Selling</h1>
+          <form class="flex items-center gap-10 px-10" action="/report-selling/show-graph" method="post">
+            <div class="flex flex-wrap items-center gap-10">
+              <div class="relative flex justify-between items-center w-36">
+                <select 
+                  class="appearance-none block w-full bg-gray-200 text-gray-700 border-2 border-[#C5C5C5] rounded-xl py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" 
+                  id="year"
+                  name="year"              
+                ></select>
+                <div class="pointer-events-none absolute -translate-x-[0.5rem] -translate-y-[0.3rem] right-0 flex items-center px-2 text-gray-700">
+                  <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+                </div>
+              </div>
+            </div>
+            <div class="flex flex-wrap px-2">
+              <button class="py-2 px-4 w-28 font-semibold text-lg bg-[#6853F0] text-white rounded-full hover:bg-blue-700 transition duration-500" type="submit">
+                Filter
+              </button>
+            </div>
+        </form>
+        <div class="px-16">
+          <canvas id="myChart"></canvas>
         </div>
-    </form>
-      <canvas id="myChart"></canvas>
+      </main>
     </div>
-    
-    <script>
+  </div>
+
+  
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script>
       var label = "<%= labels %>".split(',');
       var data = "<%= dataGraph %>".split(',').map((items) => Number(items));
       const ctx = document.getElementById('myChart');
@@ -64,7 +162,6 @@
         }
         dropdownYear.appendChild(newOption);
       }
-    </script>
+  </script>
+</style>
 <%- include('../includes/end.ejs') %>
-
-

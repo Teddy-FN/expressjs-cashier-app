@@ -54,6 +54,7 @@ exports.postAddProduct = async (req, res, next) => {
         onPage: "add-product",
         isEdit: false,
         success: true,
+        deleteImage: false,
         navigationActive: {
           list: "list",
           cart: "cart",
@@ -95,6 +96,7 @@ exports.renderFormEdit = async (req, res, next) => {
           url: req.protocol + "://" + req.header.host,
           onPage: "edit-product",
           isEdit: true,
+          deleteImage: false,
           success: false,
           navigationActive: {
             list: "list",
@@ -160,6 +162,7 @@ exports.EditProduct = async (req, res, next) => {
             onPage: "edit-product",
             isEdit: true,
             success: true,
+            deleteImage: false,
             navigationActive: {
               list: "list",
               cart: "cart",
@@ -223,4 +226,89 @@ exports.renderCart = (req, res, next) => {
       reportSelling: "/report-selling/show-graph",
     },
   });
+};
+
+// Delete file image
+exports.deleteImage = async (req, res, next) => {
+  console.log("REQ =>", req.body);
+  const {
+    deleteIdProduct,
+    deleteNameproduct,
+    deletePrice,
+    deleteDescription,
+    deleteCategory,
+    deleteImage,
+  } = req.body;
+
+  await db.pool.query(
+    'SELECT * FROM public."ListProduct" WHERE img = $1',
+    [`assets/${deleteImage}`],
+    (err, response) => {
+      if (!response.rows) {
+        fs.unlink(products.img);
+        res.render("admin/formProduct.ejs", {
+          pageTitle: deleteIdProduct ? "Edit Product" : "Add Product",
+          admin: true,
+          url: req.protocol + "://" + req.header.host,
+          onPage: deleteIdProduct ? "edit-product" : "add-product",
+          isEdit: deleteIdProduct ? true : false,
+          deleteImage: true,
+          success: false,
+          navigationActive: {
+            list: "list",
+            cart: "cart",
+            addProduct: "add-product",
+            editProduct: "edit-product",
+            reportSelling: "report-selling",
+          },
+          urlNavigation: {
+            list: "/admin/list",
+            cart: "/admin/cart",
+            addProduct: "/admin/add-product",
+            editProduct: "/admin/edit-product",
+            reportSelling: "/report-selling/show-graph",
+          },
+          item: {
+            id: deleteIdProduct ? Number(deleteIdProduct) : "",
+            img: "",
+            category: deleteCategory,
+            product: deleteNameproduct,
+            price: deletePrice,
+            description: deleteDescription,
+          },
+        });
+      }
+      return res.render("admin/formProduct.ejs", {
+        pageTitle: deleteIdProduct ? "Edit Product" : "Add Product",
+        admin: true,
+        url: req.protocol + "://" + req.header.host,
+        onPage: deleteIdProduct ? "edit-product" : "add-product",
+        isEdit: deleteIdProduct ? true : false,
+        deleteImage: true,
+        success: false,
+        navigationActive: {
+          list: "list",
+          cart: "cart",
+          addProduct: "add-product",
+          editProduct: "edit-product",
+          reportSelling: "report-selling",
+        },
+        urlNavigation: {
+          list: "/admin/list",
+          cart: "/admin/cart",
+          addProduct: "/admin/add-product",
+          editProduct: "/admin/edit-product",
+          reportSelling: "/report-selling/show-graph",
+        },
+        item: {
+          id: deleteIdProduct ? Number(deleteIdProduct) : "",
+          img: "",
+          category: deleteCategory,
+          product: deleteNameproduct,
+          price: deletePrice,
+          description: deleteDescription,
+        },
+      });
+    }
+  );
 };
