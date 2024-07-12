@@ -17,6 +17,8 @@ exports.renderFormAdd = (req, res, next) => {
       list: "list",
       cart: "cart",
       addProduct: "add-product",
+      addCategory: "add-category",
+      editCategory: "edit-category",
       editProduct: "edit-product",
       reportSelling: "report-selling",
     },
@@ -25,6 +27,8 @@ exports.renderFormAdd = (req, res, next) => {
       cart: "/admin/cart",
       addProduct: "/admin/add-product",
       editProduct: "/admin/edit-product",
+      addCategory: "/admin/add-category",
+      editCategory: "/admin/edit-category",
       reportSelling: "/report-selling/show-graph",
     },
     item: {
@@ -60,6 +64,8 @@ exports.postAddProduct = async (req, res, next) => {
           cart: "cart",
           addProduct: "add-product",
           editProduct: "edit-product",
+          addCategory: "add-category",
+          editCategory: "edit-category",
           reportSelling: "report-selling",
         },
         urlNavigation: {
@@ -67,6 +73,8 @@ exports.postAddProduct = async (req, res, next) => {
           cart: "/admin/cart",
           addProduct: "/admin/add-product",
           editProduct: "/admin/edit-product",
+          addCategory: "/admin/add-category",
+          editCategory: "/admin/edit-category",
           reportSelling: "/report-selling/show-graph",
         },
         item: {
@@ -103,6 +111,8 @@ exports.renderFormEdit = async (req, res, next) => {
             cart: "cart",
             addProduct: "add-product",
             editProduct: "edit-product",
+            addCategory: "add-category",
+            editCategory: "edit-category",
             reportSelling: "report-selling",
           },
           urlNavigation: {
@@ -110,6 +120,8 @@ exports.renderFormEdit = async (req, res, next) => {
             cart: "/admin/cart",
             addProduct: "/admin/add-product",
             editProduct: "/admin/edit-product",
+            addCategory: "/admin/add-category",
+            editCategory: "/admin/edit-category",
             reportSelling: "/report-selling/show-graph",
           },
           item: {
@@ -168,6 +180,8 @@ exports.EditProduct = async (req, res, next) => {
               cart: "cart",
               addProduct: "add-product",
               editProduct: "edit-product",
+              addCategory: "add-category",
+              editCategory: "edit-category",
               reportSelling: "report-selling",
             },
             urlNavigation: {
@@ -175,6 +189,8 @@ exports.EditProduct = async (req, res, next) => {
               cart: "/admin/cart",
               addProduct: "/admin/add-product",
               editProduct: "/admin/edit-product",
+              addCategory: "/admin/add-category",
+              editCategory: "/admin/edit-category",
               reportSelling: "/report-selling/show-graph",
             },
             item: {
@@ -216,6 +232,8 @@ exports.renderCart = (req, res, next) => {
       cart: "cart",
       addProduct: "add-product",
       editProduct: "edit-product",
+      addCategory: "add-category",
+      editCategory: "edit-category",
       reportSelling: "report-selling",
     },
     urlNavigation: {
@@ -223,10 +241,14 @@ exports.renderCart = (req, res, next) => {
       cart: "/admin/cart",
       addProduct: "/admin/add-product",
       editProduct: "/admin/edit-product",
+      addCategory: "/admin/add-category",
+      editCategory: "/admin/edit-category",
       reportSelling: "/report-selling/show-graph",
     },
   });
 };
+
+// Render Form Add Category
 
 // Delete file image
 exports.deleteImage = async (req, res, next) => {
@@ -259,6 +281,8 @@ exports.deleteImage = async (req, res, next) => {
             cart: "cart",
             addProduct: "add-product",
             editProduct: "edit-product",
+            addCategory: "add-category",
+            editCategory: "edit-category",
             reportSelling: "report-selling",
           },
           urlNavigation: {
@@ -266,6 +290,8 @@ exports.deleteImage = async (req, res, next) => {
             cart: "/admin/cart",
             addProduct: "/admin/add-product",
             editProduct: "/admin/edit-product",
+            addCategory: "/admin/add-category",
+            editCategory: "/admin/edit-category",
             reportSelling: "/report-selling/show-graph",
           },
           item: {
@@ -291,6 +317,8 @@ exports.deleteImage = async (req, res, next) => {
           cart: "cart",
           addProduct: "add-product",
           editProduct: "edit-product",
+          addCategory: "add-category",
+          editCategory: "edit-category",
           reportSelling: "report-selling",
         },
         urlNavigation: {
@@ -298,6 +326,8 @@ exports.deleteImage = async (req, res, next) => {
           cart: "/admin/cart",
           addProduct: "/admin/add-product",
           editProduct: "/admin/edit-product",
+          addCategory: "/admin/add-category",
+          editCategory: "/admin/edit-category",
           reportSelling: "/report-selling/show-graph",
         },
         item: {
