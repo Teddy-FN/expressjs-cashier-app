@@ -89,7 +89,7 @@ exports.home = async (req, res, next) => {
               if (res.statusCode === 200) {
                 res.render("home.ejs", {
                   pageTitle: role === "user" ? "User Page" : "Admin Page",
-                  
+
                   emptyProduct: newProduct.length < 1,
                   prod: newProduct,
 
@@ -135,6 +135,8 @@ exports.home = async (req, res, next) => {
                     cart: "cart",
                     addProduct: "add-product",
                     editProduct: "edit-product",
+                    addCategory: "add-category",
+                    editCategory: "edit-category",
                     reportSelling: "report-selling",
                   },
                   urlNavigation: {
@@ -142,6 +144,8 @@ exports.home = async (req, res, next) => {
                     cart: "/admin/cart",
                     addProduct: "/admin/add-product",
                     editProduct: "/admin/edit-product",
+                    addCategory: "/admin/add-category",
+                    editCategory: "/admin/edit-category",
                     reportSelling: "/report-selling/show-graph",
                   },
                 });
@@ -283,6 +287,8 @@ exports.filteringHome = (req, res, next) => {
                       cart: "cart",
                       addProduct: "add-product",
                       editProduct: "edit-product",
+                      addCategory: "add-category",
+                      editCategory: "edit-category",
                       reportSelling: "report-selling",
                     },
                     urlNavigation: {
@@ -290,6 +296,8 @@ exports.filteringHome = (req, res, next) => {
                       cart: "/admin/cart",
                       addProduct: "/admin/add-product",
                       editProduct: "/admin/edit-product",
+                      addCategory: "/admin/add-category",
+                      editCategory: "/admin/edit-category",
                       reportSelling: "/report-selling/show-graph",
                     },
                   });

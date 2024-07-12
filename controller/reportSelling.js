@@ -1,12 +1,4 @@
 const db = require("../db");
-const moment = require("moment");
-const monthNow = new Date().getMonth() + 1;
-
-/*
-SELECT EXTRACT(MONTH FROM create_date) AS MONTH, COUNT(item_checkout) FROM public."Invoice"
-	WHERE EXTRACT(YEAR from create_date) = '2023'
-	GROUP BY EXTRACT(MONTH FROM create_date)
-*/
 
 // Report Selling
 exports.showGraph = async (req, res, next) => {
@@ -94,6 +86,8 @@ exports.showGraph = async (req, res, next) => {
           cart: "cart",
           addProduct: "add-product",
           editProduct: "edit-product",
+          addCategory: "add-category",
+          editCategory: "edit-category",
           reportSelling: "report-selling",
         },
         urlNavigation: {
@@ -101,6 +95,8 @@ exports.showGraph = async (req, res, next) => {
           cart: "/admin/cart",
           addProduct: "/admin/add-product",
           editProduct: "/admin/edit-product",
+          addCategory: "/admin/add-category",
+          editCategory: "/admin/edit-category",
           reportSelling: "/report-selling/show-graph",
         },
         year: year ? year : new Date().getFullYear().toString(),

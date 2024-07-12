@@ -1,3 +1,5 @@
 exports.error = (req, res, next) => {
-  res.send("<h1>ERROR</h1>");
+  res.render("404.ejs", {
+    pageTitle: "404 Error",
+  });
 };
