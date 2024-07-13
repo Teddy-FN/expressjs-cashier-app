@@ -11,12 +11,15 @@ exports.renderFormAdd = (req, res, next) => {
     admin: true,
     url: req.protocol + "://" + req.header.host,
     onPage: "add-product",
+    activeTab: "add-product",
     isEdit: false,
     success: false,
+    isError: false,
     navigationActive: {
       list: "list",
       cart: "cart",
       addProduct: "add-product",
+      addCategory: "add-category",
       editProduct: "edit-product",
       reportSelling: "report-selling",
     },
@@ -24,6 +27,7 @@ exports.renderFormAdd = (req, res, next) => {
       list: "/admin/list",
       cart: "/admin/cart",
       addProduct: "/admin/add-product",
+      addCategory: "/admin/add-category",
       editProduct: "/admin/edit-product",
       reportSelling: "/report-selling/show-graph",
     },
@@ -229,8 +233,90 @@ exports.renderCart = (req, res, next) => {
 };
 
 // Render Form Add Category
+exports.renderAddCategory = async (req, res, next) => {
+  return await res.render("admin/index.ejs", {
+    pageTitle: "Add Category",
+    admin: true,
+    url: req.protocol + "://" + req.header.host,
+    onPage: "add-category",
+    activeTab: "add-category",
+    isEdit: false,
+    success: false,
+    isError: false,
+    navigationActive: {
+      list: "list",
+      cart: "cart",
+      addProduct: "add-product",
+      addCategory: "add-category",
+      editProduct: "edit-product",
+      reportSelling: "report-selling",
+    },
+    urlNavigation: {
+      list: "/admin/list",
+      cart: "/admin/cart",
+      addProduct: "/admin/add-product",
+      addCategory: "/admin/add-category",
+      editProduct: "/admin/edit-product",
+      reportSelling: "/report-selling/show-graph",
+    },
+    item: {
+      id: null,
+      img: null,
+      category: null,
+      productName: null,
+      price: null,
+      description: null,
+    },
+  });
+};
 
+exports.postAddCategory = async (req, res, next) => {
+  const { nameCategory } = req.body;
 
+  await db.pool.query(
+    `INSERT INTO public."Filtering"(name, value) 
+      SELECT '${nameCategory}', '${nameCategory.toLowerCase()}' WHERE NOT EXISTS (SELECT name, value FROM public."Filtering" WHERE name = '${nameCategory}' AND value = '${nameCategory.toLowerCase()}') RETURNING *`,
+    [],
+    (err, response) => {
+      console.log("err =>", err);
+      console.log("response =>", response);
+      return res.render("admin/index.ejs", {
+        pageTitle: "Add Category",
+        admin: true,
+        url: req.protocol + "://" + req.header.host,
+        onPage: "add-category",
+        activeTab: "add-category",
+        isEdit: false,
+        success: response.rows ? true : false,
+        isError: response.rows.length < 1 ? true : false,
+        navigationActive: {
+          list: "list",
+          cart: "cart",
+          addProduct: "add-product",
+          addCategory: "add-category",
+          editProduct: "edit-product",
+          reportSelling: "report-selling",
+        },
+        urlNavigation: {
+          list: "/admin/list",
+          cart: "/admin/cart",
+          addProduct: "/admin/add-product",
+          addCategory: "/admin/add-category",
+          editProduct: "/admin/edit-product",
+          reportSelling: "/report-selling/show-graph",
+        },
+        item: {
+          id: null,
+          img: null,
+          category: null,
+          productName: null,
+          price: null,
+          description: null,
+        },
+      });
+    }
+  );
+};
 
 // Delete file image
 exports.deleteImage = async (req, res, next) => {

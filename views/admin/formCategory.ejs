@@ -1,12 +1,13 @@
 <div>
-  <h1 class="text-[#636363] font-semibold text-[32px] leading-10 text-center mb-6">
-    <% if(item.id){ %>Ubah Product<% } else{ %>Tambah Product<% } %>
+  <h1
+    class="text-[#636363] font-semibold text-[32px] leading-10 text-center mb-6"
+  >
+    <% if(item.id){ %>Ubah Category<% } else{ %>Tambah Category<% } %>
   </h1>
   <form
     class="max-w-2xl px-4 md:px-0 mx-auto"
-    action="<% if(item.id){ %>/admin/edit-product/<%= item.id %><% } else{ %>/admin/add-product<% } %>"
+    action="<% if(item.id){ %>/admin/edit-product/<%= item.id %><% } else{ %>/admin/add-category<% } %>"
     method="post"
-    enctype="multipart/form-data"
   >
     <!-- Category -->
     <div class="flex flex-col flex-wrap mb-6 w-full px-3">

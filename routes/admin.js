@@ -10,7 +10,9 @@ const storage = multer.diskStorage({
   },
 });
 
-const upload = multer({ storage: storage });
+const upload = multer({
+  storage: storage,
+});
 
 const router = express.Router();
 
@@ -46,6 +48,12 @@ router.get("/edit-product/:id", adminController.renderFormEdit);
 
 // Router delete Image
 router.post("/delete-image", adminController.deleteImage);
+
+// Router Render Category
+router.get("/add-category", adminController.renderAddCategory);
+
+// Function Post new Category
+router.post("/add-category", adminController.postAddCategory);
 
 // Function Post Edit Product
 router.post(
