@@ -30,7 +30,6 @@
               <a href="#" class="text-black flex items-center space-x-2 px-4 py-11 justify-center" title="Your App is cool">
                 <img src="/assets/icon-app.png" class="absolute w-9" alt="Icon app" />
               </a>
-  
               <%- include('../includes/nav.ejs', {
                 admin: admin,
                 onPage: onPage,
@@ -95,9 +94,9 @@
             </form>
           </div>
         </div>
-            <div class="flex flex-col gap-6 w-full px-4">
+            <div class="flex flex-col gap-6 w-full px-10 py-8">
                 <ul id="tabs" class="inline-flex p-2 w-full border-b [&>*]:border-cyan-600 border-cyan-600">
-                    <li class="p-2 cursor-pointer rounded-t-md border-t border-l border-r -mb-2 bg-white active" tab-to="add-edit-product">
+                    <li class="p-2 cursor-pointer rounded-t-md border-t border-l border-r -mb-2 text-base text-white bg-[#6853F0] active" tab-to="add-edit-product">
                       Tambah Product
                     </li>
                     <li class="p-2 cursor-pointer" tab-to="add-edit-category">
@@ -266,8 +265,8 @@
             tab_el.classList.remove("hidden");
             tab_el.classList.add("active");
 
-            active_tab.classList.remove("active", "rounded-t-md", "border-t", "border-l", "border-r", "-mb-2", "bg-white");
-            this.classList.add("active", "rounded-t-md", "border-t", "border-l", "border-r", "-mb-2", "bg-white");
+            active_tab.classList.remove("active", "rounded-t-md", "border-t", "border-l", "border-r", "-mb-2", 'font-bold', 'text-base', 'text-white', "bg-[#6853F0]");
+            this.classList.add("active", "rounded-t-md", "border-t", "border-l", "border-r", "-mb-2", 'font-bold', 'text-base', 'text-white', 'bg-[#6853F0]');
         });
     });
   </script>

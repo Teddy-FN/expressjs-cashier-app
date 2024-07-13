@@ -1,6 +1,6 @@
 
   <div>
-    <h1 class="text-[#636363] font-semibold text-[32px] leading-10 text-center"><% if(item.id){ %>Ubah Product<% } else{ %>Tambah Product<% } %></h1>
+    <h1 class="text-[#636363] font-semibold text-[32px] leading-10 text-center mb-6"><% if(item.id){ %>Ubah Product<% } else{ %>Tambah Product<% } %></h1>
     <form class="max-w-xl px-4 md:px-0 mx-auto" action="<% if(item.id){ %>/admin/edit-product/<%= item.id %><% } else{ %>/admin/add-product<% } %>" method="post" enctype="multipart/form-data">
       <div class="flex flex-wrap mb-6">
         <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">

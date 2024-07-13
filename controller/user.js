@@ -19,8 +19,6 @@ exports.user = async (req, res, next) => {
             cart: "cart",
             addProduct: "",
             editProduct: "",
-            addCategory: "",
-            editCategory: "",
             reportSelling: "",
           },
           urlNavigation: {
@@ -28,8 +26,6 @@ exports.user = async (req, res, next) => {
             cart: "/user/cart",
             addProduct: "",
             editProduct: "",
-            addCategory: "",
-            editCategory: "",
             reportSelling: "",
           },
         });
