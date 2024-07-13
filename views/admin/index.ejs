@@ -1,0 +1,280 @@
+<%- include('../includes/head.ejs') %>
+  </head>
+  <body>
+    <div class="relative min-h-screen md:flex" data-dev-hint="container">
+      <input type="checkbox" id="menu-open" class="hidden" />
+  
+      <label for="menu-open" class="absolute right-2 bottom-2 shadow-lg rounded-full p-2 bg-gray-100 text-gray-600 md:hidden" data-dev-hint="floating action button">
+          <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+      </label>
+  
+      <header class="bg-gray-600 text-gray-100 flex justify-between md:hidden" data-dev-hint="mobile menu bar">
+          <a href="#" class="block p-4 text-white font-bold whitespace-nowrap truncate">
+              Your App is cool
+          </a>
+  
+          <label for="menu-open" id="mobile-menu-button" class="m-2 p-2 focus:outline-none hover:text-white hover:bg-gray-700 rounded-md">
+              <svg id="menu-open-icon" class="h-6 w-6 transition duration-200 ease-in-out" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+              <svg id="menu-close-icon" class="h-6 w-6 transition duration-200 ease-in-out" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+          </label>
+      </header>
+  
+      <aside id="sidebar" class="bg-white text-gray-100 w-[80px] space-y-6 pt-6 px-0 absolute inset-y-0 left-0 transform md:relative md:translate-x-0 transition duration-200 ease-in-out  md:flex md:flex-col md:justify-between overflow-y-auto shadow-lg" data-dev-hint="sidebar; px-0 for frameless; px-2 for visually inset the navigation">
+          <div class="flex flex-col space-y-6" data-dev-hint="optional div for having an extra footer navigation">
+              <a href="#" class="text-black flex items-center space-x-2 px-4 py-11 justify-center" title="Your App is cool">
+                <img src="/assets/icon-app.png" class="absolute w-9" alt="Icon app" />
+              </a>
+  
+              <%- include('../includes/nav.ejs', {
+                admin: admin,
+                onPage: onPage,
+                navigationActive: navigationActive,
+                urlNavigation: urlNavigation,
+              }) %>
+          </div>
+  
+          <!-- <nav data-dev-hint="second-main-navigation or footer navigation">
+              <a href="#" class="block py-2 px-4 transition duration-200 hover:bg-gray-700 hover:text-white">
+                  asd
+              </a>
+              <a href="#" class="block py-2 px-4 transition duration-200 hover:bg-gray-700 hover:text-white">
+                  asd
+              </a>
+              <a href="#" class="block py-2 px-4 transition duration-200 hover:bg-gray-700 hover:text-white">
+                  asd
+              </a>
+          </nav> -->
+      </aside>
+  
+      <main id="content" class="flex-1">
+        <div class="flex justify-between items-center bg-[#ffffff70] p-[34px] shadow-lg">
+          <div class="flex flex-1 space-x-7">
+            <!-- Website Logo -->
+            <form
+              action=""
+              method="post"
+              class="items-center gap-8 flex flex-1 md:flex-[0.8]"
+            >
+            <div class="w-2/3 flex justify-end items-center relative">
+              <input
+                class="appearance-none block w-full bg-gray-200 text-gray-700 border border-1 border-[#C5C5C5] rounded-full py-3 px-10 leading-tight focus:outline-none focus:bg-white"
+                id="search"
+                type="text"
+                name="search"
+                placeholder="Search category or menu"
+              />
+              <img src="/assets/search-icon.png" class="absolute w-5 left-3" alt="Search Icon" />
+            </div>
+              <button
+                type="submit"
+                class="bg-[#6853F0] text-lg font-bold text-white py-[14px] px-[80px] rounded-full hover:bg-yellow-300 duration-200"
+              >
+                Cari
+              </button>
+            </form>
+          </div>
+          <!-- Secondary Navbar items -->
+          <div class="hidden md:flex items-center gap-[18px] space-x-3">
+            <div class="m-1 mr-2 w-12 h-12 relative flex justify-center items-center rounded-full bg-green-500 text-xl text-white uppercase">zxl</div>
+            <div>
+              <p class="text-[#737373] font-medium text-lg">Welcome, John!</p>
+              <p class="text-[#D9D9D9] font-medium text-[12px]">Cashier on bonta Coffee</p>
+            </div>
+            <form action="/logout" method="post" class="hidden md:block">
+              <button
+                class="bg-[#6853F0] w-full text-lg font-bold text-white py-[14px] px-[30px] rounded-full hover:bg-yellow-300 duration-200"
+              >
+                Logout
+              </button>
+            </form>
+          </div>
+        </div>
+            <div class="flex flex-col gap-6 w-full px-4">
+                <ul id="tabs" class="inline-flex p-2 w-full border-b [&>*]:border-cyan-600 border-cyan-600">
+                    <li class="p-2 cursor-pointer rounded-t-md border-t border-l border-r -mb-2 bg-white active" tab-to="add-edit-product">
+                      Tambah Product
+                    </li>
+                    <li class="p-2 cursor-pointer" tab-to="add-edit-category">
+                      Tambah Category
+                    </li>
+                    <li class="p-2 cursor-pointer" tab-to="third">
+                      List Anggota
+                    </li>
+                </ul>
+                            
+                <div id="tab-contents">
+                    <div class="p-4 active" tab-id="add-edit-product">
+                        <%- include('./formProduct.ejs', {
+                            item: item,
+                            admin: admin,
+                            onPage: onPage,
+                            navigationActive: navigationActive,
+                            urlNavigation: urlNavigation,
+                            isEdit: isEdit,
+                            success: success
+                        }) %>
+                    </div>
+                    <div class="p-4 hidden" tab-id="add-edit-category">
+                        <%- include('./formCategory.ejs', {
+                            item: item,
+                            admin: admin,
+                            onPage: onPage,
+                            navigationActive: navigationActive,
+                            urlNavigation: urlNavigation,
+                            isEdit: isEdit,
+                            success: success
+                        }) %>
+                    </div>
+                    <div class="p-4 hidden" tab-id="third">
+                      <%- include('./allUser.ejs', {
+                        item: item,
+                        admin: admin,
+                        onPage: onPage,
+                        navigationActive: navigationActive,
+                        urlNavigation: urlNavigation,
+                        isEdit: isEdit,
+                        success: success
+                    }) %>
+                    </div>
+                </div>
+            </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- Pop Up Success -->
+  <main class="fixed z-10 overflow-scroll top-0 w-full left-0 <% if(success){ %>block<% } else{ %>hidden<% } %>">
+    <div class="flex items-center justify-center h-max pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+      <div class="fixed inset-0 transition-opacity overflow-scroll bg-[#111827c1]">
+        <div class="absolute inset-0" />
+      </div>
+      <span class="hidden sm:inline-block sm:align-middle sm:h-screen">&#8203;</span>
+      <div class="inline-block align-center text-left overflow-scroll transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full" role="dialog" aria-modal="true" aria-labelledby="modal-headline">
+        <h1 class="p-9 text-center bg-[#6853F0] font-bold text-[32px] text-white rounded-lg">
+          <% if (isEdit && success) { %>
+            Hooray, Edit item berhasil!
+            <% } else { %>
+            Hooray, Tambah item berhasil!
+          <% } %>
+        </h1>
+        <div class="flex justify-center items-center mt-5">
+          <a href="/admin/list">
+            <p class="font-semibold text-lg text-white">Kembali</p>
+          </a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- pop up Delete Image -->
+  <main class="fixed z-10 overflow-scroll top-0 w-full left-0 hidden" id="delete-image">
+    <div class="flex items-center justify-center h-max pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+      <div class="fixed inset-0 transition-opacity overflow-scroll bg-[#111827c1]">
+        <div class="absolute inset-0" />
+      </div>
+      <span class="hidden sm:inline-block sm:align-middle sm:h-screen">&#8203;</span>
+      <div class="inline-block align-center text-left overflow-scroll shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full" role="dialog" aria-modal="true" aria-labelledby="modal-headline">
+        <h1 class="p-9 text-center bg-[#6853F0] font-bold text-[32px] text-white rounded-lg">Apa kamu yakin menghapus gambar?</h1>
+        <form action="/admin/delete-image" method="post" class="mt-4" id="edit-cart">
+          <input 
+            class="hidden" 
+            id="deleteIdProduct" 
+            type="text" 
+            name="deleteIdProduct"
+            value="<%= item.id || null %>"
+          >
+          <input 
+            class="hidden" 
+            id="deleteNameproduct" 
+            type="text" 
+            name="deleteNameproduct"
+            value="<%= item.product || '' %>"
+          >
+          <input 
+            class="hidden" 
+            id="deletePrice" 
+            type="text" 
+            name="deletePrice"
+            value="<%= item.price || '' %>"
+          >
+          <input 
+            class="hidden" 
+            id="deleteDescription" 
+            type="text" 
+            name="deleteDescription"
+            value="<%= item.description || '' %>"
+          >
+          <input 
+            class="hidden" 
+            id="deleteCategory" 
+            type="text" 
+            name="deleteCategory"
+            value="<%= item.category || '' %>"
+          >
+          <input 
+            class="hidden" 
+            id="deleteImage" 
+            type="text" 
+            name="deleteImage"
+          >
+          <div class="flex justify-between items-center">
+            <button type="button" class="py-2 px-4 font-semibold w-32 text-lg bg-[#6853F0] text-white rounded-full hover:bg-blue-700 transition duration-500" onclick="toggle_visibility('delete-image')">Batal</button>
+            <button type="submit" class="py-2 px-4 font-semibold w-32 text-lg bg-[#6853F0] text-white rounded-full hover:bg-blue-700 transition duration-500">Hapus</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </main>
+
+  <!-- pop up Cancel -->
+  <main class="fixed z-10 overflow-scroll top-0 w-full left-0 hidden" id="cancel">
+    <div class="flex items-center justify-center h-max pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+      <div class="fixed inset-0 transition-opacity overflow-scroll bg-[#111827c1]">
+        <div class="absolute inset-0" />
+      </div>
+      <span class="hidden sm:inline-block sm:align-middle sm:h-screen">&#8203;</span>
+      <div class="inline-block align-center text-left overflow-scroll shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full" role="dialog" aria-modal="true" aria-labelledby="modal-headline">
+        <h1 class="p-9 text-center bg-[#6853F0] font-bold text-[32px] text-white rounded-lg">Apa kamu yakin membatalkan tambah item?</h1>
+        <div class="flex justify-between items-center mt-5">
+          <button type="button" class="py-2 px-4 font-semibold text-lg bg-[#6853F0] text-white rounded-full hover:bg-blue-700 transition duration-500" onclick="toggle_visibility_cancel('cancel')">Batalkan</button>
+          <a href="/admin/list">
+            <button type="submit" class="py-2 px-4 font-semibold text-lg w-[80px] bg-[#6853F0] text-white rounded-full hover:bg-blue-700 transition duration-500">Ya</button>
+          </a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script>
+    document.querySelectorAll('#tabs [tab-to]').forEach(function(item) {
+        item.addEventListener('click', function(e) {
+            let link = this.getAttribute('tab-to');
+            let active_content = document.querySelector('#tab-contents .active');
+            let tab_el = document.querySelector('#tab-contents [tab-id="' + link + '"]');
+            let active_tab = document.querySelector('#tabs .active')
+
+            active_content.classList.remove("active");
+            active_content.classList.add("hidden");
+            
+            tab_el.classList.remove("hidden");
+            tab_el.classList.add("active");
+
+            active_tab.classList.remove("active", "rounded-t-md", "border-t", "border-l", "border-r", "-mb-2", "bg-white");
+            this.classList.add("active", "rounded-t-md", "border-t", "border-l", "border-r", "-mb-2", "bg-white");
+        });
+    });
+  </script>
+
+  <style>
+    [src='#'] {
+      display: none;
+    }
+</style>
+<%- include('../includes/end.ejs') %>

@@ -6,7 +6,7 @@ const fs = require("fs/promises");
 
 // Render Add Form Product
 exports.renderFormAdd = (req, res, next) => {
-  res.render("admin/formProduct.ejs", {
+  res.render("admin/index.ejs", {
     pageTitle: "Add Product",
     admin: true,
     url: req.protocol + "://" + req.header.host,
@@ -249,6 +249,8 @@ exports.renderCart = (req, res, next) => {
 };
 
 // Render Form Add Category
+
+
 
 // Delete file image
 exports.deleteImage = async (req, res, next) => {
