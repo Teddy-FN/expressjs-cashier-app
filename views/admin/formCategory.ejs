@@ -1,130 +1,50 @@
-<%- include('../includes/head.ejs') %>
-  </head>
-  <body>
-    <div class="relative min-h-screen md:flex" data-dev-hint="container">
-      <input type="checkbox" id="menu-open" class="hidden" />
-  
-      <label for="menu-open" class="absolute right-2 bottom-2 shadow-lg rounded-full p-2 bg-gray-100 text-gray-600 md:hidden" data-dev-hint="floating action button">
-          <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-          </svg>
+<div>
+  <h1 class="text-[#636363] font-semibold text-[32px] leading-10 text-center">
+    <% if(item.id){ %>Ubah Product<% } else{ %>Tambah Product<% } %>
+  </h1>
+  <form
+    class="max-w-2xl px-4 md:px-0 mx-auto"
+    action="<% if(item.id){ %>/admin/edit-product/<%= item.id %><% } else{ %>/admin/add-product<% } %>"
+    method="post"
+    enctype="multipart/form-data"
+  >
+    <!-- Category -->
+    <div class="flex flex-col flex-wrap mb-6 w-full px-3">
+      <label
+        class="block tracking-wide text-[#828282] text-lg font-semibold mb-3"
+        for="description"
+      >
+        Nama Category
       </label>
-  
-      <header class="bg-gray-600 text-gray-100 flex justify-between md:hidden" data-dev-hint="mobile menu bar">
-          <a href="#" class="block p-4 text-white font-bold whitespace-nowrap truncate">
-              Your App is cool
-          </a>
-  
-          <label for="menu-open" id="mobile-menu-button" class="m-2 p-2 focus:outline-none hover:text-white hover:bg-gray-700 rounded-md">
-              <svg id="menu-open-icon" class="h-6 w-6 transition duration-200 ease-in-out" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-              </svg>
-              <svg id="menu-close-icon" class="h-6 w-6 transition duration-200 ease-in-out" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-              </svg>
-          </label>
-      </header>
-  
-      <aside id="sidebar" class="bg-white text-gray-100 w-[80px] space-y-6 pt-6 px-0 absolute inset-y-0 left-0 transform md:relative md:translate-x-0 transition duration-200 ease-in-out  md:flex md:flex-col md:justify-between overflow-y-auto shadow-lg" data-dev-hint="sidebar; px-0 for frameless; px-2 for visually inset the navigation">
-          <div class="flex flex-col space-y-6" data-dev-hint="optional div for having an extra footer navigation">
-              <a href="#" class="text-black flex items-center space-x-2 px-4 py-11 justify-center" title="Your App is cool">
-                <img src="/assets/icon-app.png" class="absolute w-9" alt="Icon app" />
-              </a>
-  
-              <%- include('../includes/nav.ejs', {
-                admin: admin,
-                onPage: onPage,
-                navigationActive: navigationActive,
-                urlNavigation: urlNavigation,
-              }) %>
-          </div>
-  
-          <!-- <nav data-dev-hint="second-main-navigation or footer navigation">
-              <a href="#" class="block py-2 px-4 transition duration-200 hover:bg-gray-700 hover:text-white">
-                  asd
-              </a>
-              <a href="#" class="block py-2 px-4 transition duration-200 hover:bg-gray-700 hover:text-white">
-                  asd
-              </a>
-              <a href="#" class="block py-2 px-4 transition duration-200 hover:bg-gray-700 hover:text-white">
-                  asd
-              </a>
-          </nav> -->
-      </aside>
-  
-      <main id="content" class="flex-1">
-        <div class="flex justify-between items-center bg-[#ffffff70] p-[34px] shadow-lg">
-          <div class="flex flex-1 space-x-7">
-            <!-- Website Logo -->
-            <form
-              action=""
-              method="post"
-              class="items-center gap-8 flex flex-1 md:flex-[0.8]"
-            >
-            <div class="w-2/3 flex justify-end items-center relative">
-              <input
-                class="appearance-none block w-full bg-gray-200 text-gray-700 border border-1 border-[#C5C5C5] rounded-full py-3 px-10 leading-tight focus:outline-none focus:bg-white"
-                id="search"
-                type="text"
-                name="search"
-                placeholder="Search category or menu"
-              />
-              <img src="/assets/search-icon.png" class="absolute w-5 left-3" alt="Search Icon" />
-            </div>
-              <button
-                type="submit"
-                class="bg-[#6853F0] text-lg font-bold text-white py-[14px] px-[80px] rounded-full hover:bg-yellow-300 duration-200"
-              >
-                Cari
-              </button>
-            </form>
-          </div>
-          <!-- Secondary Navbar items -->
-          <div class="hidden md:flex items-center gap-[18px] space-x-3">
-            <div class="m-1 mr-2 w-12 h-12 relative flex justify-center items-center rounded-full bg-green-500 text-xl text-white uppercase">zxl</div>
-            <div>
-              <p class="text-[#737373] font-medium text-lg">Welcome, John!</p>
-              <p class="text-[#D9D9D9] font-medium text-[12px]">Cashier on bonta Coffee</p>
-            </div>
-            <form action="/logout" method="post" class="hidden md:block">
-              <button
-                class="bg-[#6853F0] w-full text-lg font-bold text-white py-[14px] px-[30px] rounded-full hover:bg-yellow-300 duration-200"
-              >
-                Logout
-              </button>
-            </form>
-          </div>
-        </div>
-        <div class="flex flex-col justify-center items-center py-20 gap-10">
-          <h1 class="text-[#636363] font-semibold text-[32px] leading-10"><% if(item.id){ %>Ubah Product<% } else{ %>Tambah Product<% } %></h1>
-          <form class="max-w-lg px-4 md:px-0" action="<% if(item.id){ %>/admin/edit-product/<%= item.id %><% } else{ %>/admin/add-product<% } %>" method="post" enctype="multipart/form-data">
-            <!-- Category -->
-            <div class="flex flex-col flex-wrap mb-6 w-full px-3">
-              <label class="block tracking-wide text-[#828282] text-lg font-semibold mb-3" for="description">
-                Nama Category
-              </label>
-              <input 
-                class="appearance-none block w-full bg-gray-200 text-gray-700 border-2 border-[#C5C5C5] rounded-xl py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" 
-                id="nameCategory" 
-                type="text" 
-                name="nameCategory"
-                value="<%= item.nameCategory || '' %>"
-                placeholder="Nama Category"
-              >
-            </div>
-            <div class="flex items-center justify-between">
-            <button type="button" class="py-2 px-4 font-semibold text-lg text-[#ADA3EC] underline decoration-[#ADA3EC] rounded" onclick="toggle_visibility_cancel('cancel')">Kembali</button>
-            <button type="submit" class="py-2 px-4 font-semibold text-lg bg-[#6853F0] text-white rounded-full hover:bg-blue-700 transition duration-500">
-              <% if(item.id){ %>Ubah<% } else{ %>Tambahkan<% } %> 
-            </button>
-            </div>
-          </form>
-      </main>
+      <input
+        class="appearance-none block w-full bg-gray-200 text-gray-700 border-2 border-[#C5C5C5] rounded-xl py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+        id="nameCategory"
+        type="text"
+        name="nameCategory"
+        value="<%= item.nameCategory || '' %>"
+        placeholder="Nama Category"
+      />
     </div>
-  </div>
+    <div class="flex items-center justify-between">
+      <button
+        type="button"
+        class="py-2 px-4 font-semibold text-lg text-[#ADA3EC] underline decoration-[#ADA3EC] rounded"
+        onclick="toggle_visibility_cancel('cancel')"
+      >
+        Kembali
+      </button>
+      <button
+        type="submit"
+        class="py-2 px-4 font-semibold text-lg bg-[#6853F0] text-white rounded-full hover:bg-blue-700 transition duration-500"
+      >
+        <% if(item.id){ %>Ubah<% } else{ %>Tambahkan<% } %>
+      </button>
+    </div>
+  </form>
+</div>
 
-  <!-- Pop Up Success -->
-  <!-- <main class="fixed z-10 overflow-scroll top-0 w-full left-0 <% if(success){ %>block<% } else{ %>hidden<% } %>">
+<!-- Pop Up Success -->
+<!-- <main class="fixed z-10 overflow-scroll top-0 w-full left-0 <% if(success){ %>block<% } else{ %>hidden<% } %>">
     <div class="flex items-center justify-center h-max pt-4 px-4 pb-20 text-center sm:block sm:p-0">
       <div class="fixed inset-0 transition-opacity overflow-scroll bg-[#111827c1]">
         <div class="absolute inset-0" />
@@ -147,8 +67,8 @@
     </div>
   </main> -->
 
-  <!-- pop up Delete Image -->
-  <!-- <main class="fixed z-10 overflow-scroll top-0 w-full left-0 hidden" id="delete-image">
+<!-- pop up Delete Image -->
+<!-- <main class="fixed z-10 overflow-scroll top-0 w-full left-0 hidden" id="delete-image">
     <div class="flex items-center justify-center h-max pt-4 px-4 pb-20 text-center sm:block sm:p-0">
       <div class="fixed inset-0 transition-opacity overflow-scroll bg-[#111827c1]">
         <div class="absolute inset-0" />
@@ -207,8 +127,8 @@
     </div>
   </main> -->
 
-  <!-- pop up Cancel -->
-  <!-- <main class="fixed z-10 overflow-scroll top-0 w-full left-0 hidden" id="cancel">
+<!-- pop up Cancel -->
+<!-- <main class="fixed z-10 overflow-scroll top-0 w-full left-0 hidden" id="cancel">
     <div class="flex items-center justify-center h-max pt-4 px-4 pb-20 text-center sm:block sm:p-0">
       <div class="fixed inset-0 transition-opacity overflow-scroll bg-[#111827c1]">
         <div class="absolute inset-0" />
@@ -226,56 +146,54 @@
     </div>
   </main> -->
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-  <script>
+<script
+  src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"
+  integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg=="
+  crossorigin="anonymous"
+  referrerpolicy="no-referrer"
+></script>
+<script>
+  function PreviewImage() {
+    const getContainerImg = document.getElementById("container-img");
+    const removeImg = document.getElementById("removeImg");
 
-    function PreviewImage() {
-      const getContainerImg = document.getElementById('container-img')
-      const removeImg = document.getElementById('removeImg')
+    console.log("HELLO =>", "<%= item.id %>");
 
-      console.log('HELLO =>', '<%= item.id %>')
+    document.getElementById("deleteImage").value =
+      document?.getElementById("uploadImage")?.files?.[0]?.name;
+    document.getElementById("deleteNameproduct").value =
+      document?.getElementById("nameproduct")?.value;
+    document.getElementById("deletePrice").value =
+      document?.getElementById("price")?.value;
+    document.getElementById("deleteDescription").value =
+      document?.getElementById("description")?.value;
 
-      document.getElementById('deleteImage').value = document?.getElementById("uploadImage")?.files?.[0]?.name
-      document.getElementById('deleteNameproduct').value = document?.getElementById("nameproduct")?.value
-      document.getElementById('deletePrice').value = document?.getElementById("price")?.value
-      document.getElementById('deleteDescription').value = document?.getElementById("description")?.value
-      
-      var oFReader = new FileReader();
-      oFReader.readAsDataURL(document.getElementById("uploadImage").files[0]);
+    var oFReader = new FileReader();
+    oFReader.readAsDataURL(document.getElementById("uploadImage").files[0]);
 
-      oFReader.onload = function (oFREvent) {
-        document.getElementById("uploadPreview").classList = 'block';
-        document.getElementById("uploadPreview").src = oFREvent.target.result;
-        getContainerImg.className = 'w-full relative'
-        removeImg.className = 'absolute h-8 w-8 top-[-12px] right-[-12px] cursor-pointer'
-      };
+    oFReader.onload = function (oFREvent) {
+      document.getElementById("uploadPreview").classList = "block";
+      document.getElementById("uploadPreview").src = oFREvent.target.result;
+      getContainerImg.className = "w-full relative";
+      removeImg.className =
+        "absolute h-8 w-8 top-[-12px] right-[-12px] cursor-pointer";
     };
+  }
 
-    function onchangeSelect(obj) {
-      document.getElementById('deleteCategory').value = obj.value
-    }
+  function onchangeSelect(obj) {
+    document.getElementById("deleteCategory").value = obj.value;
+  }
 
-    function toggle_visibility(id) {
-      var e = document.getElementById(id);
-      if (e.style.display == "block") e.style.display = "none";
-      else e.style.display = "block";
-    }
-    
-    // Select To Cancel
-    function toggle_visibility_cancel(id) {
-      var e = document.getElementById(id);
-      if (e.style.display == "block") e.style.display = "none";
-      else e.style.display = "block";
-    }
-  </script>
+  function toggle_visibility(id) {
+    var e = document.getElementById(id);
+    if (e.style.display == "block") e.style.display = "none";
+    else e.style.display = "block";
+  }
 
-  <style>
-    [src='#'] {
-      display: none;
-    }
-</style>
-<%- include('../includes/end.ejs') %>
-
-
-
-
+  // Select To Cancel
+  function toggle_visibility_cancel(id) {
+    var e = document.getElementById(id);
+    if (e.style.display == "block") e.style.display = "none";
+    else e.style.display = "block";
+  }
+</script>
