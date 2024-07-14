@@ -23,7 +23,7 @@ app.use(bodyParser.json());
 
 // Set EJS
 app.set("view engine", "ejs");
-app.set("views", path.join(__dirname, "views"));
+app.set("views", "./views");
 app.use(express.static(path.join(__dirname, "public")));
 app.use("/assets", express.static("assets"));
 
@@ -45,6 +45,6 @@ app.use(authRoutes);
 // Error Page
 app.use(errorController.error);
 
-app.listen(process.env.POSTGRES_PORT, () => {
-    console.log('server running port 5000');
+app.listen(process.env.POSTGRES_PORT || 5000, () => {
+  console.log("server running port 5000");
 });
