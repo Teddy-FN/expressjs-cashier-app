@@ -5,41 +5,57 @@ const date = moment().format("YYYY-MM-DD");
 const fs = require("fs/promises");
 
 // Render Add Form Product
-exports.renderFormAdd = (req, res, next) => {
-  res.render("admin/index.ejs", {
-    pageTitle: "Add Product",
-    admin: true,
-    url: req.protocol + "://" + req.header.host,
-    onPage: "add-product",
-    activeTab: "add-product",
-    isEdit: false,
-    success: false,
-    isError: false,
-    navigationActive: {
-      list: "list",
-      cart: "cart",
-      addProduct: "add-product",
-      addCategory: "add-category",
-      editProduct: "edit-product",
-      reportSelling: "report-selling",
-    },
-    urlNavigation: {
-      list: "/admin/list",
-      cart: "/admin/cart",
-      addProduct: "/admin/add-product",
-      addCategory: "/admin/add-category",
-      editProduct: "/admin/edit-product",
-      reportSelling: "/report-selling/show-graph",
-    },
-    item: {
-      id: null,
-      img: null,
-      category: null,
-      productName: null,
-      price: null,
-      description: null,
-    },
-  });
+exports.renderFormAdd = async (req, res, next) => {
+  await db.pool.query(
+    'SELECT * FROM public."Filtering" ORDER BY id ASC',
+    [],
+    (err, response) => {
+      const newFiltering = response.rows.filter(
+        (items) => items.name !== "Lihat Semua" && items.value !== "lihat semua"
+      );
+
+      console.log("response =>", response);
+      res.render("admin/index.ejs", {
+        pageTitle: "Add Product",
+        admin: true,
+        url: req.protocol + "://" + req.header.host,
+        onPage: "add-product",
+        activeTab: "add-product",
+        isEdit: false,
+        success: false,
+        isError: false,
+
+        // Filtering
+        filtering: newFiltering,
+        // End Filtering
+
+        navigationActive: {
+          list: "list",
+          cart: "cart",
+          addProduct: "add-product",
+          addCategory: "add-category",
+          editProduct: "edit-product",
+          reportSelling: "report-selling",
+        },
+        urlNavigation: {
+          list: "/admin/list",
+          cart: "/admin/cart",
+          addProduct: "/admin/add-product",
+          addCategory: "/admin/add-category",
+          editProduct: "/admin/edit-product",
+          reportSelling: "/report-selling/show-graph",
+        },
+        item: {
+          id: null,
+          img: null,
+          category: null,
+          productName: null,
+          price: null,
+          description: null,
+        },
+      });
+    }
+  );
 };
 
 // Function Post Add Form Product
@@ -243,6 +259,7 @@ exports.renderAddCategory = async (req, res, next) => {
     isEdit: false,
     success: false,
     isError: false,
+    filtering: [],
     navigationActive: {
       list: "list",
       cart: "cart",
@@ -289,6 +306,7 @@ exports.postAddCategory = async (req, res, next) => {
         isEdit: false,
         success: response.rows ? true : false,
         isError: response.rows.length < 1 ? true : false,
+        filtering: [],
         navigationActive: {
           list: "list",
           cart: "cart",
