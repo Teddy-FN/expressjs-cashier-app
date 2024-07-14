@@ -3,7 +3,6 @@ const bodyParser = require("body-parser");
 const path = require("path");
 const cookieParser = require("cookie-parser");
 const { credentials } = require("./config");
-const port = 5000;
 
 require("dotenv").config({ path: path.resolve(__dirname, ".env") });
 
@@ -46,4 +45,6 @@ app.use(authRoutes);
 // Error Page
 app.use(errorController.error);
 
-app.listen(port);
+app.listen(process.env.POSTGRES_PORT, () => {
+    console.log('server running port 5000');
+});
