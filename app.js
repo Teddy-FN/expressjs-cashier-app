@@ -3,6 +3,7 @@ const bodyParser = require("body-parser");
 const path = require("path");
 const cookieParser = require("cookie-parser");
 const { credentials } = require("./config");
+const cors = require("cors");
 
 require("dotenv").config({ path: path.resolve(__dirname, ".env") });
 
@@ -17,6 +18,7 @@ const reportSellingRoutes = require("./routes/reportSelling");
 const errorController = require("./controller/error");
 
 const app = express();
+app.use(cors());
 app.use(cookieParser(credentials.secretCookie));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
